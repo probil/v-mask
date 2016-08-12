@@ -1,0 +1,24 @@
+{
+  "name": "v-mask",
+  "version": "0.1.0",
+  "description": "Simple input mask lib for vue.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/probil/v-mask.git"
+  },
+  "keywords": [
+    "vue.js",
+    "vue",
+    "vue-mask"
+  ],
+  "author": "Max Lyashuk <m_lyashuk@ukr.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/probil/v-mask/issues"
+  },
+  "homepage": "https://github.com/probil/v-mask#readme"
+}
