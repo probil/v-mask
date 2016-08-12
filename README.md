@@ -15,11 +15,11 @@ Simple input mask lib for vue.js based on [PureMask.js](https://github.com/romul
     /** Activate vue.js plugins **/
     Vue.use(VueMask);
 
-Now you are ready to use it in code!
+Now you are ready to use it in the code!
 
     <input type="text" v-mask format="####-##">
     <!-- OR -->
-    <input type="text" data-mask="##/##/#### ##:##" >
+    <input type="text" v-mask format="##/##/#### ##:##" >
 
 ## Format description
 
