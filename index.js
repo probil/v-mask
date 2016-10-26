@@ -32,31 +32,32 @@ function format (data, mask){
 module.exports.install = function (Vue) {
   Vue.directive('mask', {
     params: ['format'],
-    bind  : function () {
+    bind  : function (el, binding, vNode) {
       /**
        * Fires on input change
        */
-      this.handler = function () {
-        var value     = this.el.value;
-        var mask      = this.params.format;
+      var handler = function () {
+        var value     = el.value;
+        var mask      = vNode.data.attrs.format;
         var new_value = value;
 
-        if (this.previous.length < value.length) {
+        if (el.previous.length < value.length) {
           new_value = format(value, mask);
         }
 
-        this.el.value = new_value;
-        this.previous = new_value;
+        el.value = new_value;
+        el.previous = new_value;
+      }
 
-      }.bind(this);
+      el.previous = '';
+      el.handler = handler
 
-      this.previous = '';
-
-      this.el.addEventListener('input', this.handler, false);
-      this.handler();
+      el.addEventListener('input', handler, false);
+      
+      handler();
     },
-    unbind: function () {
-      this.el.removeEventListener('input', this.handler, false)
+    unbind: function (el) {
+      el.removeEventListener('input', el.handler);
     }
   });
 };
