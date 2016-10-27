@@ -1,6 +1,6 @@
 {
   "name": "v-mask",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Simple input mask lib for vue.js",
   "main": "dist/index.js",
   "scripts": {
