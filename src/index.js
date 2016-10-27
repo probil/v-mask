@@ -5,7 +5,6 @@ import format from './format.js';
  * @param target
  */
 function handler ({target}) {
-  console.log(arguments);
   let {previousValue} = target.dataset;
 
   if (previousValue && previousValue.length < target.value.length) {
