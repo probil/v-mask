@@ -1,14 +1,44 @@
 <template>
-  <div id="app">
-    <h1>v-mask examples</h1>
-    <label>
-      ##/##/#### ##:##
-      <input type="text" v-mask="'##/##/#### ##:##'">
-    </label>
-    <br>
-    <label>
-      ##:##:##
-      <input type="text" v-mask="'##:##:##'">
-    </label>
+  <div class="wrapper h-100">
+    <div class="container">
+      <section class="header">
+        <h2 class="header">A dead simple, input formatting for Vue.js</h2>
+      </section>
+
+      <section class="examples">
+
+        <div class="row">
+          <div class="six columns">
+            <label for="time-and-date-ex">Date and Time</label>
+          </div>
+          <div class="six columns">
+            <input class="u-full-width" id="time-and-date-ex" type="text" v-mask="'##/##/#### ##:##'" placeholder="27/10/2016 23:15">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="six columns">
+            <label for="time-ex">Time with seconds </label>
+          </div>
+          <div class="six columns">
+            <input class="u-full-width" id="time-ex" type="text" v-mask="'##:##:##'" placeholder="23:15:54">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="six columns">
+            <label for="credit-cart-ex">Credit card number</label>
+          </div>
+          <div class="six columns">
+            <input class="u-full-width" id="credit-cart-ex" type="text" v-mask="'#### #### #### ####'" placeholder="4444 4444 4444 4444">
+          </div>
+        </div>
+
+      </section>
+
+      <section class="footer">
+        <a href="https://github.com/probil/v-mask/tree/vue-2.0" class="button button-primary">Github</a>
+      </section>
+    </div>
   </div>
 </template>
