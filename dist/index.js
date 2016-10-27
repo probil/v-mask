@@ -26,14 +26,8 @@ var _format2 = _interopRequireDefault(_format);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Event handler
- * @param target
- */
 function handler(_ref) {
   var target = _ref.target;
-
-  console.log(arguments);
   var previousValue = target.dataset.previousValue;
 
 
@@ -44,8 +38,4 @@ function handler(_ref) {
   target.dataset.previousValue = target.value;
 }
 
-/**
- * Vue plugin definition
- * @param {Vue} Vue
- */
 ;

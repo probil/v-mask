@@ -5,7 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 exports.default = function (data, mask) {
-  // don't do anything if mask is undefined/null/etc
   if (!mask) return data;
 
   var text = '';
