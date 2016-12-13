@@ -31,7 +31,7 @@ function handler(_ref) {
   var previousValue = target.dataset.previousValue;
 
 
-  if (previousValue && previousValue.length < target.value.length) {
+  if (typeof previousValue === 'string' && previousValue.length < target.value.length) {
     target.value = (0, _format2.default)(target.value, this.format);
   }
 
