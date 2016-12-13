@@ -7,7 +7,7 @@ import format from './format.js';
 function handler ({target}) {
   let {previousValue} = target.dataset;
 
-  if (previousValue && previousValue.length < target.value.length) {
+  if (typeof previousValue === 'string' && previousValue.length < target.value.length) {
     target.value = format(target.value, this.format);
   }
 
