@@ -21,10 +21,12 @@ function handler ({target}) {
 export default function (Vue) {
   Vue.directive('mask', {
     bind (el, {value}) {
-      let handlerFunc = handler.bind({format: value});
-      el.addEventListener('input', handlerFunc, false);
+      if (value) {
+        let handlerFunc = handler.bind({format: value});
+        el.addEventListener('input', handlerFunc, false);
 
-      return handlerFunc({target: el});
+        return handlerFunc({target: el});
+      }
     },
     unbind(el) {
       el.removeEventListener('input', handler, false)
