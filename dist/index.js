@@ -32,11 +32,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function handler(_ref) {
   var target = _ref.target;
-  var previousValue = target.dataset.previousValue;
+  var _target$dataset = target.dataset;
+  var previousValue = _target$dataset.previousValue;
+  var mask = _target$dataset.mask;
 
+  if (!mask) return;
 
   if (typeof previousValue === 'string' && previousValue.length < target.value.length) {
-    target.value = (0, _format2.default)(target.value, target.dataset.mask);
+    target.value = (0, _format2.default)(target.value, mask);
   }
 
   target.dataset.previousValue = target.value;

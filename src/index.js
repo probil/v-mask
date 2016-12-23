@@ -5,10 +5,13 @@ import format from './format.js';
  * @param {HTMLInputElement} target
  */
 function handler ({target}) {
-  let {previousValue} = target.dataset;
+  let {previousValue, mask} = target.dataset;
+
+  // do nothing if mask is not specified
+  if(!mask) return;
 
   if (typeof previousValue === 'string' && previousValue.length < target.value.length) {
-    target.value = format(target.value, target.dataset.mask);
+    target.value = format(target.value, mask);
   }
 
   target.dataset.previousValue = target.value;
