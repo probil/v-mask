@@ -2,17 +2,54 @@ import format from './format.js';
 
 /**
  * Event handler
- * @param target
+ * @param {HTMLInputElement} target
  */
 function handler ({target}) {
   let {previousValue} = target.dataset;
 
   if (typeof previousValue === 'string' && previousValue.length < target.value.length) {
-    target.value = format(target.value, this.format);
+    target.value = format(target.value, target.dataset.mask);
   }
 
   target.dataset.previousValue = target.value;
 }
+
+/**
+ * Fires on bind handler
+ * @param {HTMLInputElement} el
+ * @param {String}           mask
+ */
+function bindHandler(el, mask) {
+  el.dataset.mask = mask;
+
+  //add event listener
+  el.addEventListener('input', handler, false);
+
+  // run format function right after bind
+  handler({target: el})
+}
+
+/**
+ * Fires on unbind handler
+ * @param {HTMLInputElement} el
+ */
+function unbindHandler(el) {
+  el.removeEventListener('input', handler, false);
+}
+
+/**
+ * Fires on handler update
+ * @param {HTMLInputElement} el
+ * @param {String}           mask
+ */
+function updateHandler(el, mask){
+  // change format
+  el.dataset.mask = mask;
+
+  // run format function with new mask
+  el.value = format(el.value, mask);
+}
+
 
 /**
  * Vue plugin definition
@@ -21,13 +58,14 @@ function handler ({target}) {
 export default function (Vue) {
   Vue.directive('mask', {
     bind (el, {value}) {
-      let handlerFunc = handler.bind({format: value});
-      el.addEventListener('input', handlerFunc, false);
-
-      return handlerFunc({target: el});
+      bindHandler(el, value);
     },
-    unbind(el) {
-      el.removeEventListener('input', handler, false)
+    unbind: unbindHandler,
+    update(el, {value, oldValue}){
+      // if mask was changed
+      if (value === oldValue) return;
+
+      updateHandler(el, value)
     }
   });
 };

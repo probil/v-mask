@@ -9,13 +9,17 @@ exports.default = function (Vue) {
     bind: function bind(el, _ref2) {
       var value = _ref2.value;
 
-      var handlerFunc = handler.bind({ format: value });
-      el.addEventListener('input', handlerFunc, false);
-
-      return handlerFunc({ target: el });
+      bindHandler(el, value);
     },
-    unbind: function unbind(el) {
-      el.removeEventListener('input', handler, false);
+
+    unbind: unbindHandler,
+    update: function update(el, _ref3) {
+      var value = _ref3.value;
+      var oldValue = _ref3.oldValue;
+
+      if (value === oldValue) return;
+
+      updateHandler(el, value);
     }
   });
 };
@@ -32,10 +36,28 @@ function handler(_ref) {
 
 
   if (typeof previousValue === 'string' && previousValue.length < target.value.length) {
-    target.value = (0, _format2.default)(target.value, this.format);
+    target.value = (0, _format2.default)(target.value, target.dataset.mask);
   }
 
   target.dataset.previousValue = target.value;
+}
+
+function bindHandler(el, mask) {
+  el.dataset.mask = mask;
+
+  el.addEventListener('input', handler, false);
+
+  handler({ target: el });
+}
+
+function unbindHandler(el) {
+  el.removeEventListener('input', handler, false);
+}
+
+function updateHandler(el, mask) {
+  el.dataset.mask = mask;
+
+  el.value = (0, _format2.default)(el.value, mask);
 }
 
 ;
