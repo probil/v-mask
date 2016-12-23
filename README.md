@@ -13,17 +13,21 @@ This version requires Vue 2.X. If you are looking for Vue 1.X, [check it here](h
 
 ## Usage
 
-    import Vue from 'vue
-    import VueMask from 'v-mask'
+```javascript
+import Vue     from 'vue'
+import VueMask from 'v-mask'
 
-    /** Activate vue.js plugins **/
-    Vue.use(VueMask);
+/** Activate vue.js plugins **/
+Vue.use(VueMask);
+```
 
 Now you are ready to use it in the code!
 
-    <input type="text" v-mask="'####-##'">
-    <!-- OR -->
-    <input type="text" v-mask="'##/##/#### ##:##'" >
+```html
+<input type="text" v-mask="'####-##'">
+<!-- OR -->
+<input type="text" v-mask="'##/##/#### ##:##'" >
+```
 
 ## Format description
 
