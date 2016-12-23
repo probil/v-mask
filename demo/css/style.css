@@ -18,3 +18,10 @@ section.footer{
   margin-top: 3.5rem;
   text-align: center;
 }
+
+section.special-examples{
+  margin-top: 4rem;
+}
+section.special-examples h4{
+  text-align: center;
+}

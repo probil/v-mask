@@ -36,9 +36,42 @@
 
       </section>
 
+      <section class="special-examples">
+        <h4 class="header">Dynamic mask change supported</h4>
+        <div class="row">
+          <div class="six columns">
+            <label>
+              <input type="radio" id="cpf-example" value="###.###.###/###" v-model="dynamicMask">
+              <span class="label-body">###.###.###/###</span>
+            </label>
+
+            <label>
+              <input type="radio" id="cnpj-example" value="###.###.#####/###-#" v-model="dynamicMask">
+              <span class="label-body">###.###.#####/###-#</span>
+            </label>
+          </div>
+          <div class="six columns">
+            <input
+              type="text" class="u-full-width"
+              v-mask="dynamicMask" :placeholder="dynamicMask"
+            >
+          </div>
+        </div>
+      </section>
+
       <section class="footer">
         <a href="https://github.com/probil/v-mask/tree/vue-2.0" class="button button-primary">Github</a>
       </section>
     </div>
   </div>
 </template>
+<script>
+  export default {
+    name: 'Demo',
+    data() {
+      return {
+        dynamicMask: '###.###.###/###'
+      }
+    }
+  }
+</script>
