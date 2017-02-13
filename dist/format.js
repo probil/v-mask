@@ -13,8 +13,8 @@ exports.default = function (data, mask) {
     var m = mask.charAt(i);
 
     if (data.length == 1 && i == 0 && i + 1 < mask.length && /^((?!(#|A|N|X)).)*/.test(m)) {
-        text += m;
-        m = mask.charAt(i + 1);
+      text += m;
+      m = mask.charAt(i + 1);
     }
 
     switch (m) {
