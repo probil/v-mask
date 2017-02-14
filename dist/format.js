@@ -10,7 +10,7 @@ exports.default = function (data, mask) {
   var maskStartRegExp = /^([^#ANX]+)/;
 
   if (data.length == 1 && maskStartRegExp.test(mask)) {
-    data = maskStartRegExp.exec(data)[0] + data;
+    data = maskStartRegExp.exec(mask)[0] + data;
   }
 
   var text = '';
