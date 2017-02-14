@@ -10,15 +10,16 @@ export default function (data, mask){
   // don't do anything if mask is undefined/null/etc
   if(!mask) return data;
 
+  const maskStartRegExp = /^([^#ANX]+)/;
+
+  if (data.length == 1 && maskStartRegExp.test(mask)) {
+    data = maskStartRegExp.exec(mask)[0] + data;
+  }
+
   let text = '';
   for (let i = 0, x = 1; x && i < mask.length; ++i) {
     let c = data.charAt(i);
     let m = mask.charAt(i);
-
-    if (data.length == 1 && i == 0 && i + 1 < mask.length && /^((?!(#|A|N|X)).)*/.test(m)) {
-        text += m;
-        m = mask.charAt(i + 1);
-    }
 
     switch (m) {
       case '#' : if (/\d/.test(c))        {text += c;} else {x = 0;} break;
