@@ -29,10 +29,10 @@ export default function (data, mask){
       default  : 
         text += m; 
         
-        // preserve inputed values added in places where you normally would find
-        // a masked character, ie: the user manually deletes part of the masked string (issue #5)
+        // preserve characters that are in the same spot we need to insert a mask
+        // character by shifting the data over to the right (issue #5, & #7)
         if (c && c !== m) {
-          data += c;
+          data = ' ' + data;
         }
 
         break;
