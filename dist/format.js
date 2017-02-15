@@ -43,7 +43,7 @@ exports.default = function (data, mask) {
         text += m;
 
         if (c && c !== m) {
-          data += c;
+          data = ' ' + data;
         }
 
         break;
