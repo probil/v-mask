@@ -26,7 +26,16 @@ export default function (data, mask){
       case 'A' : if (/[a-z]/i.test(c))    {text += c;} else {x = 0;} break;
       case 'N' : if (/[a-z0-9]/i.test(c)) {text += c;} else {x = 0;} break;
       case 'X' : text += c; break;
-      default  : text += m; break;
+      default  : 
+        text += m; 
+        
+        // preserve inputed values added in places where you normally would find
+        // a masked character, ie: the user manually deletes part of the masked string (issue #5)
+        if (c && c !== m) {
+          data += c;
+        }
+
+        break;
     }
   }
   return text;
