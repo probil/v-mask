@@ -34,6 +34,15 @@
           </div>
         </div>
 
+        <div class="row">
+          <div class="six columns">
+            <label for="credit-cart-ex">Phone number</label>
+          </div>
+          <div class="six columns">
+            <input class="u-full-width" id="credit-cart-ex" type="text" v-mask="'(###) ###-####'" placeholder="(999) 999-9999">
+          </div>
+        </div>
+
       </section>
 
       <section class="special-examples">

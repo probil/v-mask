@@ -15,7 +15,7 @@ export default function (data, mask){
     let c = data.charAt(i);
     let m = mask.charAt(i);
 
-    if (data.length == 1 && i == 0 && i + 1 < mask.length && /^((?!(#|A|N|X)).)*/.test(m)) {
+    if (data.length == 1 && i == 0 && i + 1 < mask.length && ['#','A','N','X'].indexOf(m) === -1) {
         text += m;
         m = mask.charAt(i + 1);
     }
