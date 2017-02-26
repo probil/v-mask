@@ -12,7 +12,10 @@
             <label for="time-and-date-ex">Date and Time</label>
           </div>
           <div class="six columns">
-            <input class="u-full-width" id="time-and-date-ex" type="text" v-mask="'##/##/#### ##:##'" placeholder="27/10/2016 23:15">
+            <input class="u-full-width" id="time-and-date-ex" type="text" placeholder="27/10/2016 23:15"
+                   v-mask="'##/##/#### ##:##'"
+                   v-model="models.timeAndDate"
+            />
           </div>
         </div>
 
@@ -21,7 +24,10 @@
             <label for="time-ex">Time with seconds </label>
           </div>
           <div class="six columns">
-            <input class="u-full-width" id="time-ex" type="text" v-mask="'##:##:##'" placeholder="23:15:54">
+            <input class="u-full-width" id="time-ex" type="text" placeholder="27/10/2016 23:15"
+                   v-mask="'##:##:##'"
+                   v-model="models.timeWithSeconds"
+            />
           </div>
         </div>
 
@@ -30,7 +36,34 @@
             <label for="credit-cart-ex">Credit card number</label>
           </div>
           <div class="six columns">
-            <input class="u-full-width" id="credit-cart-ex" type="text" v-mask="'#### #### #### ####'" placeholder="4444 4444 4444 4444">
+            <input class="u-full-width" id="credit-cart-ex" type="text" placeholder="4444 4444 4444 4444"
+                   v-mask="'#### #### #### ####'"
+                   v-model="models.cardNumber"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="six columns">
+            <label for="credit-cart-ex">Phone number</label>
+          </div>
+          <div class="six columns">
+            <input class="u-full-width" id="phone-number-ex" type="text" placeholder="(999) 999-9999"
+                   v-mask="'(###) ###-####'"
+                   v-model="models.phoneNumber"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="six columns">
+            <label for="credit-cart-ex">US Phone Number</label>
+          </div>
+          <div class="six columns">
+            <input class="u-full-width" id="us-phone-number-ex" type="text" placeholder="+1(999)-999-9999"
+                   v-mask="'+1(###)-###-####'"
+                   v-model="models.usPhoneNumber"
+            />
           </div>
         </div>
 
@@ -53,8 +86,10 @@
           <div class="six columns">
             <input
               type="text" class="u-full-width"
-              v-mask="dynamicMask" :placeholder="dynamicMask"
-            >
+              v-mask="dynamicMask"
+              :placeholder="dynamicMask"
+              v-model="models.dynamicMask"
+            />
           </div>
         </div>
       </section>
@@ -70,7 +105,15 @@
     name: 'Demo',
     data() {
       return {
-        dynamicMask: '###.###.###/###'
+        dynamicMask: '###.###.###/###',
+        models: {
+          timeAndDate    : '',
+          timeWithSeconds: '',
+          cardNumber     : '',
+          phoneNumber    : '',
+          dynamicMask    : '',
+          usPhoneNumber  : ''
+        }
       }
     }
   }
