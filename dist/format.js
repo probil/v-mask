@@ -7,15 +7,16 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = function (data, mask) {
   if (!mask) return data;
 
+  var maskStartRegExp = /^([^#ANX]+)/;
+
+  if (data.length == 1 && maskStartRegExp.test(mask)) {
+    data = maskStartRegExp.exec(mask)[0] + data;
+  }
+
   var text = '';
   for (var i = 0, x = 1; x && i < mask.length; ++i) {
     var c = data.charAt(i);
     var m = mask.charAt(i);
-
-    if (data.length == 1 && i == 0 && i + 1 < mask.length && /^((?!(#|A|N|X)).)*/.test(m)) {
-      text += m;
-      m = mask.charAt(i + 1);
-    }
 
     switch (m) {
       case '#':
