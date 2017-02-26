@@ -55,6 +55,18 @@
           </div>
         </div>
 
+        <div class="row">
+          <div class="six columns">
+            <label for="credit-cart-ex">US Phone Number</label>
+          </div>
+          <div class="six columns">
+            <input class="u-full-width" id="us-phone-number-ex" type="text" placeholder="+1(999)-999-9999"
+                   v-mask="'+1(###)-###-####'"
+                   v-model="models.usPhoneNumber"
+            />
+          </div>
+        </div>
+
       </section>
 
       <section class="special-examples">
@@ -99,7 +111,8 @@
           timeWithSeconds: '',
           cardNumber     : '',
           phoneNumber    : '',
-          dynamicMask    : ''
+          dynamicMask    : '',
+          usPhoneNumber  : ''
         }
       }
     }
