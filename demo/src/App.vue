@@ -24,7 +24,7 @@
             <label for="time-ex">Time with seconds </label>
           </div>
           <div class="six columns">
-            <input class="u-full-width" id="time-ex" type="text" placeholder="27/10/2016 23:15"
+            <input class="u-full-width" id="time-ex" type="text" placeholder="11:23:15"
                    v-mask="'##:##:##'"
                    v-model="models.timeWithSeconds"
             />

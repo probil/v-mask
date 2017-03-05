@@ -3,7 +3,7 @@
  * {@link https://github.com/romulobrasil/PureMask.js}
  *
  * @param {String} data String to mask (input value)
- * @param {String} mask Mask format, like `####-##`
+ * @param {String} [mask] Mask format, like `####-##`
  * @returns {string} Formatted text
  */
 export default function (data, mask){
@@ -26,9 +26,9 @@ export default function (data, mask){
       case 'A' : if (/[a-z]/i.test(c))    {text += c;} else {x = 0;} break;
       case 'N' : if (/[a-z0-9]/i.test(c)) {text += c;} else {x = 0;} break;
       case 'X' : text += c; break;
-      default  : 
-        text += m; 
-        
+      default  :
+        text += m;
+
         // preserve characters that are in the same spot we need to insert a mask
         // character by shifting the data over to the right (issue #5, & #7)
         if (c && c !== m) {
