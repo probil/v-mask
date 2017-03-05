@@ -42,7 +42,13 @@ List of supported placeholders:
 
 ## Tests
 
-In TODO
+[Jest](https://github.com/facebook/jest) is used for unit-tests
+
+You can run tests by typing this command in your console:
+
+```bash****
+npm test
+```
 
 ## Contributing
 
