@@ -60,12 +60,36 @@ function updateHandler(el, mask){
  */
 export default function (Vue) {
   Vue.directive('mask', {
+
+    /**
+     * Called only once, when the directive is first bound to the element.
+     * This is where you can do one-time setup work.
+     *
+     * @param {HTMLInputElement} el
+     * @param {?String}          value
+     */
     bind (el, {value}) {
       bindHandler(el, value);
     },
+
+    /**
+     * Called only once, when the directive is unbound from the element.
+     */
     unbind: unbindHandler,
+
+    /**
+     * Called after the containing component has updated,
+     * but possibly before its children have updated.
+     * The directive’s value may or may not have changed,
+     * but you can skip unnecessary updates by comparing the
+     * binding’s current and old values.
+     *
+     * @param {HTMLInputElement} el
+     * @param {?String}          value
+     * @param {?String}          oldValue
+     */
     update(el, {value, oldValue}){
-      // if mask was changed
+      // if mask was not changed - do nothing
       if (value === oldValue) return;
 
       updateHandler(el, value)
