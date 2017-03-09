@@ -30,37 +30,35 @@ var _format2 = _interopRequireDefault(_format);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function handler(_ref) {
-  var target = _ref.target;
+function handler(_ref, evt) {
+  if (evt.keyCode === 8) return;
+  var target = _ref;
   var _target$dataset = target.dataset;
   var previousValue = _target$dataset.previousValue;
   var mask = _target$dataset.mask;
 
   if (!mask) return;
 
-  if (typeof previousValue === 'string' && previousValue.length < target.value.length) {
+  if ((typeof previousValue === 'string' && previousValue.length < target.value.length) || target.value !== undefined) {
     target.value = (0, _format2.default)(target.value, mask);
   }
-
   target.dataset.previousValue = target.value;
 }
 
 function bindHandler(el, mask) {
   el.dataset.mask = mask;
 
-  el.addEventListener('input', handler, false);
+  el.addEventListener('keyup', evt => handler(el, evt), false);
 
-  handler({ target: el });
+  // handler({ target: el, ev });
 }
 
 function unbindHandler(el) {
-  el.removeEventListener('input', handler, false);
+  el.removeEventListener('keyup', handler, false);
 }
 
 function updateHandler(el, mask) {
   el.dataset.mask = mask;
 
   el.value = (0, _format2.default)(el.value, mask);
-}
-
-;
+};
