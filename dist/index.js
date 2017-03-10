@@ -51,7 +51,7 @@ function handler(_ref, evt) {
 
 function bindHandler(el, mask) {
   el.dataset.mask = mask;
-  el.addEventListener('keypress', evt => handler(el, evt), false);
+  el.addEventListener('keypress', function (evt) { handler(el, evt) }, false);
 }
 
 function unbindHandler(el) {
