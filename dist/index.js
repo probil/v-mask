@@ -25,7 +25,6 @@ exports.default = function (Vue) {
 };
 
 var _format = require('./format.js');
-
 var _format2 = _interopRequireDefault(_format);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -39,26 +38,27 @@ function handler(_ref, evt) {
 
   if (!mask) return;
 
+  var tmp = target.value + String.fromCharCode(evt.keyCode);
   if ((typeof previousValue === 'string' && previousValue.length < target.value.length) || target.value !== undefined) {
+    var tmpTarget = (0, _format2.default)(tmp, mask);
     target.value = (0, _format2.default)(target.value, mask);
+    if (tmp.length > tmpTarget.length) {
+      evt.preventDefault();
+    }
   }
-  target.dataset.previousValue = target.value;
+  target.dataset.previousValue = tmpTarget;
 }
 
 function bindHandler(el, mask) {
   el.dataset.mask = mask;
-
-  el.addEventListener('keyup', evt => handler(el, evt), false);
-
-  // handler({ target: el, ev });
+  el.addEventListener('keypress', evt => handler(el, evt), false);
 }
 
 function unbindHandler(el) {
-  el.removeEventListener('keyup', handler, false);
+  el.removeEventListener('keypress', handler, false);
 }
 
 function updateHandler(el, mask) {
   el.dataset.mask = mask;
-
   el.value = (0, _format2.default)(el.value, mask);
 };
