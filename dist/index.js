@@ -30,7 +30,8 @@ var _format2 = _interopRequireDefault(_format);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function handler(_ref, evt) {
-  if (evt.keyCode === 8) return;
+  var kCode = evt.keyCode || evt.charCode
+  if (kCode === 8 ) return;
   var target = _ref;
   var _target$dataset = target.dataset;
   var previousValue = _target$dataset.previousValue;
@@ -38,7 +39,7 @@ function handler(_ref, evt) {
 
   if (!mask) return;
 
-  var tmp = target.value + String.fromCharCode(evt.keyCode);
+  var tmp = target.value + String.fromCharCode(kCode);
   if ((typeof previousValue === 'string' && previousValue.length < target.value.length) || target.value !== undefined) {
     var tmpTarget = (0, _format2.default)(tmp, mask);
     target.value = (0, _format2.default)(target.value, mask);
