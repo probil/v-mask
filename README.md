@@ -42,13 +42,21 @@ List of supported placeholders:
 
 ## Tests
 
-[Jest](https://github.com/facebook/jest) is used for unit-tests
+[Jest](https://github.com/facebook/jest) is used for unit-tests.
 
 You can run tests by typing this command in your console:
 
-```bash****
+```bash
 npm test
 ```
+
+[Nightwatch](http://nightwatchjs.org/) is used of E2E testing.
+
+To run e2e-tests you should type:
+```bash
+npm run e2e
+```
+
 
 ## Contributing
 

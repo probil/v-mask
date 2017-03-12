@@ -120,3 +120,4 @@ Temporary Items
 
 # Exclude demo directory
 demo
+/e2e/
