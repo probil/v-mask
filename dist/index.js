@@ -25,42 +25,41 @@ exports.default = function (Vue) {
 };
 
 var _format = require('./format.js');
-
 var _format2 = _interopRequireDefault(_format);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function handler(_ref) {
-  var target = _ref.target;
+function handler(_ref, evt) {
+  var kCode = evt.keyCode || evt.charCode
+  if (kCode === 8 ) return;
+  var target = _ref;
   var _target$dataset = target.dataset;
   var previousValue = _target$dataset.previousValue;
   var mask = _target$dataset.mask;
 
   if (!mask) return;
 
-  if (typeof previousValue === 'string' && previousValue.length < target.value.length) {
+  var tmp = target.value + String.fromCharCode(kCode);
+  if ((typeof previousValue === 'string' && previousValue.length < target.value.length) || target.value !== undefined) {
+    var tmpTarget = (0, _format2.default)(tmp, mask);
     target.value = (0, _format2.default)(target.value, mask);
+    if (tmp.length > tmpTarget.length) {
+      evt.preventDefault();
+    }
   }
-
-  target.dataset.previousValue = target.value;
+  target.dataset.previousValue = tmpTarget;
 }
 
 function bindHandler(el, mask) {
   el.dataset.mask = mask;
-
-  el.addEventListener('input', handler, false);
-
-  handler({ target: el });
+  el.addEventListener('keypress', function (evt) { handler(el, evt) }, false);
 }
 
 function unbindHandler(el) {
-  el.removeEventListener('input', handler, false);
+  el.removeEventListener('keypress', handler, false);
 }
 
 function updateHandler(el, mask) {
   el.dataset.mask = mask;
-
   el.value = (0, _format2.default)(el.value, mask);
-}
-
-;
+};
