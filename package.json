@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "jest",
+    "test-coverage": "jest --coverage",
     "build": "babel src --out-dir dist --no-comments",
     "e2e": "node e2e/runner.js"
   },
@@ -35,5 +36,19 @@
     "nightwatch": "^0.9.12",
     "selenium-server": "^3.0.1",
     "cross-spawn": "^5.0.1"
+  },
+  "jest": {
+    "verbose": true,
+    "browser": false,
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "src/*.js"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/demo/",
+      "/dist/",
+      "/e2e/"
+    ]
   }
 }
