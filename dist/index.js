@@ -14,10 +14,9 @@ exports.default = function (Vue) {
 
     unbind: unbindHandler,
     update: function update(el, _ref3) {
-      var value = _ref3.value;
-      var oldValue = _ref3.oldValue;
+      var value = _ref3.value,
+          oldValue = _ref3.oldValue;
 
-      if (value === oldValue) return;
 
       updateHandler(el, value);
     }
@@ -25,41 +24,42 @@ exports.default = function (Vue) {
 };
 
 var _format = require('./format.js');
+
 var _format2 = _interopRequireDefault(_format);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function handler(_ref, evt) {
-  var kCode = evt.keyCode || evt.charCode
-  if (kCode === 8 ) return;
-  var target = _ref;
-  var _target$dataset = target.dataset;
-  var previousValue = _target$dataset.previousValue;
-  var mask = _target$dataset.mask;
+function handler(_ref) {
+  var target = _ref.target;
+  var _target$dataset = target.dataset,
+      previousValue = _target$dataset.previousValue,
+      mask = _target$dataset.mask;
 
   if (!mask) return;
 
-  var tmp = target.value + String.fromCharCode(kCode);
-  if ((typeof previousValue === 'string' && previousValue.length < target.value.length) || target.value !== undefined) {
-    var tmpTarget = (0, _format2.default)(tmp, mask);
+  if (typeof previousValue === 'string' && previousValue.length < target.value.length) {
     target.value = (0, _format2.default)(target.value, mask);
-    if (tmp.length > tmpTarget.length) {
-      evt.preventDefault();
-    }
   }
-  target.dataset.previousValue = tmpTarget;
+
+  target.dataset.previousValue = target.value;
 }
 
 function bindHandler(el, mask) {
   el.dataset.mask = mask;
-  el.addEventListener('keypress', function (evt) { handler(el, evt) }, false);
+
+  el.addEventListener('input', handler, false);
+
+  handler({ target: el });
 }
 
 function unbindHandler(el) {
-  el.removeEventListener('keypress', handler, false);
+  el.removeEventListener('input', handler, false);
 }
 
 function updateHandler(el, mask) {
   el.dataset.mask = mask;
+
   el.value = (0, _format2.default)(el.value, mask);
-};
+}
+
+;
