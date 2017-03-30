@@ -1,74 +1,63 @@
-import format from './format.js';
+import format from './format.js'
 
-/**
- * Event handler
- * @param {HTMLInputElement} target
- */
-function handler ({target}) {
-  let {previousValue, mask} = target.dataset;
-
-  // do nothing if mask is not specified
-  if(!mask) return;
-
-  if (typeof previousValue === 'string' && previousValue.length < target.value.length) {
-    target.value = format(target.value, mask);
-  }
-
-  target.dataset.previousValue = target.value;
-}
-
-/**
- * Fires on bind handler
- * @param {HTMLInputElement} el
- * @param {String}           mask
- */
-function bindHandler(el, mask) {
-  el.dataset.mask = mask;
-
-  //add event listener
-  el.addEventListener('input', handler, false);
-
-  // run format function right after bind
-  handler({target: el})
-}
-
-/**
- * Fires on unbind handler
- * @param {HTMLInputElement} el
- */
-function unbindHandler(el) {
-  el.removeEventListener('input', handler, false);
-}
-
-/**
- * Fires on handler update
- * @param {HTMLInputElement} el
- * @param {String}           mask
- */
-function updateHandler(el, mask){
-  // change format
-  el.dataset.mask = mask;
-
-  // run format function with new mask
-  el.value = format(el.value, mask);
-}
-
-
-/**
- * Vue plugin definition
- * @param {Vue} Vue
- */
 export default function (Vue) {
   Vue.directive('mask', {
-    bind (el, {value}) {
-      bindHandler(el, value);
+    bind: function bind(el, _ref2) {
+      var value = _ref2.value
+
+      bindHandler(el, value)
     },
+
     unbind: unbindHandler,
-    update(el, {value, oldValue}){
-      // if mask was changed
-      if (value === oldValue) return;
+    update: function update(el, _ref3) {
+      var value = _ref3.value
+      var oldValue = _ref3.oldValue
+
+      if (value === oldValue) return
 
       updateHandler(el, value)
     }
-  });
-};
+  })
+}
+
+// var _format = require('./format.js')
+// var _format2 = _interopRequireDefault(_format)
+//
+// function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj } }
+
+function handler(_ref, evt) {
+  var kCode = evt.keyCode || evt.charCode
+  if (kCode === 8 ) return
+  var target = _ref
+  var _target$dataset = target.dataset
+  var previousValue = _target$dataset.previousValue
+  var mask = _target$dataset.mask
+
+  if (!mask) return
+
+  var tmp = target.value + String.fromCharCode(kCode)
+  if ((typeof previousValue === 'string' && previousValue.length < target.value.length) || target.value !== undefined) {
+    var tmpTarget = format(tmp, mask);
+    target.value = format(target.value, mask);
+    // var tmpTarget = (0, _format2.default)(tmp, mask)
+    // target.value = (0, _format2.default)(target.value, mask)
+    if (tmp.length > tmpTarget.length) {
+      evt.preventDefault()
+    }
+  }
+  target.dataset.previousValue = tmpTarget
+}
+
+function bindHandler(el, mask) {
+  el.dataset.mask = mask
+  el.addEventListener('keypress', function (evt) { handler(el, evt) }, false)
+}
+
+function unbindHandler(el) {
+  el.removeEventListener('keypress', handler, false)
+}
+
+function updateHandler(el, mask) {
+  el.dataset.mask = mask
+  el.value = format(el.value, mask) // (0, _format2.default)(el.value, mask)
+}
