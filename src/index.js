@@ -13,17 +13,10 @@ export default function (Vue) {
       var value = _ref3.value
       var oldValue = _ref3.oldValue
 
-      if (value === oldValue) return
-
       updateHandler(el, value)
     }
   })
 }
-
-// var _format = require('./format.js')
-// var _format2 = _interopRequireDefault(_format)
-//
-// function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj } }
 
 function handler(_ref, evt) {
   var kCode = evt.keyCode || evt.charCode
@@ -39,8 +32,6 @@ function handler(_ref, evt) {
   if ((typeof previousValue === 'string' && previousValue.length < target.value.length) || target.value !== undefined) {
     var tmpTarget = format(tmp, mask);
     target.value = format(target.value, mask);
-    // var tmpTarget = (0, _format2.default)(tmp, mask)
-    // target.value = (0, _format2.default)(target.value, mask)
     if (tmp.length > tmpTarget.length) {
       evt.preventDefault()
     }
