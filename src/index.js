@@ -66,7 +66,7 @@ export default function (Vue) {
     unbind: unbindHandler,
     update(el, {value, oldValue}){
       // if mask was changed
-      // if (value === oldValue) return;
+      if (value === oldValue) return;
 
       updateHandler(el, value)
     }

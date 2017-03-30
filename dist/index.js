@@ -17,6 +17,7 @@ exports.default = function (Vue) {
       var value = _ref3.value,
           oldValue = _ref3.oldValue;
 
+      if (value === oldValue) return;
 
       updateHandler(el, value);
     }
