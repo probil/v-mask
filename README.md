@@ -24,10 +24,13 @@ Vue.use(VueMask);
 Now you are ready to use it in the code!
 
 ```html
-<input type="text" v-mask="'####-##'">
+<input type="text" v-mask="'####-##'" v-model="myInputModel">
 <!-- OR -->
-<input type="text" v-mask="'##/##/#### ##:##'" >
+<input type="text" v-mask="'##/##/#### ##:##'" v-model="myInputModel">
 ```
+**Notice:** `v-model` is required starting from `v1.1.0`, because [a lot](https://github.com/probil/v-mask/issues/16) [of](https://github.com/probil/v-mask/issues/30) [bugs](https://github.com/probil/v-mask/issues/29) with HTMLElement event listeners and sync with Vue internals.
+
+There is no reason to support using this lib for using without `v-model` but open the door for using on [custom inputs](http://vuejs.org/v2/guide/components.html#Form-Input-Components-using-Custom-Events).
 
 ## Format description
 
@@ -57,4 +60,6 @@ Check the [v-mask--demo](https://github.com/probil/v-mask--demo) repo for more d
 
 ## Contributing
 
-PR is welcome! 
+PR is welcome!
+
+**Notice:** You should make your changes only in `src` folder, don't try to edit files from `dist` as it compiled from `src` by babel and shouldn't be changes manually.
