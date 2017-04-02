@@ -3,7 +3,7 @@ Vue input mask
 
 Simple input mask lib for vue.js based on [PureMask.js](https://github.com/romulobrasil/PureMask.js)
 
-**[Demo](https://cdn.rawgit.com/probil/v-mask/vue-2.0/demo/index.html)**
+**[Demo](https://rawgit.com/probil/v-mask--demo/master/dist/index.html)**
 
 ## Installation
 
@@ -52,12 +52,9 @@ npm test
 
 [Nightwatch](http://nightwatchjs.org/) is used of E2E testing.
 
-To run e2e-tests you should type:
-```bash
-npm run e2e
-```
+Check the [v-mask--demo](https://github.com/probil/v-mask--demo) repo for more details
 
 
 ## Contributing
 
-PR is welcome!
+PR is welcome! 
