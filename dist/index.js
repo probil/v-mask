@@ -6,20 +6,24 @@ Object.defineProperty(exports, "__esModule", {
 
 exports.default = function (Vue) {
   Vue.directive('mask', {
-    bind: function bind(el, _ref2) {
-      var value = _ref2.value;
+    bind: function bind(el, _ref) {
+      var value = _ref.value;
 
-      bindHandler(el, value);
+      updateMask(el, value);
+      updateValue(el);
     },
+    componentUpdated: function componentUpdated(el, _ref2) {
+      var value = _ref2.value,
+          oldValue = _ref2.oldValue;
 
-    unbind: unbindHandler,
-    update: function update(el, _ref3) {
-      var value = _ref3.value;
-      var oldValue = _ref3.oldValue;
 
-      if (value === oldValue) return;
+      var isMaskChanged = value !== oldValue;
 
-      updateHandler(el, value);
+      if (isMaskChanged) {
+        updateMask(el, value);
+      }
+
+      updateValue(el, isMaskChanged);
     }
   });
 };
@@ -28,39 +32,28 @@ var _format = require('./format.js');
 
 var _format2 = _interopRequireDefault(_format);
 
+var _utils = require('./utils');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function handler(_ref) {
-  var target = _ref.target;
-  var _target$dataset = target.dataset;
-  var previousValue = _target$dataset.previousValue;
-  var mask = _target$dataset.mask;
+function updateValue(el) {
+  var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  var value = el.value,
+      _el$dataset = el.dataset,
+      previousValue = _el$dataset.previousValue,
+      mask = _el$dataset.mask;
 
-  if (!mask) return;
 
-  if (typeof previousValue === 'string' && previousValue.length < target.value.length) {
-    target.value = (0, _format2.default)(target.value, mask);
+  if (force || value && value !== previousValue && value.length > previousValue.length) {
+    el.value = (0, _format2.default)(value, mask);
+    (0, _utils.trigger)(el, 'input');
   }
 
-  target.dataset.previousValue = target.value;
+  el.dataset.previousValue = value;
 }
 
-function bindHandler(el, mask) {
+function updateMask(el, mask) {
   el.dataset.mask = mask;
-
-  el.addEventListener('input', handler, false);
-
-  handler({ target: el });
-}
-
-function unbindHandler(el) {
-  el.removeEventListener('input', handler, false);
-}
-
-function updateHandler(el, mask) {
-  el.dataset.mask = mask;
-
-  el.value = (0, _format2.default)(el.value, mask);
 }
 
 ;
