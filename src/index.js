@@ -1,43 +1,20 @@
 import format from './format.js';
+import { trigger } from './utils'
 
 /**
  * Event handler
- * @param {HTMLInputElement} target
+ * @param {HTMLInputElement} el
+ * @param {Boolean}          force
  */
-function handler ({target}) {
-  let {previousValue, mask} = target.dataset;
+function updateValue (el, force = false) {
+  let {value, dataset: {previousValue, mask } } = el;
 
-  // do nothing if mask is not specified
-  if(!mask) return;
-
-  if (typeof previousValue === 'string' && previousValue.length < target.value.length) {
-    target.value = format(target.value, mask);
+  if(force || (value && value !== previousValue && value.length > previousValue.length)) {
+    el.value = format(value, mask);
+    trigger(el, 'input')
   }
 
-  target.dataset.previousValue = target.value;
-}
-
-/**
- * Fires on bind handler
- * @param {HTMLInputElement} el
- * @param {String}           mask
- */
-function bindHandler(el, mask) {
-  el.dataset.mask = mask;
-
-  //add event listener
-  el.addEventListener('input', handler, false);
-
-  // run format function right after bind
-  handler({target: el})
-}
-
-/**
- * Fires on unbind handler
- * @param {HTMLInputElement} el
- */
-function unbindHandler(el) {
-  el.removeEventListener('input', handler, false);
+  el.dataset.previousValue = value;
 }
 
 /**
@@ -45,12 +22,9 @@ function unbindHandler(el) {
  * @param {HTMLInputElement} el
  * @param {String}           mask
  */
-function updateHandler(el, mask){
+function updateMask(el, mask) {
   // change format
   el.dataset.mask = mask;
-
-  // run format function with new mask
-  el.value = format(el.value, mask);
 }
 
 
@@ -69,13 +43,9 @@ export default function (Vue) {
      * @param {?String}          value
      */
     bind (el, {value}) {
-      bindHandler(el, value);
+      updateMask(el, value);
+      updateValue(el);
     },
-
-    /**
-     * Called only once, when the directive is unbound from the element.
-     */
-    unbind: unbindHandler,
 
     /**
      * Called after the containing component has updated,
@@ -88,11 +58,17 @@ export default function (Vue) {
      * @param {?String}          value
      * @param {?String}          oldValue
      */
-    update(el, {value, oldValue}){
-      // if mask was not changed - do nothing
-      if (value === oldValue) return;
+    componentUpdated(el, {value, oldValue}){
 
-      updateHandler(el, value)
+      let isMaskChanged = value !== oldValue;
+
+      // update mask first if changed
+      if(isMaskChanged){
+        updateMask(el, value);
+      }
+
+      // update value
+      updateValue(el, isMaskChanged);
     }
   });
 };
