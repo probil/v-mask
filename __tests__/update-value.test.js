@@ -27,7 +27,7 @@ describe('Element binding works', () => {
       },
       dispatchEvent: () => {}
     };
-    debugger;
+    
     bindFunc(element, mask);
 
     expect(element.value).toBe("11.11.2011");
