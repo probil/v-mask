@@ -49,6 +49,7 @@ function unbindHandler(el) {
 }
 
 function updateHandler(el, mask) {
+  if (!el.value) return
   el.dataset.mask = mask
   el.value = format(el.value, mask) // (0, _format2.default)(el.value, mask)
 }
