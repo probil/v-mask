@@ -61,6 +61,7 @@ function unbindHandler(el) {
 }
 
 function updateHandler(el, mask) {
+  if (!el.value) return;
   el.dataset.mask = mask;
   el.value = (0, _format2.default)(el.value, mask);
 }
