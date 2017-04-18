@@ -10,6 +10,7 @@ exports.default = function (Vue) {
       var value = _ref2.value;
 
       bindHandler(el, value);
+      updateHandler(el, value, true);
     },
 
     unbind: unbindHandler,
@@ -17,6 +18,7 @@ exports.default = function (Vue) {
       var value = _ref3.value;
       var oldValue = _ref3.oldValue;
 
+      bindHandler(el, value);
       updateHandler(el, value);
     }
   });
@@ -30,7 +32,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function handler(_ref, evt) {
   var kCode = evt.keyCode || evt.charCode;
-  if (kCode === 8) return;
+  if (kCode === 8 || kCode === 13) return;
   var target = _ref;
   var _target$dataset = target.dataset;
   var previousValue = _target$dataset.previousValue;
@@ -42,7 +44,7 @@ function handler(_ref, evt) {
   if (typeof previousValue === 'string' && previousValue.length < target.value.length || target.value !== undefined) {
     var tmpTarget = (0, _format2.default)(tmp, mask);
     target.value = (0, _format2.default)(target.value, mask);
-    if (kCode !== 13 && tmp.length > tmpTarget.length) {
+    if (tmp.length > tmpTarget.length) {
       evt.preventDefault();
     }
   }
@@ -60,8 +62,9 @@ function unbindHandler(el) {
   el.removeEventListener('keypress', handler, false);
 }
 
-function updateHandler(el, mask) {
+function updateHandler(el, mask, pInitial) {
   if (!el.value) return;
   el.dataset.mask = mask;
-  el.value = (0, _format2.default)(el.value, mask);
+  var formated = (0, _format2.default)(el.value, mask);
+  if (el.value.length >= formated || pInitial === true) el.value = formated;
 }

@@ -14,6 +14,7 @@ export default function (Vue) {
       var value = _ref3.value
       var oldValue = _ref3.oldValue
 
+      bindHandler(el, value)
       updateHandler(el, value)
     }
   })
