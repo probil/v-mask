@@ -42,7 +42,7 @@ function handler(_ref, evt) {
   if (typeof previousValue === 'string' && previousValue.length < target.value.length || target.value !== undefined) {
     var tmpTarget = (0, _format2.default)(tmp, mask);
     target.value = (0, _format2.default)(target.value, mask);
-    if (tmp.length > tmpTarget.length) {
+    if (kCode !== 13 && tmp.length > tmpTarget.length) {
       evt.preventDefault();
     }
   }
