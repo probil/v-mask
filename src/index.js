@@ -6,6 +6,7 @@ export default function (Vue) {
       var value = _ref2.value
 
       bindHandler(el, value)
+      updateHandler(el, value, true)
     },
 
     unbind: unbindHandler,
@@ -20,7 +21,7 @@ export default function (Vue) {
 
 function handler(_ref, evt) {
   var kCode = evt.keyCode || evt.charCode
-  if (kCode === 8 ) return
+  if (kCode === 8 || kCode === 13) return
   var target = _ref
   var _target$dataset = target.dataset
   var previousValue = _target$dataset.previousValue
@@ -32,7 +33,7 @@ function handler(_ref, evt) {
   if ((typeof previousValue === 'string' && previousValue.length < target.value.length) || target.value !== undefined) {
     var tmpTarget = format(tmp, mask);
     target.value = format(target.value, mask);
-    if (kCode !== 13 && tmp.length > tmpTarget.length) {
+    if (tmp.length > tmpTarget.length) {
       evt.preventDefault()
     }
   }
@@ -48,8 +49,9 @@ function unbindHandler(el) {
   el.removeEventListener('keypress', handler, false)
 }
 
-function updateHandler(el, mask) {
+function updateHandler(el, mask, pInitial) {
   if (!el.value) return
   el.dataset.mask = mask
-  el.value = format(el.value, mask) // (0, _format2.default)(el.value, mask)
+  let formated = format(el.value, mask)
+  if (el.value.length >= formated || pInitial === true) el.value = formated;
 }

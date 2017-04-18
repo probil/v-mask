@@ -11,7 +11,6 @@ exports.default = function (data, mask) {
   if (data.length == 1 && maskStartRegExp.test(mask)) {
     data = maskStartRegExp.exec(mask)[0] + data;
   }
-
   var text = '';
   for (var i = 0, x = 1; x && i < mask.length; ++i) {
     var c = data.charAt(i);
