@@ -54,5 +54,5 @@ function updateHandler(el, mask, pInitial) {
   if (!el.value) return
   el.dataset.mask = mask
   let formated = format(el.value, mask)
-  if (el.value.length >= formated || pInitial === true) el.value = formated;
+  if (el.value.length !== formated || pInitial === true) el.value = formated;
 }
