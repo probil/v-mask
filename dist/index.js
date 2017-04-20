@@ -66,5 +66,5 @@ function updateHandler(el, mask, pInitial) {
   if (!el.value) return;
   el.dataset.mask = mask;
   var formated = (0, _format2.default)(el.value, mask);
-  if (el.value.length >= formated || pInitial === true) el.value = formated;
+  if (el.value.length !== formated || pInitial === true) el.value = formated;
 }
