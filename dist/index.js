@@ -13,11 +13,12 @@ exports.default = function (Vue) {
     },
 
     unbind: unbindHandler,
-    update: function update(el, _ref3) {
-      var value = _ref3.value;
-      var oldValue = _ref3.oldValue;
+    update: function update(el, _ref3, _ref4) {
+      var value = _ref3.value,
+          oldValue = _ref3.oldValue;
+      var elm = _ref4.elm;
 
-      if (value === oldValue) return;
+      if (value === oldValue && elm.value.length < 1) return;
 
       updateHandler(el, value);
     }
@@ -32,9 +33,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function handler(_ref) {
   var target = _ref.target;
-  var _target$dataset = target.dataset;
-  var previousValue = _target$dataset.previousValue;
-  var mask = _target$dataset.mask;
+  var _target$dataset = target.dataset,
+      previousValue = _target$dataset.previousValue,
+      mask = _target$dataset.mask;
 
   if (!mask) return;
 
