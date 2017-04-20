@@ -64,8 +64,10 @@ export default function (Vue) {
       bindHandler(el, value);
     },
     unbind: unbindHandler,
+    // Injects vnode param so it's possible to check the value on the field
     update(el, {value, oldValue}, {elm}){
       // if mask was changed
+      // if the field value is blank, returns, else it will mask the value
       if (value === oldValue && elm.value.length < 1) return;
 
       updateHandler(el, value)
