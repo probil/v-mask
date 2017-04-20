@@ -13,6 +13,7 @@ exports.default = function (Vue) {
     },
 
     unbind: unbindHandler,
+    
     update: function update(el, _ref3, _ref4) {
       var value = _ref3.value,
           oldValue = _ref3.oldValue;
