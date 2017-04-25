@@ -40,7 +40,8 @@ function updateValue(el) {
   var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   var value = el.value,
       _el$dataset = el.dataset,
-      previousValue = _el$dataset.previousValue,
+      _el$dataset$previousV = _el$dataset.previousValue,
+      previousValue = _el$dataset$previousV === undefined ? "" : _el$dataset$previousV,
       mask = _el$dataset.mask;
 
 
