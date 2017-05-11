@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _getOwnPropertyDescriptor = require('babel-runtime/core-js/object/get-own-property-descriptor');
+
+var _getOwnPropertyDescriptor2 = _interopRequireDefault(_getOwnPropertyDescriptor);
+
 exports.default = function (Vue) {
   Vue.directive('mask', {
     bind: function bind(el, _ref) {
@@ -36,25 +40,43 @@ var _utils = require('./utils');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function supportsDataset() {
+  return !document || !document.documentElement || document.documentElement.dataset || (0, _getOwnPropertyDescriptor2.default)(Element.prototype, 'dataset') && (0, _getOwnPropertyDescriptor2.default)(Element.prototype, 'dataset').get;
+}
+
 function updateValue(el) {
   var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  var value = el.value,
-      _el$dataset = el.dataset,
-      _el$dataset$previousV = _el$dataset.previousValue,
-      previousValue = _el$dataset$previousV === undefined ? "" : _el$dataset$previousV,
-      mask = _el$dataset.mask;
 
+  var value = el.value;
+  var previousValue = void 0;
+  var mask = void 0;
+
+  if (supportsDataset()) {
+    previousValue = el.dataset.previousValue || '';
+    mask = el.dataset.mask;
+  } else {
+    previousValue = el.getAttribute('data-previous-value') || '';
+    mask = el.getAttribute('data-mask');
+  }
 
   if (force || value && value !== previousValue && value.length > previousValue.length) {
     el.value = (0, _format2.default)(value, mask);
     (0, _utils.trigger)(el, 'input');
   }
 
-  el.dataset.previousValue = value;
+  if (supportsDataset()) {
+    el.dataset.previousValue = value;
+  } else {
+    el.setAttribute('data-previous-value', value);
+  }
 }
 
 function updateMask(el, mask) {
-  el.dataset.mask = mask;
+  if (supportsDataset()) {
+    el.dataset.mask = mask;
+  } else {
+    el.setAttribute('data-mask', mask);
+  }
 }
 
 ;

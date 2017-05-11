@@ -2,19 +2,40 @@ import format from './format.js';
 import { trigger } from './utils'
 
 /**
+ * Dataset test
+ */
+function supportsDataset() {
+  return !document || !document.documentElement || document.documentElement.dataset || (Object.getOwnPropertyDescriptor(Element.prototype, 'dataset')	&& Object.getOwnPropertyDescriptor(Element.prototype, 'dataset').get);
+}
+
+/**
  * Event handler
  * @param {HTMLInputElement} el
  * @param {Boolean}          force
  */
 function updateValue (el, force = false) {
-  let {value, dataset: {previousValue = "", mask } } = el;
+  let value = el.value;
+  let previousValue;
+  let mask;
+
+  if (supportsDataset()) {
+    previousValue = el.dataset.previousValue || '';
+    mask = el.dataset.mask;
+  } else {
+    previousValue = el.getAttribute('data-previous-value') || '';
+    mask = el.getAttribute('data-mask');
+  }
 
   if(force || (value && value !== previousValue && value.length > previousValue.length)) {
     el.value = format(value, mask);
     trigger(el, 'input')
   }
 
-  el.dataset.previousValue = value;
+  if (supportsDataset()) {
+    el.dataset.previousValue = value;
+  } else {
+    el.setAttribute('data-previous-value', value);
+  }
 }
 
 /**
@@ -24,7 +45,11 @@ function updateValue (el, force = false) {
  */
 function updateMask(el, mask) {
   // change format
-  el.dataset.mask = mask;
+  if (supportsDataset()) {
+    el.dataset.mask = mask;
+  } else {
+    el.setAttribute('data-mask', mask);
+  }
 }
 
 
@@ -72,4 +97,3 @@ export default function (Vue) {
     }
   });
 };
-
