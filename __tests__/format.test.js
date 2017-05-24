@@ -121,6 +121,29 @@ describe('One-symbol mask for any input -> X', () => {
   })
 });
 
+describe('Optional character mask', () => {
+
+  test('Should return `(12) 1234-1234` for mask `(##) ####-####?#` and input `1212341234`', () => {
+    let input = '1212341234'
+    let expected = '(12) 1234-1234'
+    let mask = '(##) ####-####?#'
+
+    let actual = format(input, mask)
+
+    expect(actual).toBe(expected)
+  })
+
+  test('Should return `(12) 1234-12345` for mask `(##) ####-####?#` and input `12123412345`', () => {
+    let input = '12123412345'
+    let expected = '(12) 1234-12345'
+    let mask = '(##) ####-####?#'
+
+    let actual = format(input, mask)
+    
+    expect(actual).toBe(expected)
+  })
+})
+
 describe('Real-word masks', () => {
   test('[Time] Should return `11:15:15` for mask `##:##:##` and input `111515`', () => {
     let input = '111515';
