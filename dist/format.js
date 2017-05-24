@@ -14,11 +14,31 @@ exports.default = function (data, mask) {
   }
 
   var text = '';
-  for (var i = 0, x = 1; x && i < mask.length; ++i) {
-    var c = data.charAt(i);
-    var m = mask.charAt(i);
 
+  var cOffset = 0;
+
+  for (var i = 0; i < mask.length; i++) {
+    var m = mask.charAt(i);
     switch (m) {
+      case '#':
+        break;
+      case 'A':
+        break;
+      case '?':
+        break;
+      case 'N':
+        break;
+      case 'X':
+        break;
+      default:
+        data = data.replace(m, '');
+    }
+  }
+  for (var _i = 0, x = 1; x && _i < mask.length; ++_i) {
+    var c = data.charAt(_i - cOffset);
+    var _m = mask.charAt(_i);
+
+    switch (_m) {
       case '#':
         if (/\d/.test(c)) {
           text += c;
@@ -37,12 +57,15 @@ exports.default = function (data, mask) {
         } else {
           x = 0;
         }break;
+
+      case '?':
+        cOffset++;break;
       case 'X':
         text += c;break;
       default:
-        text += m;
+        text += _m;
 
-        if (c && c !== m) {
+        if (c && c !== _m) {
           data = ' ' + data;
         }
 
