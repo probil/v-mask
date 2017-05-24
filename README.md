@@ -42,6 +42,7 @@ List of supported placeholders:
 | A     | Letter in any case (a-z,A-Z) |
 | N     | Number or letter             |
 | X     | Any symbol                   |
+| ?     | Optional (next character)    |
 
 ## Tests
 
