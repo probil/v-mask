@@ -9,7 +9,7 @@ import { trigger } from './utils'
 function updateValue (el, force = false) {
   let {value, dataset: {previousValue = "", mask } } = el;
 
-  if(force || (value && value !== previousValue && value.length > previousValue.length)) {
+  if(force || (value && value !== previousValue && value.length > (previousValue || []).length)) {
     el.value = format(value, mask);
     trigger(el, 'input')
   }
