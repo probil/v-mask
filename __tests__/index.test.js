@@ -18,10 +18,10 @@ describe('Element binding works', () => {
     vueMask(mockVue);
   });
 
-
   test('Should set value when bound and previous value is `undefined`', () => {
     let mask = {value: "##.##.####"};
     let element = {
+      tagName      : "INPUT",
       value        : "11112011",
       dataset      : {
         previousValue: undefined,
