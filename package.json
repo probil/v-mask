@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/probil/v-mask#readme",
   "devDependencies": {
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.0.0",
     "babel-plugin-transform-runtime": "^6.0.0",
     "babel-preset-es2015": "^6.0.0",
