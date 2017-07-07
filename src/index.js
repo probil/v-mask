@@ -1,4 +1,4 @@
-import format from './format.js';
+import format from './format.js'
 import { trigger } from './utils'
 
 /**
@@ -7,14 +7,17 @@ import { trigger } from './utils'
  * @param {Boolean}          force
  */
 function updateValue (el, force = false) {
-  let {value, dataset: {previousValue = "", mask } } = el;
+  let {value, dataset: {previousValue = "", mask } } = el
+  let position = getCursorPosition(el)
 
   if(force || (value && value !== previousValue && value.length > previousValue.length)) {
-    el.value = format(value, mask);
+    el.value = format(value, mask)
     trigger(el, 'input')
+    position++
   }
 
-  el.dataset.previousValue = value;
+  setCursorPosition(el, position)
+  el.dataset.previousValue = value
 }
 
 /**
@@ -24,9 +27,38 @@ function updateValue (el, force = false) {
  */
 function updateMask(el, mask) {
   // change format
-  el.dataset.mask = mask;
+  el.dataset.mask = mask
 }
 
+/**
+ * Get inner input element by tag
+ * @param {HTMLInputElement} el
+ */
+function getInputElement(el) {
+  if (el.tagName !== 'INPUT'){
+    el = el.getElementsByTagName('input')[0]
+  }
+  return el
+}
+
+/**
+ * Get cursor element position
+ * @param {HTMLInputElement} el
+ */
+function getCursorPosition (el) {
+  return el.selectionEnd || 0
+}
+
+/**
+ * Set cursor element position
+ * @param {HTMLInputElement} el
+ */
+function setCursorPosition (el, p) {
+  // update cursor only if the input has focus
+  if (el === document.activeElement) {
+    el.setSelectionRange(p, p)
+  }
+}
 
 /**
  * Vue plugin definition
@@ -43,8 +75,9 @@ export default function (Vue) {
      * @param {?String}          value
      */
     bind (el, {value}) {
-      updateMask(el, value);
-      updateValue(el);
+      el = getInputElement(el)
+      updateMask(el, value)
+      updateValue(el)
     },
 
     /**
@@ -59,17 +92,17 @@ export default function (Vue) {
      * @param {?String}          oldValue
      */
     componentUpdated(el, {value, oldValue}){
+      let isMaskChanged = value !== oldValue
 
-      let isMaskChanged = value !== oldValue;
+      el = getInputElement(el)
 
       // update mask first if changed
       if(isMaskChanged){
-        updateMask(el, value);
+        updateMask(el, value)
       }
 
       // update value
-      updateValue(el, isMaskChanged);
+      updateValue(el, isMaskChanged)
     }
-  });
-};
-
+  })
+}

@@ -9,6 +9,7 @@ exports.default = function (Vue) {
     bind: function bind(el, _ref) {
       var value = _ref.value;
 
+      el = getInputElement(el);
       updateMask(el, value);
       updateValue(el);
     },
@@ -16,8 +17,9 @@ exports.default = function (Vue) {
       var value = _ref2.value,
           oldValue = _ref2.oldValue;
 
-
       var isMaskChanged = value !== oldValue;
+
+      el = getInputElement(el);
 
       if (isMaskChanged) {
         updateMask(el, value);
@@ -44,12 +46,15 @@ function updateValue(el) {
       previousValue = _el$dataset$previousV === undefined ? "" : _el$dataset$previousV,
       mask = _el$dataset.mask;
 
+  var position = getCursorPosition(el);
 
   if (force || value && value !== previousValue && value.length > previousValue.length) {
     el.value = (0, _format2.default)(value, mask);
     (0, _utils.trigger)(el, 'input');
+    position++;
   }
 
+  setCursorPosition(el, position);
   el.dataset.previousValue = value;
 }
 
@@ -57,4 +62,19 @@ function updateMask(el, mask) {
   el.dataset.mask = mask;
 }
 
-;
+function getInputElement(el) {
+  if (el.tagName !== 'INPUT') {
+    el = el.getElementsByTagName('input')[0];
+  }
+  return el;
+}
+
+function getCursorPosition(el) {
+  return el.selectionEnd || 0;
+}
+
+function setCursorPosition(el, p) {
+  if (el === document.activeElement) {
+    el.setSelectionRange(p, p);
+  }
+}
