@@ -78,5 +78,3 @@ function setCursorPosition(el, p) {
     el.setSelectionRange(p, p);
   }
 }
-
-;
