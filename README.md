@@ -13,12 +13,20 @@ This version requires Vue 2.X. If you are looking for Vue 1.X, [check it here](h
 
 ## Usage
 
+As a plugin
+
 ```javascript
 import Vue     from 'vue'
 import VueMask from 'v-mask'
-
-/** Activate vue.js plugins **/
 Vue.use(VueMask);
+```
+
+As a directive
+
+```javascript
+import Vue from 'vue'
+import { VueMaskDirective } from 'v-mask'
+Vue.directive('mask', VueMaskDirective);
 ```
 
 Now you are ready to use it in the code!

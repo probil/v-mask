@@ -3,30 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-exports.default = function (Vue) {
-  Vue.directive('mask', {
-    bind: function bind(el, _ref) {
-      var value = _ref.value;
-
-      updateMask(el, value);
-      updateValue(el);
-    },
-    componentUpdated: function componentUpdated(el, _ref2) {
-      var value = _ref2.value,
-          oldValue = _ref2.oldValue;
-
-
-      var isMaskChanged = value !== oldValue;
-
-      if (isMaskChanged) {
-        updateMask(el, value);
-      }
-
-      updateValue(el, isMaskChanged);
-    }
-  });
-};
+exports.VueMaskDirective = exports.default = undefined;
 
 var _format = require('./format.js');
 
@@ -57,4 +34,31 @@ function updateMask(el, mask) {
   el.dataset.mask = mask;
 }
 
-;
+var VueMaskDirective = {
+  bind: function bind(el, _ref) {
+    var value = _ref.value;
+
+    updateMask(el, value);
+    updateValue(el);
+  },
+  componentUpdated: function componentUpdated(el, _ref2) {
+    var value = _ref2.value,
+        oldValue = _ref2.oldValue;
+
+
+    var isMaskChanged = value !== oldValue;
+
+    if (isMaskChanged) {
+      updateMask(el, value);
+    }
+
+    updateValue(el, isMaskChanged);
+  }
+};
+
+var VueMaskPlugin = function VueMaskPlugin(Vue) {
+  Vue.directive('mask', VueMaskDirective);
+};
+
+exports.default = VueMaskPlugin;
+exports.VueMaskDirective = VueMaskDirective;
