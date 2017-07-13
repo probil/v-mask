@@ -11,25 +11,37 @@ This version requires Vue 2.X. If you are looking for Vue 1.X, [check it here](h
 
   `npm install v-mask`
 
-## Usage
+## Initialization
 
-As a plugin
-
-```javascript
-import Vue     from 'vue'
-import VueMask from 'v-mask'
-Vue.use(VueMask);
-```
-
-As a directive
+ES2015
 
 ```javascript
 import Vue from 'vue'
+
+// As a plugin
+import VueMask from 'v-mask'
+Vue.use(VueMask);
+
+// As a directive
 import { VueMaskDirective } from 'v-mask'
 Vue.directive('mask', VueMaskDirective);
 ```
 
-Now you are ready to use it in the code!
+UMD
+
+```html
+<script src="vue.min.js"></script>
+<script src="v-mask.min.js"></script>
+<script>
+// As a plugin
+Vue.use(VueMask.VueMaskPlugin);
+
+// As a directive
+Vue.directive('mask', VueMask.VueMaskDirective);
+</script>
+```
+
+## Usage
 
 ```html
 <input type="text" v-mask="'####-##'" v-model="myInputModel">
