@@ -79,5 +79,5 @@ const VueMaskPlugin = function (Vue) {
   Vue.directive('mask', VueMaskDirective);
 };
 
-export { VueMaskPlugin as default, VueMaskDirective };
+export { VueMaskPlugin as default, VueMaskPlugin, VueMaskDirective };
 

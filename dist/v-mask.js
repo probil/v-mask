@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global.VueMask = factory());
-}(this, (function () { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.VueMask = global.VueMask || {})));
+}(this, (function (exports) { 'use strict';
 
 var format = function (data, mask) {
   if (!mask) return data;
@@ -102,30 +102,36 @@ function updateMask(el, mask) {
   el.dataset.mask = mask;
 }
 
-var index = function (Vue) {
-  Vue.directive('mask', {
-    bind: function bind(el, _ref) {
-      var value = _ref.value;
+var VueMaskDirective = {
+  bind: function bind(el, _ref) {
+    var value = _ref.value;
 
+    updateMask(el, value);
+    updateValue(el);
+  },
+  componentUpdated: function componentUpdated(el, _ref2) {
+    var value = _ref2.value,
+        oldValue = _ref2.oldValue;
+
+
+    var isMaskChanged = value !== oldValue;
+
+    if (isMaskChanged) {
       updateMask(el, value);
-      updateValue(el);
-    },
-    componentUpdated: function componentUpdated(el, _ref2) {
-      var value = _ref2.value,
-          oldValue = _ref2.oldValue;
-
-
-      var isMaskChanged = value !== oldValue;
-
-      if (isMaskChanged) {
-        updateMask(el, value);
-      }
-
-      updateValue(el, isMaskChanged);
     }
-  });
+
+    updateValue(el, isMaskChanged);
+  }
 };
 
-return index;
+var VueMaskPlugin = function VueMaskPlugin(Vue) {
+  Vue.directive('mask', VueMaskDirective);
+};
+
+exports['default'] = VueMaskPlugin;
+exports.VueMaskPlugin = VueMaskPlugin;
+exports.VueMaskDirective = VueMaskDirective;
+
+Object.defineProperty(exports, '__esModule', { value: true });
 
 })));

@@ -96,28 +96,30 @@ function updateMask(el, mask) {
   el.dataset.mask = mask;
 }
 
-var index = function (Vue) {
-  Vue.directive('mask', {
-    bind: function bind(el, _ref) {
-      var value = _ref.value;
+var VueMaskDirective = {
+  bind: function bind(el, _ref) {
+    var value = _ref.value;
 
+    updateMask(el, value);
+    updateValue(el);
+  },
+  componentUpdated: function componentUpdated(el, _ref2) {
+    var value = _ref2.value,
+        oldValue = _ref2.oldValue;
+
+
+    var isMaskChanged = value !== oldValue;
+
+    if (isMaskChanged) {
       updateMask(el, value);
-      updateValue(el);
-    },
-    componentUpdated: function componentUpdated(el, _ref2) {
-      var value = _ref2.value,
-          oldValue = _ref2.oldValue;
-
-
-      var isMaskChanged = value !== oldValue;
-
-      if (isMaskChanged) {
-        updateMask(el, value);
-      }
-
-      updateValue(el, isMaskChanged);
     }
-  });
+
+    updateValue(el, isMaskChanged);
+  }
 };
 
-export default index;
+var VueMaskPlugin = function VueMaskPlugin(Vue) {
+  Vue.directive('mask', VueMaskDirective);
+};
+
+export { VueMaskPlugin, VueMaskDirective };export default VueMaskPlugin;
