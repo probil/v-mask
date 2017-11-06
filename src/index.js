@@ -27,6 +27,35 @@ function updateMask(el, mask) {
   el.dataset.mask = mask;
 }
 
+/**
+ * Create a security error message.
+ * @param {String} message
+ */
+function error(message) {
+  if (console && console.error) {
+    console.error('v-mask - %s', message);
+  }
+}
+
+/**
+ * Create an cssSelector for an element. This should be used to help
+ * the programmer to find errors when creating masks.
+ * @param {HTMLInputElement} ele
+ */
+function getSelector(ele) {
+  let result;
+  if (!ele ) {
+    result = '';
+  } else if (ele.getAttribute('id')) {
+    result = '#' + ele.getAttribute('id');
+  } else if (ele.getAttribute('class')) {
+    result = '.' + ele.getAttribute('class').split(' ').join('.');
+  } else {
+    result = ele.tagName;
+  }
+
+  return result;
+}
 
 /**
  * Vue directive definition
@@ -41,8 +70,19 @@ const VueMaskDirective = {
    * @param {?String}          value
    */
   bind (el, {value}) {
-    updateMask(el, value);
-    updateValue(el);
+    let input;
+    if (ele.tagName !== 'INPUT' || ele.tagName !== 'input') {
+      let result = ele.getElementsByTagName('input');
+      if (!result || !result.length) {
+        error('Can\'t find an input element on ' + getSelector(ele));
+        return;
+      }
+      input = result[0];
+    } else {
+      input = ele;
+    }
+    updateMask(input, value);
+    updateValue(input);
   },
 
   /**
