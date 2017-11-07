@@ -1,5 +1,5 @@
-import format from './format.js';
-import { trigger } from './utils'
+import format from "./format.js";
+import { trigger } from "./utils";
 
 /**
  * Event handler
@@ -11,7 +11,7 @@ function updateValue (el, force = false) {
 
   if(force || (value && value !== previousValue && value.length > previousValue.length)) {
     el.value = format(value, mask);
-    trigger(el, 'input')
+    trigger(el, "input")
   }
 
   el.dataset.previousValue = value;
@@ -28,16 +28,6 @@ function updateMask(el, mask) {
 }
 
 /**
- * Create a security error message.
- * @param {String} message
- */
-function error(message) {
-  if (console && console.error) {
-    console.error('v-mask - %s', message);
-  }
-}
-
-/**
  * Create an cssSelector for an element. This should be used to help
  * the programmer to find errors when creating masks.
  * @param {HTMLInputElement} ele
@@ -45,11 +35,11 @@ function error(message) {
 function getSelector(ele) {
   let result;
   if (!ele ) {
-    result = '';
-  } else if (ele.getAttribute('id')) {
-    result = '#' + ele.getAttribute('id');
-  } else if (ele.getAttribute('class')) {
-    result = '.' + ele.getAttribute('class').split(' ').join('.');
+    result = "";
+  } else if (ele.getAttribute("id")) {
+    result = "#" + ele.getAttribute("id");
+  } else if (ele.getAttribute("class")) {
+    result = "." + ele.getAttribute("class").split(" ").join(".");
   } else {
     result = ele.tagName;
   }
@@ -71,11 +61,10 @@ const VueMaskDirective = {
    */
   bind (el, {value}) {
     let input;
-    if (ele.tagName !== 'INPUT' || ele.tagName !== 'input') {
-      let result = ele.getElementsByTagName('input');
+    if (el.tagName !== "INPUT" || el.tagName !== "input") {
+      let result = el.getElementsByTagName("input");
       if (!result || !result.length) {
-        error('Can\'t find an input element on ' + getSelector(ele));
-        return;
+        throw new Error("Can't find an input element on " + getSelector(el));
       }
       input = result[0];
     } else {
@@ -116,7 +105,7 @@ const VueMaskDirective = {
  * @param {Vue} Vue
  */
 const VueMaskPlugin = function (Vue) {
-  Vue.directive('mask', VueMaskDirective);
+  Vue.directive("mask", VueMaskDirective);
 };
 
 export { VueMaskPlugin as default, VueMaskPlugin, VueMaskDirective };
