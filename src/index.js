@@ -68,7 +68,7 @@ const VueMaskDirective = {
       }
       input = result[0];
     } else {
-      input = ele;
+      input = el;
     }
     updateMask(input, value);
     updateValue(input);
