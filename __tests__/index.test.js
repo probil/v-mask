@@ -22,6 +22,7 @@ describe('Element binding works', () => {
   test('Should set value when bound and previous value is `undefined`', () => {
     let mask = {value: "##.##.####"};
     let element = {
+      tagName      : "input",
       value        : "11112011",
       dataset      : {
         previousValue: undefined,

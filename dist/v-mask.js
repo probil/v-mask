@@ -92,7 +92,7 @@ function updateValue(el) {
 
   if (force || value && value !== previousValue && value.length > previousValue.length) {
     el.value = format(value, mask);
-    trigger(el, 'input');
+    trigger(el, "input");
   }
 
   el.dataset.previousValue = value;
@@ -102,30 +102,59 @@ function updateMask(el, mask) {
   el.dataset.mask = mask;
 }
 
+function getSelector(ele) {
+  var result = void 0;
+  if (!ele) {
+    result = "";
+  } else if (ele.getAttribute("id")) {
+    result = "#" + ele.getAttribute("id");
+  } else if (ele.getAttribute("class")) {
+    result = "." + ele.getAttribute("class").split(" ").join(".");
+  } else {
+    result = ele.tagName;
+  }
+
+  return result;
+}
+
+function getInput(ele) {
+  var input = ele;
+  if (ele.tagName && ele.tagName.toLowerCase() !== "input") {
+    var result = ele.getElementsByTagName("input");
+    if (!result || !result.length) {
+      throw new Error("Can't find an input element on " + getSelector(ele));
+    }
+    input = result[0];
+  }
+
+  return input;
+}
+
 var VueMaskDirective = {
   bind: function bind(el, _ref) {
     var value = _ref.value;
 
-    updateMask(el, value);
-    updateValue(el);
+    var input = getInput(el);
+    updateMask(input, value);
+    updateValue(input);
   },
   componentUpdated: function componentUpdated(el, _ref2) {
     var value = _ref2.value,
         oldValue = _ref2.oldValue;
 
-
+    var input = getInput(el);
     var isMaskChanged = value !== oldValue;
 
     if (isMaskChanged) {
-      updateMask(el, value);
+      updateMask(input, value);
     }
 
-    updateValue(el, isMaskChanged);
+    updateValue(input, isMaskChanged);
   }
 };
 
 var VueMaskPlugin = function VueMaskPlugin(Vue) {
-  Vue.directive('mask', VueMaskDirective);
+  Vue.directive("mask", VueMaskDirective);
 };
 
 exports['default'] = VueMaskPlugin;
