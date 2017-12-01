@@ -48,6 +48,25 @@ function getSelector(ele) {
 }
 
 /**
+ * If not bound to an input element at the root level, that function will resolve 
+ * first child input as the masking target.
+ * @param {HTMLInputElement} ele
+ */
+function getInput(ele) {
+  let input = ele;
+  if (ele.tagName && ele.tagName.toLowerCase() !== "input") {
+    let result = ele.getElementsByTagName("input");
+    if (!result || !result.length) {
+      throw new Error("Can't find an input element on " + getSelector(ele));
+    }
+    input = result[0];
+  }
+
+  return input;
+}
+
+
+ /**
  * Vue directive definition
  */
 const VueMaskDirective = {
@@ -60,16 +79,7 @@ const VueMaskDirective = {
    * @param {?String}          value
    */
   bind (el, {value}) {
-    let input;
-    if (el.tagName !== "INPUT" || el.tagName !== "input") {
-      let result = el.getElementsByTagName("input");
-      if (!result || !result.length) {
-        throw new Error("Can't find an input element on " + getSelector(el));
-      }
-      input = result[0];
-    } else {
-      input = el;
-    }
+    const input = getInput(el);
     updateMask(input, value);
     updateValue(input);
   },
@@ -86,16 +96,16 @@ const VueMaskDirective = {
    * @param {?String}          oldValue
    */
   componentUpdated(el, {value, oldValue}){
-
+    const input = getInput(el);
     let isMaskChanged = value !== oldValue;
 
     // update mask first if changed
     if(isMaskChanged){
-      updateMask(el, value);
+      updateMask(input, value);
     }
 
     // update value
-    updateValue(el, isMaskChanged);
+    updateValue(input, isMaskChanged);
   }
 };
 
