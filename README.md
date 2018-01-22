@@ -5,7 +5,7 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/probil/v-mask/master/LICENSE)
 [![vue2](https://img.shields.io/badge/vue-2.x-brightgreen.svg)](https://vuejs.org/)
 
-Simple input mask lib for vue.js based on [PureMask.js](https://github.com/romulobrasil/PureMask.js)
+Super tiny input mask library for vue.js based on [PureMask.js](https://github.com/romulobrasil/PureMask.js) (~2kb) exposed as directive. No dependencies
 
 **[Demo](https://rawgit.com/probil/v-mask--demo/master/dist/index.html)**
 
