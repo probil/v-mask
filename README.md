@@ -13,7 +13,9 @@ Super tiny input mask library for vue.js based on [PureMask.js](https://github.c
 
 This version requires Vue 2.X. If you are looking for Vue 1.X, [check it here](https://github.com/probil/v-mask/tree/vue-1.x).
 
-  `npm install v-mask`
+```sh
+npm install v-mask
+```
 
 ## Initialization
 
@@ -26,7 +28,7 @@ import Vue from 'vue'
 import VueMask from 'v-mask'
 Vue.use(VueMask);
 
-// As a directive
+// Or as a directive
 import { VueMaskDirective } from 'v-mask'
 Vue.directive('mask', VueMaskDirective);
 ```
@@ -40,7 +42,7 @@ UMD
 // As a plugin
 Vue.use(VueMask.VueMaskPlugin);
 
-// As a directive
+// Or as a directive
 Vue.directive('mask', VueMask.VueMaskDirective);
 </script>
 ```
