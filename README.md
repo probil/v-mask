@@ -3,7 +3,8 @@
 [![Github file size](https://img.shields.io/github/size/probil/v-mask/dist/v-mask.min.js.svg)](https://raw.githubusercontent.com/probil/v-mask/master/dist/v-mask.min.js)
 [![npm](https://img.shields.io/npm/dm/v-mask.svg)](https://www.npmjs.com/package/v-mask)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/probil/v-mask/master/LICENSE)
-[![vue2](https://img.shields.io/badge/vue-2.x-brightgreen.svg)](https://vuejs.org/)
+[![Vue2](https://img.shields.io/badge/Vue-2.x-brightgreen.svg)](https://vuejs.org/)
+[![](https://data.jsdelivr.com/v1/package/npm/v-mask/badge?style=rounded)](https://www.jsdelivr.com/package/npm/v-mask)
 
 > Super tiny input mask library for vue.js based on [PureMask.js](https://github.com/romulobrasil/PureMask.js) (~2kb) exposed as directive. No dependencies
 
