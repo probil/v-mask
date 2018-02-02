@@ -1,15 +1,17 @@
-# Vue input mask 
+# :abcd: Vue input mask 
 [![npm](https://img.shields.io/npm/v/v-mask.svg)](https://www.npmjs.com/package/v-mask)
 [![Github file size](https://img.shields.io/github/size/probil/v-mask/dist/v-mask.min.js.svg)](https://raw.githubusercontent.com/probil/v-mask/master/dist/v-mask.min.js)
 [![npm](https://img.shields.io/npm/dm/v-mask.svg)](https://www.npmjs.com/package/v-mask)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/probil/v-mask/master/LICENSE)
 [![vue2](https://img.shields.io/badge/vue-2.x-brightgreen.svg)](https://vuejs.org/)
 
-Super tiny input mask library for vue.js based on [PureMask.js](https://github.com/romulobrasil/PureMask.js) (~2kb) exposed as directive. No dependencies
+> Super tiny input mask library for vue.js based on [PureMask.js](https://github.com/romulobrasil/PureMask.js) (~2kb) exposed as directive. No dependencies
 
-**[Demo](https://rawgit.com/probil/v-mask--demo/master/dist/index.html)**
+## :art: Playground on the Web
 
-## Installation
+- https://rawgit.com/probil/v-mask--demo/master/dist/index.html
+
+## :cd: Installation
 
 This version requires Vue 2.X. If you are looking for Vue 1.X, [check it here](https://github.com/probil/v-mask/tree/vue-1.x).
 
@@ -19,7 +21,7 @@ npm install v-mask
 
 ## Initialization
 
-ES2015
+### ES2015 (Webpack/Rollup/Browserify/etc)
 
 ```javascript
 import Vue from 'vue'
@@ -33,11 +35,11 @@ import { VueMaskDirective } from 'v-mask'
 Vue.directive('mask', VueMaskDirective);
 ```
 
-UMD
+### UMD (Browser)
 
 ```html
-<script src="vue.min.js"></script>
-<script src="v-mask.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/v-mask/dist/v-mask.min.js"></script>
 <script>
 // As a plugin
 Vue.use(VueMask.VueMaskPlugin);
@@ -47,18 +49,18 @@ Vue.directive('mask', VueMask.VueMaskDirective);
 </script>
 ```
 
-## Usage
+## :rocket: Usage
 
 ```html
 <input type="text" v-mask="'####-##'" v-model="myInputModel">
 <!-- OR -->
-<input type="text" v-mask="'##/##/#### ##:##'" v-model="myInputModel">
+<input type="text" v-mask="nameOfVariableWithMask" v-model="myInputModel">
 ```
 **Notice:** `v-model` is required starting from `v1.1.0`, because [a lot](https://github.com/probil/v-mask/issues/16) [of](https://github.com/probil/v-mask/issues/30) [bugs](https://github.com/probil/v-mask/issues/29) with HTMLElement event listeners and sync with Vue internals.
 
 There is no reason to support using this lib for using without `v-model` but open the door for using on [custom inputs](http://vuejs.org/v2/guide/components.html#Form-Input-Components-using-Custom-Events).
 
-## Format description
+## :gear: Configs
 
 List of supported placeholders:
 
@@ -70,7 +72,7 @@ List of supported placeholders:
 | X     | Any symbol                   |
 | ?     | Optional (next character)    |
 
-## Tests
+## :syringe: Tests
 
 [Jest](https://github.com/facebook/jest) is used for unit-tests.
 
@@ -85,8 +87,20 @@ npm test
 Check the [v-mask--demo](https://github.com/probil/v-mask--demo) repo for more details
 
 
-## Contributing
+## :anchor: Semantic Versioning Policy
 
-PR is welcome!
+This plugin follows [semantic versioning](http://semver.org/).
+
+## :newspaper: Changelog
+
+We're using [GitHub Releases](https://github.com/probil/v-mask/releases).
+
+## :beers: Contributing
+
+We're more than happy to see potential contributions, so don't hesitate. If you have any suggestions, ideas or problems feel free to add new [issue](https://github.com/vuejs/eslint-plugin-vue/issues), but first please make sure your question does not repeat previous ones.
 
 **Notice:** You should make your changes only in `src` folder, don't try to edit files from `dist` as it compiled from `src` by babel and shouldn't be changes manually.
+
+## :lock: License
+
+See the [LICENSE](LICENSE) file for license rights and limitations (MIT).
