@@ -12,6 +12,7 @@ export default {
     {
       format: 'umd',
       moduleName: 'VueMask',
+      exports: 'named',
       dest: 'dist/v-mask.js',
     },
     {
