@@ -29,6 +29,9 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      # catch build-time errors (if any)
+      - run: npm run build
+
       # run tests!
       - run: npm run test-coverage
 
