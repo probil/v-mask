@@ -10,6 +10,7 @@
     "build": "npm run bundle && npm run bundle:min",
     "bundle": "rollup -c build/rollup.conf.js",
     "bundle:min": "rollup -c build/rollup.conf.min.js",
+    "release": "bash scripts/release.sh",
     "release:note": "node scripts/gen-release-note.js"
   },
   "repository": {
