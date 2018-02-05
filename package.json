@@ -9,7 +9,8 @@
     "test-coverage": "jest --coverage",
     "build": "npm run bundle && npm run bundle:min",
     "bundle": "rollup -c build/rollup.conf.js",
-    "bundle:min": "rollup -c build/rollup.conf.min.js"
+    "bundle:min": "rollup -c build/rollup.conf.min.js",
+    "release:note": "node scripts/gen-release-note.js"
   },
   "repository": {
     "type": "git",
