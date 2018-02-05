@@ -6,10 +6,12 @@
   "module": "dist/v-mask.esm.js",
   "scripts": {
     "test": "jest",
-    "test-coverage": "jest --coverage",
+    "test:coverage": "jest --coverage",
     "build": "npm run bundle && npm run bundle:min",
     "bundle": "rollup -c build/rollup.conf.js",
-    "bundle:min": "rollup -c build/rollup.conf.min.js"
+    "bundle:min": "rollup -c build/rollup.conf.min.js",
+    "release": "bash scripts/release.sh",
+    "release:note": "node scripts/gen-release-note.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +34,7 @@
     "babel-plugin-transform-runtime": "6.23.0",
     "babel-preset-es2015": "6.24.1",
     "babel-register": "6.26.0",
+    "conventional-changelog": "1.1.11",
     "jest": "22.1.4",
     "rollup": "0.55.3",
     "rollup-plugin-babel": "3.0.3",
