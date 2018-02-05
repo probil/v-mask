@@ -3,21 +3,21 @@ import babel from 'rollup-plugin-babel';
 
 
 export default {
-  entry: 'src/index.js',
+  input: 'src/index.js',
   plugins: [
     nodeResolve(),
     babel(),
   ],
-  targets: [
+  output: [
     {
       format: 'umd',
-      moduleName: 'VueMask',
+      name: 'VueMask',
       exports: 'named',
-      dest: 'dist/v-mask.js',
+      file: 'dist/v-mask.js',
     },
     {
       format: 'es',
-      dest: 'dist/v-mask.esm.js',
+      file: 'dist/v-mask.esm.js',
     },
   ],
 }
