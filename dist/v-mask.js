@@ -4,7 +4,7 @@
 	(factory((global.VueMask = {})));
 }(this, (function (exports) { 'use strict';
 
-var format = function (data, mask) {
+function format (data, mask) {
   if (!mask) return data;
 
   var maskStartRegExp = /^([^#ANX]+)/;
@@ -73,7 +73,7 @@ var format = function (data, mask) {
     }
   }
   return text;
-};
+}
 
 var trigger = function trigger(el, type) {
   var e = document.createEvent('HTMLEvents');
@@ -128,7 +128,7 @@ var VueMaskPlugin = function VueMaskPlugin(Vue) {
   Vue.directive('mask', VueMaskDirective);
 };
 
-exports['default'] = VueMaskPlugin;
+exports.default = VueMaskPlugin;
 exports.VueMaskPlugin = VueMaskPlugin;
 exports.VueMaskDirective = VueMaskDirective;
 
