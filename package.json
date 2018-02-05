@@ -6,7 +6,7 @@
   "module": "dist/v-mask.esm.js",
   "scripts": {
     "test": "jest",
-    "test-coverage": "jest --coverage",
+    "test:coverage": "jest --coverage",
     "build": "npm run bundle && npm run bundle:min",
     "bundle": "rollup -c build/rollup.conf.js",
     "bundle:min": "rollup -c build/rollup.conf.min.js",

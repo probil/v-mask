@@ -16,7 +16,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   if [[ -z $SKIP_TESTS ]]; then
     # npm run lint # TODO: implement using `eslint`
     # npm run flow
-    npm run test-coverage
+    npm run test:coverage
     # npm run test:e2e
     # npm run test:ssr
   fi
