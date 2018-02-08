@@ -14,7 +14,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   echo "Releasing $VERSION ..."
 
   if [[ -z $SKIP_TESTS ]]; then
-    # npm run lint # TODO: implement using `eslint`
+    npm run lint
     # npm run flow
     npm run test:coverage
     # npm run test:e2e

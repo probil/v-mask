@@ -1,17 +1,18 @@
-import format from './format.js';
-import { trigger } from './utils'
+/* eslint-disable no-param-reassign */
+import format from './format';
+import { trigger } from './utils';
 
 /**
  * Event handler
  * @param {HTMLInputElement} el
  * @param {Boolean}          force
  */
-function updateValue (el, force = false) {
-  let {value, dataset: {previousValue = "", mask } } = el;
+function updateValue(el, force = false) {
+  const { value, dataset: { previousValue = '', mask } } = el;
 
-  if(force || (value && value !== previousValue && value.length > previousValue.length)) {
+  if (force || (value && value !== previousValue && value.length > previousValue.length)) {
     el.value = format(value, mask);
-    trigger(el, 'input')
+    trigger(el, 'input');
   }
 
   el.dataset.previousValue = value;
@@ -40,7 +41,7 @@ const VueMaskDirective = {
    * @param {HTMLInputElement} el
    * @param {?String}          value
    */
-  bind (el, {value}) {
+  bind(el, { value }) {
     updateMask(el, value);
     updateValue(el);
   },
@@ -56,18 +57,17 @@ const VueMaskDirective = {
    * @param {?String}          value
    * @param {?String}          oldValue
    */
-  componentUpdated(el, {value, oldValue}){
-
-    let isMaskChanged = value !== oldValue;
+  componentUpdated(el, { value, oldValue }) {
+    const isMaskChanged = value !== oldValue;
 
     // update mask first if changed
-    if(isMaskChanged){
+    if (isMaskChanged) {
       updateMask(el, value);
     }
 
     // update value
     updateValue(el, isMaskChanged);
-  }
+  },
 };
 
 
@@ -75,7 +75,7 @@ const VueMaskDirective = {
  * Vue plugin definition
  * @param {Vue} Vue
  */
-const VueMaskPlugin = function (Vue) {
+const VueMaskPlugin = (Vue) => {
   Vue.directive('mask', VueMaskDirective);
 };
 
