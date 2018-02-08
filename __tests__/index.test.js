@@ -1,18 +1,18 @@
-import vueMask from '../src/index'
+import vueMask from '../src/index';
 
 describe('Element binding works', () => {
-  let bindFunc = function () {};
-  let mockVue = {};
+  let bindFunc = function bindFunc() {};
+  const mockVue = {};
 
   beforeEach(() => {
     global.document = {
       createEvent() {
         return {
-          initEvent() {}
-        }
-      }
+          initEvent() {},
+        };
+      },
     };
-    mockVue.directive = function (name, funcObject) {
+    mockVue.directive = function directive(name, funcObject) {
       bindFunc = funcObject.bind;
     };
     vueMask(mockVue);
@@ -20,17 +20,17 @@ describe('Element binding works', () => {
 
 
   test('Should set value when bound and previous value is `undefined`', () => {
-    let mask = {value: "##.##.####"};
-    let element = {
-      value        : "11112011",
-      dataset      : {
+    const mask = { value: '##.##.####' };
+    const element = {
+      value: '11112011',
+      dataset: {
         previousValue: undefined,
-        mask         : mask.value
+        mask: mask.value,
       },
-      dispatchEvent: () => {}
+      dispatchEvent: () => {},
     };
     bindFunc(element, mask);
 
-    expect(element.value).toBe("11.11.2011");
+    expect(element.value).toBe('11.11.2011');
   });
 });
