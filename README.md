@@ -10,8 +10,9 @@
 
 ## :art: Playground on the Web
 
-- https://codesandbox.io/s/m3q1m5yp9x (interactive playground)
-- https://rawgit.com/probil/v-mask--demo/master/dist/index.html (preview)
+- https://codesandbox.io/s/m3q1m5yp9x (interactive playground with webpack and ESM)
+- https://jsfiddle.net/probil/c6fjjzn6/ (simple interactive playground with UMD)
+- https://rawgit.com/probil/v-mask--demo/master/dist/index.html (just preview)
 
 ## :cd: Installation
 
