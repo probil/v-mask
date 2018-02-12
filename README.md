@@ -10,7 +10,8 @@
 
 ## :art: Playground on the Web
 
-- https://rawgit.com/probil/v-mask--demo/master/dist/index.html
+- https://codesandbox.io/s/m3q1m5yp9x (interactive playground)
+- https://rawgit.com/probil/v-mask--demo/master/dist/index.html (preview)
 
 ## :cd: Installation
 
@@ -98,7 +99,7 @@ We're using [GitHub Releases](https://github.com/probil/v-mask/releases).
 
 ## :beers: Contributing
 
-We're more than happy to see potential contributions, so don't hesitate. If you have any suggestions, ideas or problems feel free to add new [issue](https://github.com/vuejs/eslint-plugin-vue/issues), but first please make sure your question does not repeat previous ones.
+We're more than happy to see potential contributions, so don't hesitate. If you have any suggestions, ideas or problems feel free to add new [issue](https://github.com/probil/v-mask/issues), but first please make sure your question does not repeat previous ones.
 
 **Notice:** You should make your changes only in `src` folder, don't try to edit files from `dist` as it compiled from `src` by babel and shouldn't be changes manually.
 
