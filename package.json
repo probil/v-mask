@@ -43,7 +43,7 @@
     "jest": "22.3.0",
     "rollup": "0.55.5",
     "rollup-plugin-babel": "3.0.3",
-    "rollup-plugin-node-resolve": "3.0.2",
+    "rollup-plugin-node-resolve": "3.0.3",
     "rollup-plugin-uglify": "3.0.0"
   },
   "jest": {
