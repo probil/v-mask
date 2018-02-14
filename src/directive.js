@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import format from './format';
 import { trigger } from './utils';
+import { isAndroid, isChrome } from './utils/env';
 
 /**
  * Event handler
@@ -12,7 +13,11 @@ function updateValue(el, force = false) {
 
   if (force || (value && value !== previousValue && value.length > previousValue.length)) {
     el.value = format(value, mask);
-    trigger(el, 'input');
+    if (isAndroid && isChrome) {
+      setTimeout(() => trigger(el, 'input'), 0);
+    } else {
+      trigger(el, 'input');
+    }
   }
 
   el.dataset.previousValue = value;
