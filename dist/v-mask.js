@@ -9,7 +9,7 @@ function format (data, mask) {
 
   var maskStartRegExp = /^([^#ANX]+)/;
 
-  if (data.length == 1 && maskStartRegExp.test(mask)) {
+  if (+data.length === 1 && maskStartRegExp.test(mask)) {
     data = maskStartRegExp.exec(mask)[0] + data;
   }
 
@@ -17,7 +17,7 @@ function format (data, mask) {
 
   var cOffset = 0;
 
-  for (var i = 0; i < mask.length; i++) {
+  for (var i = 0; i < mask.length; i += 1) {
     var m = mask.charAt(i);
     switch (m) {
       case '#':
@@ -34,34 +34,27 @@ function format (data, mask) {
         data = data.replace(m, '');
     }
   }
-  for (var _i = 0, x = 1; x && _i < mask.length; ++_i) {
+  for (var _i = 0, x = 1; x && _i < mask.length; _i += 1) {
     var c = data.charAt(_i - cOffset);
     var _m = mask.charAt(_i);
 
     switch (_m) {
       case '#':
-        if (/\d/.test(c)) {
-          text += c;
-        } else {
-          x = 0;
-        }break;
+        /\d/.test(c) ? text += c : x = 0;
+        break;
       case 'A':
-        if (/[a-z]/i.test(c)) {
-          text += c;
-        } else {
-          x = 0;
-        }break;
+        /[a-z]/i.test(c) ? text += c : x = 0;
+        break;
       case 'N':
-        if (/[a-z0-9]/i.test(c)) {
-          text += c;
-        } else {
-          x = 0;
-        }break;
+        /[a-z0-9]/i.test(c) ? text += c : x = 0;
+        break;
 
       case '?':
-        cOffset++;break;
+        cOffset += 1;
+        break;
       case 'X':
-        text += c;break;
+        text += c;
+        break;
       default:
         text += _m;
 
@@ -81,18 +74,30 @@ var trigger = function trigger(el, type) {
   el.dispatchEvent(e);
 };
 
+var inBrowser = typeof window !== 'undefined';
+var UA = inBrowser && window.navigator.userAgent.toLowerCase();
+var isEdge = UA && UA.indexOf('edge/') > 0;
+var isAndroid = UA && UA.indexOf('android') > 0;
+var isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;
+
 function updateValue(el) {
   var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   var value = el.value,
       _el$dataset = el.dataset,
       _el$dataset$previousV = _el$dataset.previousValue,
-      previousValue = _el$dataset$previousV === undefined ? "" : _el$dataset$previousV,
+      previousValue = _el$dataset$previousV === undefined ? '' : _el$dataset$previousV,
       mask = _el$dataset.mask;
 
 
   if (force || value && value !== previousValue && value.length > previousValue.length) {
     el.value = format(value, mask);
-    trigger(el, 'input');
+    if (isAndroid && isChrome) {
+      setTimeout(function () {
+        return trigger(el, 'input');
+      }, 0);
+    } else {
+      trigger(el, 'input');
+    }
   }
 
   el.dataset.previousValue = value;
@@ -102,7 +107,7 @@ function updateMask(el, mask) {
   el.dataset.mask = mask;
 }
 
-var VueMaskDirective = {
+var directive = {
   bind: function bind(el, _ref) {
     var value = _ref.value;
 
@@ -112,7 +117,6 @@ var VueMaskDirective = {
   componentUpdated: function componentUpdated(el, _ref2) {
     var value = _ref2.value,
         oldValue = _ref2.oldValue;
-
 
     var isMaskChanged = value !== oldValue;
 
@@ -124,13 +128,13 @@ var VueMaskDirective = {
   }
 };
 
-var VueMaskPlugin = function VueMaskPlugin(Vue) {
-  Vue.directive('mask', VueMaskDirective);
-};
+var plugin = (function (Vue) {
+  Vue.directive('mask', directive);
+});
 
-exports.default = VueMaskPlugin;
-exports.VueMaskPlugin = VueMaskPlugin;
-exports.VueMaskDirective = VueMaskDirective;
+exports.default = plugin;
+exports.VueMaskPlugin = plugin;
+exports.VueMaskDirective = directive;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
