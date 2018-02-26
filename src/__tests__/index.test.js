@@ -1,4 +1,4 @@
-import vueMask from '../src/index';
+import vueMask from '../index';
 
 describe('Element binding works', () => {
   let bindFunc = function bindFunc() {};
