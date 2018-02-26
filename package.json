@@ -12,7 +12,7 @@
     "bundle:min": "rollup -c build/rollup.conf.min.js",
     "release": "bash scripts/release.sh",
     "release:note": "node scripts/gen-release-note.js",
-    "lint": "eslint src scripts __tests__"
+    "lint": "eslint src scripts"
   },
   "repository": {
     "type": "git",
@@ -45,17 +45,8 @@
     "rollup-plugin-uglify": "3.0.0"
   },
   "jest": {
-    "verbose": true,
-    "browser": false,
-    "testEnvironment": "node",
-    "collectCoverageFrom": [
-      "src/*.js"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/demo/",
-      "/dist/",
-      "/e2e/"
+    "roots": [
+      "<rootDir>/src"
     ]
   }
 }
