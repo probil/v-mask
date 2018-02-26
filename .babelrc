@@ -2,13 +2,13 @@
   "presets": [
     ["es2015", {
       "modules": false
-    }],
+    }]
   ],
   "comments": false,
   "env": {
     "test": {
       "presets": ["es2015"],
-      "plugins": ["transform-runtime", "syntax-dynamic-import"],
+      "plugins": ["transform-runtime"]
     }
   }
 }
