@@ -30,7 +30,6 @@
   },
   "homepage": "https://github.com/probil/v-mask#readme",
   "devDependencies": {
-    "babel-jest": "22.4.1",
     "babel-plugin-transform-runtime": "6.23.0",
     "babel-preset-env": "1.6.1",
     "babel-register": "6.26.0",
@@ -57,9 +56,6 @@
       "/demo/",
       "/dist/",
       "/e2e/"
-    ],
-    "transform": {
-      "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
-    }
+    ]
   }
 }
