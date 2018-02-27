@@ -1,4 +1,4 @@
-import format from '../src/format';
+import format from '../format';
 
 describe('General', () => {
   test('Should do nothing if mask is `undefined`', () => {
