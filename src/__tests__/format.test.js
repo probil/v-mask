@@ -1,213 +1,82 @@
 import format from '../format';
 
-describe('General', () => {
-  test('Should do nothing if mask is `undefined`', () => {
-    const input = 'Some test string with numbers 123 and mask ##';
-    const expected = input;
-
-    const actual = format(input);
-
-    expect(actual).toBe(expected);
-  });
-});
-
-describe('One-symbol mask for numeric input -> #', () => {
-  test('Should return empty string for mask `#` and input `A`', () => {
-    const input = 'A';
-    const expected = '';
-    const mask = '#';
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
+describe('format.js', () => {
+  it('should be a function', () => {
+    expect(format).toEqual(expect.any(Function));
   });
 
-  test('Should return `5` for mask `#` and input `5` ', () => {
-    const input = '5';
-    const expected = '5';
-    const mask = '#';
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
-  });
-});
-
-describe('One-symbol mask for alphabetical input -> A', () => {
-  test('Should return empty string for mask `A` and input `1`', () => {
-    const input = '1';
-    const expected = '';
-    const mask = 'A';
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
+  it('should do nothing if mask is `undefined` or `null` ', () => {
+    const input = 'numbers 123 and mask ##';
+    expect(format(input)).toBe(input);
+    expect(format(input, null)).toBe(input);
   });
 
-  test('Should return `a` for mask `A` and input `a`', () => {
-    const input = 'a';
-    const expected = 'a';
-    const mask = 'A';
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
-  });
-});
-
-describe('One-symbol mask for alphanumeric input -> N', () => {
-  test('Should return `A` for mask `N` and input `A`', () => {
-    const input = 'A';
-    const expected = 'A';
-    const mask = 'N';
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
-  });
-  test('Should return `a` for mask `N` and input `a`', () => {
-    const input = 'a';
-    const expected = 'a';
-    const mask = 'N';
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
-  });
-  test('Should return `1` for mask `N` and input `1`', () => {
-    const input = '1';
-    const expected = '1';
-    const mask = 'N';
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
-  });
-  test('Should return empty string for mask `N` and input `-`', () => {
-    const input = '-';
-    const expected = '';
-    const mask = 'N';
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
-  });
-});
-
-describe('One-symbol mask for any input -> X', () => {
-  test('Should return `A` for mask `X` and input `A`', () => {
-    const input = 'A';
-    const expected = 'A';
-    const mask = 'X';
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
-  });
-  test('Should return `a` for mask `X` and input `a`', () => {
-    const input = 'a';
-    const expected = 'a';
-    const mask = 'X';
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
-  });
-  test('Should return `1` for mask `X` and input `1`', () => {
-    const input = '1';
-    const expected = '1';
-    const mask = 'X';
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
-  });
-  test('Should return `-` for mask `X` and input `-`', () => {
-    const input = '-';
-    const expected = '-';
-    const mask = 'X';
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
-  });
-});
-
-describe('Optional character mask', () => {
-  test('Should return `(12) 1234-1234` for mask `(##) ####-####?#` and input `1212341234`', () => {
-    const input = '1212341234';
-    const expected = '(12) 1234-1234';
-    const mask = '(##) ####-####?#';
-
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
+  it('should add delimiter if explicitly typed', () => {
+    expect(format('(', '(#')).toBe('(');
   });
 
-  test('Should return `(12) 1234-12345` for mask `(##) ####-####?#` and input `12123412345`', () => {
-    const input = '12123412345';
-    const expected = '(12) 1234-12345';
-    const mask = '(##) ####-####?#';
-
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
-  });
-});
-
-describe('Real-word masks', () => {
-  test('[Time] Should return `11:15:15` for mask `##:##:##` and input `111515`', () => {
-    const input = '111515';
-    const expected = '11:15:15';
-    const mask = '##:##:##';
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
+  it('should add delimiters and masks', () => {
+    expect(format('1234', '(###) #')).toBe('(123) 4');
+    expect(format('444444444', '#### - #### - #### - ####')).toBe('4444 - 4444 - 4');
+    expect(format('A314444', 'A## - ####')).toBe('A31 - 4444');
   });
 
-  test('[HourMinute] Should return `20h15m` for mask `##h##m` and input `2015`', () => {
-    const input = '2015';
-    const expected = '20h15m';
-    const mask = '##h##m';
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
+  it('should fill mask blanks', () => {
+    expect(format('11', '## - ##')).toBe('11 - ');
   });
 
-  test('[Date&Time] Should return `27/10/2016 23:15` for mask `##/##/#### ##:##` and input `271020162315`', () => {
-    const input = '271020162315';
-    const expected = '27/10/2016 23:15';
-    const mask = '##/##/#### ##:##';
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
+  it('should not fill if no value is provided', () => {
+    expect(format('', '## - ##')).toBe('');
   });
 
-  test('[CreditCard] Should return `4444 4444 4444 4444` for mask `#### #### #### ####` and input `4444444444444444`', () => {
-    const input = '4444444444444444';
-    const expected = '4444 4444 4444 4444';
-    const mask = '#### #### #### ####';
-
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
+  it('should not fill if wrong value is provided even if it is correct later in mask', () => {
+    expect(format('a', '#a')).toBe('');
   });
 
-  test('[PhoneNum] Should return `(999) 999-9999` for mask `(###) ###-####`  and input `9999999999`', () => {
-    const input = '9999999999';
-    const expected = '(999) 999-9999';
-    const mask = '(###) ###-####';
-
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
+  it('should fill last characters if they are all delimiters', () => {
+    expect(format('1', '#)')).toBe('1)');
+    expect(format('564', '(###)!!')).toBe('(564)!!');
   });
 
-  test('[PhoneNumUS] Should return `+1 (999) 999-9999` for mask `+1 (###) ###-####`  and input `9999999999`', () => {
-    const input = '9999999999';
-    const expected = '+1 (999) 999-9999';
-    const mask = '+1 (###) ###-####';
-
-    const actual = format(input, mask);
-
-    expect(actual).toBe(expected);
+  /* === TODO: fix later === *\
+  it('should mask numbers', () => {
+    expect(format(1234, '##.##')).toBe('12.34');
   });
 
-  test('[CPF] Should return `390.533.447-05` for mask `###.###.###-#`  and input `39053344705`', () => {
-    const input = '39053344705';
-    const expected = '390.533.447-05';
-    const mask = '###.###.###-##';
+  it('should return empty string if no input is given', () => {
+    expect(format(null, '#')).toBe('');
+  });
 
-    const actual = format(input, mask);
+  it('should accept masked parameter if array', () => {
+    expect(format('12', ['#', '-', '#'])).toBe('1-2');
+  });
+  \* === /TODO: fix later === */
 
-    expect(actual).toBe(expected);
+  it('should allow string with and without optional char', () => {
+    expect(format('123L', '##?#-A')).toBe('123-L');
+    // expect(format('12L', '##?#-A')).toBe('12-L'); TODO: fix later
+    expect(format('1212341234', '(##) ####-####?#')).toBe('(12) 1234-1234');
+    expect(format('12123412345', '(##) ####-####?#')).toBe('(12) 1234-12345');
+  });
+
+  it('should format inputs based on real-work masks', () => {
+    // time with seconds
+    expect(format('111515', '##:##:##')).toBe('11:15:15');
+    // hours and minutes
+    expect(format('2015', '##h##m')).toBe('20h15m');
+    // date-time
+    expect(format('271020162315', '##/##/#### ##:##')).toBe('27/10/2016 23:15');
+    // credit card
+    expect(format('4532478255247634', '#### #### #### ####')).toBe('4532 4782 5524 7634');
+    // phone number
+    expect(format('9999999999', '(###) ###-####')).toBe('(999) 999-9999');
+    // phone number (US)
+    expect(format('9999999999', '+1 (###) ###-####')).toBe('+1 (999) 999-9999');
+    // CPF
+    expect(format('39053344705', '###.###.###-##')).toBe('390.533.447-05');
+    // CPNJ
+    expect(format('53288196000128', '##.###.###/####-##')).toBe('53.288.196/0001-28');
+    // Social Security number
+    expect(format('365038704', '###-##-####')).toBe('365-03-8704');
   });
 });
