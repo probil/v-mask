@@ -68,4 +68,49 @@ describe('directive usage', () => {
     await wrapper.$nextTick();
     expect(wrapper.$el.value).toBe('11.11.2011');
   });
+
+  // https://github.com/probil/v-mask/issues/40
+  it('should format model value when new input value has lower length than previous', async () => {
+    const wrapper = mount({
+      data: () => ({ mask: '##:##', value: '11:22' }),
+      directives: { mask: VueMaskDirective },
+      template: '<input v-mask="mask" v-model="value"/>',
+    });
+
+    wrapper.$el.focus();
+    wrapper.$el.value = 'sup';
+    trigger(wrapper.$el, 'input');
+    await wrapper.$nextTick();
+    expect(wrapper.$el.value).toBe('');
+  });
+
+  // https://github.com/probil/v-mask/issues/40
+  it('should format model value when new input value has the bigger length than previous', async () => {
+    const wrapper = mount({
+      data: () => ({ mask: '##:##', value: '11:22' }),
+      directives: { mask: VueMaskDirective },
+      template: '<input v-mask="mask" v-model="value"/>',
+    });
+
+    wrapper.$el.focus();
+    wrapper.$el.value = 'super3';
+    trigger(wrapper.$el, 'input');
+    await wrapper.$nextTick();
+    expect(wrapper.$el.value).toBe('');
+  });
+
+  // https://github.com/probil/v-mask/issues/40
+  it('should format model value when new input value has the same length as previous', async () => {
+    const wrapper = mount({
+      data: () => ({ mask: '##:##', value: '11:22' }),
+      directives: { mask: VueMaskDirective },
+      template: '<input v-mask="mask" v-model="value"/>',
+    });
+
+    wrapper.$el.focus();
+    wrapper.$el.value = 'super';
+    trigger(wrapper.$el, 'input');
+    await wrapper.$nextTick();
+    expect(wrapper.$el.value).toBe('');
+  });
 });
