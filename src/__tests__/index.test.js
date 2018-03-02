@@ -1,4 +1,6 @@
-import { createLocalVue, mount } from '@vue/test-utils';
+import { createLocalVue } from '@vue/test-utils';
+// TODO: rewrite using '@vue/test-utils' when it will support directives
+import { mount, trigger } from 'vuenit';
 import VueMask, { VueMaskDirective, VueMaskPlugin } from '../index';
 
 describe('plugin/directive registration', () => {
@@ -34,37 +36,36 @@ describe('plugin/directive registration', () => {
 });
 
 describe('directive usage', () => {
-  let Vue;
-  beforeAll(() => {
-    Vue = createLocalVue();
-    Vue.use(VueMask);
-  });
-
   it('should run this canary test', () => {
     const wrapper = mount({
       template: '<input />',
     });
-    expect(wrapper.is('input')).toBe(true);
+    expect(wrapper.$contains('input')).toBe(true);
   });
 
-  test('Should set value when bound and previous value is `undefined`', () => {
-    let bindFunc = function bindFunc() {};
-    const mockVue = {};
-    mockVue.directive = function directive(name, funcObject) {
-      bindFunc = funcObject.bind;
-    };
-    VueMask(mockVue);
-    const mask = { value: '##.##.####' };
-    const element = {
-      value: '11112011',
-      dataset: {
-        previousValue: undefined,
-        mask: mask.value,
+  it('should update model value after directive bind', () => {
+    const wrapper = mount({
+      data: () => ({
+        mask: '##.##.####',
+        value: '11112011',
+      }),
+      directives: {
+        mask: VueMaskDirective,
       },
-      dispatchEvent: () => {},
-    };
-    bindFunc(element, mask);
+      template: '<input v-mask="mask" v-model="value"/>',
+    });
+    expect(wrapper.$el.value).toBe('11.11.2011');
+  });
 
-    expect(element.value).toBe('11.11.2011');
+  it('should update model value when input value changes', async () => {
+    const wrapper = mount({
+      data: () => ({ mask: '##.##.####', value: undefined }),
+      directives: { mask: VueMaskDirective },
+      template: '<input v-mask="mask" v-model="value"/>',
+    });
+    wrapper.$el.value = '11112011';
+    trigger(wrapper.$el, 'input');
+    await wrapper.$nextTick();
+    expect(wrapper.$el.value).toBe('11.11.2011');
   });
 });
