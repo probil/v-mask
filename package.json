@@ -46,7 +46,8 @@
     "rollup-plugin-uglify": "3.0.0",
     "vue": "2.5.13",
     "vue-server-renderer": "2.5.13",
-    "vue-template-compiler": "2.5.13"
+    "vue-template-compiler": "2.5.13",
+    "vuenit": "^1.1.1"
   },
   "jest": {
     "roots": [
