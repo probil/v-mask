@@ -1,6 +1,4 @@
-import { createLocalVue } from '@vue/test-utils';
-// TODO: rewrite using '@vue/test-utils' when it will support directives
-import { mount, trigger } from 'vuenit';
+import { createLocalVue, mount } from '@vue/test-utils';
 import VueMask, { VueMaskDirective, VueMaskPlugin } from '../index';
 
 describe('plugin/directive registration', () => {
@@ -36,36 +34,37 @@ describe('plugin/directive registration', () => {
 });
 
 describe('directive usage', () => {
+  let mountWithMask;
+
+  beforeEach(() => {
+    const localVue = createLocalVue();
+    localVue.use(VueMask);
+    mountWithMask = (arg, options) => mount(arg, { ...options, localVue });
+  });
+
   it('should run this canary test', () => {
-    const wrapper = mount({
+    const wrapper = mountWithMask({
       template: '<input />',
     });
-    expect(wrapper.$contains('input')).toBe(true);
+    expect(wrapper.is('input')).toBe(true);
   });
 
   it('should update model value after directive bind', () => {
-    const wrapper = mount({
-      data: () => ({
-        mask: '##.##.####',
-        value: '11112011',
-      }),
-      directives: {
-        mask: VueMaskDirective,
-      },
+    const wrapper = mountWithMask({
+      data: () => ({ mask: '##.##.####', value: '11112011' }),
       template: '<input v-mask="mask" v-model="value"/>',
     });
-    expect(wrapper.$el.value).toBe('11.11.2011');
+    expect(wrapper.vm.$el.value).toBe('11.11.2011');
   });
 
   it('should update model value when input value changes', async () => {
-    const wrapper = mount({
+    const wrapper = mountWithMask({
       data: () => ({ mask: '##.##.####', value: undefined }),
-      directives: { mask: VueMaskDirective },
       template: '<input v-mask="mask" v-model="value"/>',
     });
-    wrapper.$el.value = '11112011';
-    trigger(wrapper.$el, 'input');
-    await wrapper.$nextTick();
-    expect(wrapper.$el.value).toBe('11.11.2011');
+    wrapper.vm.$el.value = '11112011';
+    wrapper.trigger('input');
+    await wrapper.vm.$nextTick();
+    expect(wrapper.vm.$el.value).toBe('11.11.2011');
   });
 });
