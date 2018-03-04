@@ -1,79 +1,88 @@
 /* eslint-disable no-param-reassign, no-unused-expressions */
 
 /**
- * Simple format function borrowed from PureMask.js
- * {@link https://github.com/romulobrasil/PureMask.js}
+ * Mask keys
  *
- * @param {String} data String to mask (input value)
+ * @type {Object}
+ */
+const allowedMaskPlaceholders = {
+  '#': {
+    test: char => /\d/.test(char)
+  },
+  'A': {
+    test: char => /[a-z]/i.test(char)
+  },
+  'N': {
+    test: char => /[a-z0-9]/i.test(char)
+  },
+  'X': {
+    test: () => true
+  },
+  '?': {
+    special: true
+  }
+}
+
+/**
+ * Indicates is given char a mask placeholder
+ *
+ * @param {String} char
+ * @return {Boolean}
+ */
+const isPlaceholder = char => allowedMaskPlaceholders.hasOwnProperty(char);
+
+/**
+ * Indicates is given value is a string
+ * @param {*|String} val
+ * @returns {boolean}
+ */
+const isString = val => typeof val === 'string';
+
+/**
+ * Indicates is given mask char validates by given text char
+ * @param {String} mask
+ * @param {String} char
+ * @returns {boolean}
+ */
+const isValid = (mask, char) => (true
+  && isString(char)
+  && isPlaceholder(mask)
+  && allowedMaskPlaceholders[mask].test(char)
+)
+
+/**
+ * Format given input based on mask and options
+ *
+ * @param {String} text String to mask (input value)
  * @param {String} [mask] Mask format, like `####-##`
  * @returns {string} Formatted text
  */
-export default function (data, mask) {
-  // don't do anything if mask is undefined/null/etc
-  if (!mask) return data;
+export default function (text, wholeMask) {
+  if (!text) return '';
+  text = String(text);
+  if (!wholeMask || !wholeMask.length|| !text.length) return text;
+  const maskArray = Array.isArray(wholeMask) ? wholeMask : wholeMask.split('');
 
-  const maskStartRegExp = /^([^#ANX]+)/;
+  let textIndex = 0;
+  let maskIndex = 0;
+  let newText = '';
 
-  if (+data.length === 1 && maskStartRegExp.test(mask)) {
-    data = maskStartRegExp.exec(mask)[0] + data;
-  }
+  while (maskIndex < maskArray.length) {
+    const mask = maskArray[maskIndex];
+    const char = text[textIndex];
 
-  let text = '';
-
-  // Adds a char offset to allow testing on optional values
-  let cOffset = 0;
-
-  // Cleans data to  avoid value loss on dynamic mask changing
-  for (let i = 0; i < mask.length; i += 1) {
-    const m = mask.charAt(i);
-    switch (m) {
-      case '#':
-        break;
-      case 'A':
-        break;
-      case '?':
-        break;
-      case 'N':
-        break;
-      case 'X':
-        break;
-      default:
-        data = data.replace(m, '');
+    if (!isPlaceholder(mask) && char === mask) {
+      newText += mask;
+      textIndex++;
+    } else if (!isPlaceholder(mask)) {
+      newText += mask;
+    } else if (isValid(mask, char)) {
+      newText += char;
+      textIndex++;
+    } else {
+      return newText;
     }
+    maskIndex++;
   }
-  for (let i = 0, x = 1; x && i < mask.length; i += 1) {
-    // Uses the optional mask character offset
-    const c = data.charAt(i - cOffset);
-    const m = mask.charAt(i);
-
-    switch (m) {
-      case '#':
-        /\d/.test(c) ? text += c : x = 0;
-        break;
-      case 'A':
-        /[a-z]/i.test(c) ? text += c : x = 0;
-        break;
-      case 'N':
-        /[a-z0-9]/i.test(c) ? text += c : x = 0;
-        break;
-      // Skips testing if optional field is specified
-      case '?':
-        cOffset += 1;
-        break;
-      case 'X':
-        text += c;
-        break;
-      default:
-        text += m;
-
-        // preserve characters that are in the same spot we need to insert a mask
-        // character by shifting the data over to the right (issue #5, & #7)
-        if (c && c !== m) {
-          data = ` ${data}`;
-        }
-
-        break;
-    }
-  }
-  return text;
+  return newText;
 }
