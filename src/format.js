@@ -67,15 +67,19 @@ export default function (text, wholeMask) {
     if (!isPlaceholder(mask) && char === mask) {
       newText += mask;
       textIndex += 1;
-    } else if (!isPlaceholder(mask)) {
+      return false;
+    }
+    if (!isPlaceholder(mask)) {
       newText += mask;
-    } else if (isValid(mask, char)) {
+      return false;
+    }
+    if (isValid(mask, char)) {
       newText += char;
       textIndex += 1;
-    } else {
-      return true;
+      return false;
     }
-    return false;
+    return true;
   });
+
   return newText;
 }
