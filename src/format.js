@@ -60,15 +60,14 @@ const isValid = (mask, char) => (true
 export default function (text, wholeMask) {
   if (!text) return '';
   text = String(text);
-  if (!wholeMask || !wholeMask.length|| !text.length) return text;
+  if (!wholeMask || !wholeMask.length || !text.length) return text;
   const maskArray = Array.isArray(wholeMask) ? wholeMask : wholeMask.split('');
 
   let textIndex = 0;
   let maskIndex = 0;
   let newText = '';
 
-  while (maskIndex < maskArray.length) {
-    const mask = maskArray[maskIndex];
+  maskArray.some(mask => {
     const char = text[textIndex];
 
     if (!isPlaceholder(mask) && char === mask) {
@@ -80,9 +79,8 @@ export default function (text, wholeMask) {
       newText += char;
       textIndex++;
     } else {
-      return newText;
+      return true;
     }
-    maskIndex++;
-  }
+  });
   return newText;
 }
