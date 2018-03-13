@@ -7,21 +7,21 @@
  */
 const allowedMaskPlaceholders = {
   '#': {
-    test: char => /\d/.test(char)
+    test: char => /\d/.test(char),
   },
-  'A': {
-    test: char => /[a-z]/i.test(char)
+  A: {
+    test: char => /[a-z]/i.test(char),
   },
-  'N': {
-    test: char => /[a-z0-9]/i.test(char)
+  N: {
+    test: char => /[a-z0-9]/i.test(char),
   },
-  'X': {
-    test: () => true
+  X: {
+    test: () => true,
   },
   '?': {
-    special: true
-  }
-}
+    special: true,
+  },
+};
 
 /**
  * Indicates is given char a mask placeholder
@@ -29,7 +29,7 @@ const allowedMaskPlaceholders = {
  * @param {String} char
  * @return {Boolean}
  */
-const isPlaceholder = char => allowedMaskPlaceholders.hasOwnProperty(char);
+const isPlaceholder = char => char in allowedMaskPlaceholders;
 
 /**
  * Indicates is given value is a string
@@ -44,17 +44,17 @@ const isString = val => typeof val === 'string';
  * @param {String} char
  * @returns {boolean}
  */
-const isValid = (mask, char) => (true
-  && isString(char)
+const isValid = (mask, char) => (
+  isString(char)
   && isPlaceholder(mask)
   && allowedMaskPlaceholders[mask].test(char)
-)
+);
 
 /**
  * Format given input based on mask and options
  *
  * @param {String} text String to mask (input value)
- * @param {String} [mask] Mask format, like `####-##`
+ * @param {String|String[]} [wholeMask] Mask format, like `####-##`
  * @returns {string} Formatted text
  */
 export default function (text, wholeMask) {
@@ -64,23 +64,23 @@ export default function (text, wholeMask) {
   const maskArray = Array.isArray(wholeMask) ? wholeMask : wholeMask.split('');
 
   let textIndex = 0;
-  let maskIndex = 0;
   let newText = '';
 
-  maskArray.some(mask => {
+  maskArray.some((mask) => {
     const char = text[textIndex];
 
     if (!isPlaceholder(mask) && char === mask) {
       newText += mask;
-      textIndex++;
+      textIndex += 1;
     } else if (!isPlaceholder(mask)) {
       newText += mask;
     } else if (isValid(mask, char)) {
       newText += char;
-      textIndex++;
+      textIndex += 1;
     } else {
       return true;
     }
+    return false;
   });
   return newText;
 }
