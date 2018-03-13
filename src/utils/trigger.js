@@ -6,7 +6,7 @@
  * @param {HTMLInputElement} el
  * @param {String}           type
  */
-export const trigger = (el, type) => {
+export default (el, type) => {
   const e = document.createEvent('HTMLEvents');
   e.initEvent(type, true, true);
   el.dispatchEvent(e);

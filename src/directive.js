@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import format from './format';
-import { trigger } from './utils';
+import trigger from './utils/trigger';
 import { isAndroid, isChrome } from './utils/env';
 
 /**
