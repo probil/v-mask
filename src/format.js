@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign, no-unused-expressions */
+import { isString, hasKey } from './utils/common';
 
 /**
  * Mask keys
@@ -29,14 +30,8 @@ const allowedMaskPlaceholders = {
  * @param {String} char
  * @return {Boolean}
  */
-const isPlaceholder = char => char in allowedMaskPlaceholders;
+const isPlaceholder = char => hasKey(allowedMaskPlaceholders, char);
 
-/**
- * Indicates is given value is a string
- * @param {*|String} val
- * @returns {boolean}
- */
-const isString = val => typeof val === 'string';
 
 /**
  * Indicates is given mask char validates by given text char
