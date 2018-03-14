@@ -1,5 +1,19 @@
 {
   "extends": [
     "config:base"
+  ],
+  "packageRules": [
+    {
+      "packagePatterns": ["^eslint"],
+      "groupName": "eslint"
+    },
+    {
+      "packagePatterns": ["^rollup"],
+      "groupName": "rollup"
+    },
+    {
+      "packagePatterns": ["^vue"],
+      "groupName": "vue"
+    }
   ]
 }
