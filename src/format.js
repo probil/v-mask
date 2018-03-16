@@ -20,6 +20,7 @@ const allowedMaskPlaceholders = {
     test: () => true,
   },
   '?': {
+    test: () => false,
     special: true,
   },
 };
@@ -32,7 +33,7 @@ const allowedMaskPlaceholders = {
  */
 const isPlaceholder = char => hasKey(allowedMaskPlaceholders, char);
 
-
+const isSpecial = char => isPlaceholder(char) && allowedMaskPlaceholders[char].special;
 /**
  * Indicates is given mask char validates by given text char
  * @param {String} mask
@@ -61,8 +62,9 @@ export default function (text, wholeMask) {
   let textIndex = 0;
   let newText = '';
 
-  maskArray.some((mask) => {
+  maskArray.some((mask, index) => {
     const char = text[textIndex];
+    const prevMask = maskArray[index - 1];
 
     if (!isPlaceholder(mask) && char === mask) {
       newText += mask;
@@ -76,6 +78,10 @@ export default function (text, wholeMask) {
     if (isValid(mask, char)) {
       newText += char;
       textIndex += 1;
+      return false;
+    }
+    // TODO: apply better solution here
+    if (isSpecial(mask) || isSpecial(prevMask)) {
       return false;
     }
     return true;

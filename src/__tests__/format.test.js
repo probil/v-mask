@@ -54,7 +54,7 @@ describe('format.js', () => {
 
   it('should allow string with and without optional char', () => {
     expect(format('123L', '##?#-A')).toBe('123-L');
-    // expect(format('12L', '##?#-A')).toBe('12-L'); TODO: fix later
+    expect(format('12L', '##?#-A')).toBe('12-L');
     expect(format('1212341234', '(##) ####-####?#')).toBe('(12) 1234-1234');
     expect(format('12123412345', '(##) ####-####?#')).toBe('(12) 1234-12345');
   });
