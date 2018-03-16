@@ -7,18 +7,10 @@ import { isString, hasKey } from './utils/common';
  * @type {Object}
  */
 const allowedMaskPlaceholders = {
-  '#': {
-    test: char => /\d/.test(char),
-  },
-  A: {
-    test: char => /[a-z]/i.test(char),
-  },
-  N: {
-    test: char => /[a-z0-9]/i.test(char),
-  },
-  X: {
-    test: () => true,
-  },
+  '#': /\d/,
+  A: /[a-z]/i,
+  N: /[a-z0-9]/i,
+  X: /./,
   '?': {
     test: () => false,
     special: true,
