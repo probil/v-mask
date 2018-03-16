@@ -38,7 +38,6 @@ describe('format.js', () => {
     expect(format('564', '(###)!!')).toBe('(564)!!');
   });
 
-  /* === TODO: fix later === *\
   it('should mask numbers', () => {
     expect(format(1234, '##.##')).toBe('12.34');
   });
@@ -50,7 +49,6 @@ describe('format.js', () => {
   it('should accept masked parameter if array', () => {
     expect(format('12', ['#', '-', '#'])).toBe('1-2');
   });
-  \* === /TODO: fix later === */
 
   it('should allow string with and without optional char', () => {
     expect(format('123L', '##?#-A')).toBe('123-L');

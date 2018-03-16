@@ -49,7 +49,7 @@ const isValid = (mask, char) => (
 /**
  * Format given input based on mask and options
  *
- * @param {String} text String to mask (input value)
+ * @param {String|Number} text String to mask (input value)
  * @param {String|String[]} [wholeMask] Mask format, like `####-##`
  * @returns {string} Formatted text
  */
