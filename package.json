@@ -1,6 +1,6 @@
 {
   "name": "v-mask",
-  "version": "1.3.2",
+  "version": "1.4.0-alpha",
   "description": "Super tiny input mask library for Vue.js based on PureMask.js (~2kb) exposed as directive. No dependencies",
   "main": "dist/v-mask.js",
   "module": "dist/v-mask.esm.js",
