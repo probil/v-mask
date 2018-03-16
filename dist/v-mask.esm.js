@@ -1,72 +1,78 @@
-function format (data, mask) {
-  if (!mask) return data;
+var hasKey = function hasKey(obj, key) {
+  return key in obj;
+};
 
-  var maskStartRegExp = /^([^#ANX]+)/;
+var isString = function isString(val) {
+  return typeof val === 'string';
+};
 
-  if (+data.length === 1 && maskStartRegExp.test(mask)) {
-    data = maskStartRegExp.exec(mask)[0] + data;
+var allowedMaskPlaceholders = {
+  '#': /\d/,
+  A: /[a-z]/i,
+  N: /[a-z0-9]/i,
+  X: /./,
+  '?': {
+    test: function test() {
+      return false;
+    },
+    special: true
   }
+};
 
-  var text = '';
+var isPlaceholder = function isPlaceholder(char) {
+  return hasKey(allowedMaskPlaceholders, char);
+};
 
-  var cOffset = 0;
+var isSpecial = function isSpecial(char) {
+  return isPlaceholder(char) && allowedMaskPlaceholders[char].special;
+};
 
-  for (var i = 0; i < mask.length; i += 1) {
-    var m = mask.charAt(i);
-    switch (m) {
-      case '#':
-        break;
-      case 'A':
-        break;
-      case '?':
-        break;
-      case 'N':
-        break;
-      case 'X':
-        break;
-      default:
-        data = data.replace(m, '');
+var isValid = function isValid(mask, char) {
+  return isString(char) && isPlaceholder(mask) && allowedMaskPlaceholders[mask].test(char);
+};
+
+function format (text, wholeMask) {
+  if (!text) return '';
+  text = String(text);
+  if (!wholeMask || !wholeMask.length || !text.length) return text;
+  var maskArray = Array.isArray(wholeMask) ? wholeMask : wholeMask.split('');
+
+  var textIndex = 0;
+  var newText = '';
+
+  maskArray.some(function (mask, index) {
+    var char = text[textIndex];
+    var prevMask = maskArray[index - 1];
+
+    if (!isPlaceholder(mask) && char === mask) {
+      newText += mask;
+      textIndex += 1;
+      return false;
     }
-  }
-  for (var _i = 0, x = 1; x && _i < mask.length; _i += 1) {
-    var c = data.charAt(_i - cOffset);
-    var _m = mask.charAt(_i);
-
-    switch (_m) {
-      case '#':
-        /\d/.test(c) ? text += c : x = 0;
-        break;
-      case 'A':
-        /[a-z]/i.test(c) ? text += c : x = 0;
-        break;
-      case 'N':
-        /[a-z0-9]/i.test(c) ? text += c : x = 0;
-        break;
-
-      case '?':
-        cOffset += 1;
-        break;
-      case 'X':
-        text += c;
-        break;
-      default:
-        text += _m;
-
-        if (c && c !== _m) {
-          data = ' ' + data;
-        }
-
-        break;
+    if (!isPlaceholder(mask)) {
+      newText += mask;
+      return false;
     }
-  }
-  return text;
+    if (isValid(mask, char)) {
+      newText += char;
+      textIndex += 1;
+      return false;
+    }
+
+    if (isSpecial(mask) || isSpecial(prevMask)) {
+      return false;
+    }
+    return true;
+  });
+
+  return newText;
 }
 
-var trigger = function trigger(el, type) {
+var trigger = (function (el, type) {
   var e = document.createEvent('HTMLEvents');
   e.initEvent(type, true, true);
   el.dispatchEvent(e);
-};
+});
 
 var inBrowser = typeof window !== 'undefined';
 var UA = inBrowser && window.navigator.userAgent.toLowerCase();
