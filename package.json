@@ -42,7 +42,7 @@
     "jest": "22.4.2",
     "rollup": "0.57.1",
     "rollup-plugin-babel": "3.0.3",
-    "rollup-plugin-node-resolve": "3.2.0",
+    "rollup-plugin-node-resolve": "3.3.0",
     "rollup-plugin-uglify": "3.0.0",
     "vue": "2.5.16",
     "vue-server-renderer": "2.5.16",
