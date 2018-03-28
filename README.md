@@ -48,7 +48,7 @@ Vue.directive('mask', VueMaskDirective);
 Vue.use(VueMask.VueMaskPlugin);
 
 // Or as a directive
-Vue.directive('mask', VueMask.VueMaskDirective);
+Vue.directive('mask', VueTheMask.TheMask.directives.mask);
 </script>
 ```
 
