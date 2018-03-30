@@ -37,7 +37,7 @@
     "conventional-changelog": "1.1.23",
     "eslint": "4.19.1",
     "eslint-config-airbnb-base": "12.1.0",
-    "eslint-plugin-import": "2.9.0",
+    "eslint-plugin-import": "2.10.0",
     "eslint-plugin-jest": "21.15.0",
     "jest": "22.4.3",
     "rollup": "0.57.1",
