@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/probil/v-mask#readme",
   "devDependencies": {
-    "@vue/test-utils": "1.0.0-beta.15",
+    "@vue/test-utils": "1.0.0-beta.16",
     "babel-plugin-transform-runtime": "6.23.0",
     "babel-preset-env": "1.7.0",
     "babel-register": "6.26.0",
