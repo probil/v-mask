@@ -9,7 +9,6 @@
  * @returns {string} Formatted text
  */
 export default function (text, wholeMask) {
-  // don't do anything if mask is undefined/null/etc
   if (!wholeMask) return text;
 
   const maskStartRegExp = /^([^#ANX]+)/;
@@ -19,8 +18,6 @@ export default function (text, wholeMask) {
   }
 
   let newText = '';
-
-  // Adds a char offset to allow testing on optional values
   let charOffset = 0;
 
   // Cleans data to  avoid value loss on dynamic mask changing
@@ -42,7 +39,6 @@ export default function (text, wholeMask) {
     }
   }
   for (let maskIndex = 0, x = 1; x && maskIndex < wholeMask.length; maskIndex += 1) {
-    // Uses the optional mask character offset
     const char = text.charAt(maskIndex - charOffset);
     const mask = wholeMask.charAt(maskIndex);
 
