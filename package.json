@@ -43,7 +43,7 @@
     "rollup": "0.59.4",
     "rollup-plugin-babel": "3.0.4",
     "rollup-plugin-node-resolve": "3.3.0",
-    "rollup-plugin-uglify": "4.0.0",
+    "rollup-plugin-terser": "1.0.1",
     "vue": "2.5.16",
     "vue-server-renderer": "2.5.16",
     "vue-template-compiler": "2.5.16"
