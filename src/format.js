@@ -21,11 +21,11 @@ export default function (text, wholeMask) {
   let newText = '';
 
   // Adds a char offset to allow testing on optional values
-  let cOffset = 0;
+  let charOffset = 0;
 
   // Cleans data to  avoid value loss on dynamic mask changing
-  for (let i = 0; i < wholeMask.length; i += 1) {
-    const mask = wholeMask.charAt(i);
+  for (let maskIndex = 0; maskIndex < wholeMask.length; maskIndex += 1) {
+    const mask = wholeMask.charAt(maskIndex);
     switch (mask) {
       case '#':
         break;
@@ -41,10 +41,10 @@ export default function (text, wholeMask) {
         text = text.replace(mask, '');
     }
   }
-  for (let i = 0, x = 1; x && i < wholeMask.length; i += 1) {
+  for (let maskIndex = 0, x = 1; x && maskIndex < wholeMask.length; maskIndex += 1) {
     // Uses the optional mask character offset
-    const char = text.charAt(i - cOffset);
-    const mask = wholeMask.charAt(i);
+    const char = text.charAt(maskIndex - charOffset);
+    const mask = wholeMask.charAt(maskIndex);
 
     switch (mask) {
       case '#':
@@ -58,7 +58,7 @@ export default function (text, wholeMask) {
         break;
       // Skips testing if optional field is specified
       case '?':
-        cOffset += 1;
+        charOffset += 1;
         break;
       case 'X':
         newText += char;
