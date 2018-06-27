@@ -40,7 +40,7 @@
     "eslint-plugin-import": "2.13.0",
     "eslint-plugin-jest": "21.17.0",
     "jest": "23.2.0",
-    "rollup": "0.61.2",
+    "rollup": "0.62.0",
     "rollup-plugin-babel": "3.0.5",
     "rollup-plugin-node-resolve": "3.3.0",
     "rollup-plugin-terser": "1.0.1",
