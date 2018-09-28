@@ -43,10 +43,14 @@ export default {
    * Called only once, when the directive is first bound to the element.
    * This is where you can do one-time setup work.
    *
-   * @param {HTMLInputElement} el
+   * @param {(HTMLInputElement|HTMLElement)} el
    * @param {?String}          value
    */
   bind(el, { value }) {
+    if (!(el instanceof HTMLInputElement)) {
+      el = el.querySelector('input');
+    }
+
     updateMask(el, value);
     updateValue(el);
   },
@@ -58,11 +62,15 @@ export default {
    * but you can skip unnecessary updates by comparing the
    * binding’s current and old values.
    *
-   * @param {HTMLInputElement} el
+   * @param {(HTMLInputElement|HTMLElement)} el
    * @param {?String}          value
    * @param {?String}          oldValue
    */
   componentUpdated(el, { value, oldValue }) {
+    if (!(el instanceof HTMLInputElement)) {
+      el = el.querySelector('input');
+    }
+
     const isMaskChanged = value !== oldValue;
 
     // update mask first if changed
