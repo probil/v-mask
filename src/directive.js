@@ -44,7 +44,7 @@ export default {
    * This is where you can do one-time setup work.
    *
    * @param {(HTMLInputElement|HTMLElement)} el
-   * @param {?String}          value
+   * @param {?String}                        value
    */
   bind(el, { value }) {
     if (!(el instanceof HTMLInputElement)) {
@@ -63,8 +63,8 @@ export default {
    * binding’s current and old values.
    *
    * @param {(HTMLInputElement|HTMLElement)} el
-   * @param {?String}          value
-   * @param {?String}          oldValue
+   * @param {?String}                        value
+   * @param {?String}                        oldValue
    */
   componentUpdated(el, { value, oldValue }) {
     if (!(el instanceof HTMLInputElement)) {
