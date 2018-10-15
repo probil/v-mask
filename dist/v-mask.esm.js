@@ -1,19 +1,18 @@
-function format (data, mask) {
-  if (!mask) return data;
+function format (text, wholeMask) {
+  if (!wholeMask) return text;
 
   var maskStartRegExp = /^([^#ANX]+)/;
 
-  if (+data.length === 1 && maskStartRegExp.test(mask)) {
-    data = maskStartRegExp.exec(mask)[0] + data;
+  if (+text.length === 1 && maskStartRegExp.test(wholeMask)) {
+    text = maskStartRegExp.exec(wholeMask)[0] + text;
   }
 
-  var text = '';
+  var newText = '';
+  var charOffset = 0;
 
-  var cOffset = 0;
-
-  for (var i = 0; i < mask.length; i += 1) {
-    var m = mask.charAt(i);
-    switch (m) {
+  for (var maskIndex = 0; maskIndex < wholeMask.length; maskIndex += 1) {
+    var mask = wholeMask.charAt(maskIndex);
+    switch (mask) {
       case '#':
         break;
       case 'A':
@@ -25,41 +24,41 @@ function format (data, mask) {
       case 'X':
         break;
       default:
-        data = data.replace(m, '');
+        text = text.replace(mask, '');
     }
   }
-  for (var _i = 0, x = 1; x && _i < mask.length; _i += 1) {
-    var c = data.charAt(_i - cOffset);
-    var _m = mask.charAt(_i);
+  for (var _maskIndex = 0, x = 1; x && _maskIndex < wholeMask.length; _maskIndex += 1) {
+    var char = text.charAt(_maskIndex - charOffset);
+    var _mask = wholeMask.charAt(_maskIndex);
 
-    switch (_m) {
+    switch (_mask) {
       case '#':
-        /\d/.test(c) ? text += c : x = 0;
+        /\d/.test(char) ? newText += char : x = 0;
         break;
       case 'A':
-        /[a-z]/i.test(c) ? text += c : x = 0;
+        /[a-z]/i.test(char) ? newText += char : x = 0;
         break;
       case 'N':
-        /[a-z0-9]/i.test(c) ? text += c : x = 0;
+        /[a-z0-9]/i.test(char) ? newText += char : x = 0;
         break;
 
       case '?':
-        cOffset += 1;
+        charOffset += 1;
         break;
       case 'X':
-        text += c;
+        newText += char;
         break;
       default:
-        text += _m;
+        newText += _mask;
 
-        if (c && c !== _m) {
-          data = ' ' + data;
+        if (char && char !== _mask) {
+          text = ' ' + text;
         }
 
         break;
     }
   }
-  return text;
+  return newText;
 }
 
 var trigger = function trigger(el, type) {
