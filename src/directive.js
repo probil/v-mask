@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import format from './format';
-import { trigger } from './utils';
+import { trigger, queryInputElementInside } from './utils';
 import { isAndroid, isChrome } from './utils/env';
 
 /**
@@ -47,9 +47,7 @@ export default {
    * @param {?String}                        value
    */
   bind(el, { value }) {
-    if (!(el instanceof HTMLInputElement)) {
-      el = el.querySelector('input');
-    }
+    el = queryInputElementInside(el);
 
     updateMask(el, value);
     updateValue(el);
@@ -67,9 +65,7 @@ export default {
    * @param {?String}                        oldValue
    */
   componentUpdated(el, { value, oldValue }) {
-    if (!(el instanceof HTMLInputElement)) {
-      el = el.querySelector('input');
-    }
+    el = queryInputElementInside(el);
 
     const isMaskChanged = value !== oldValue;
 
