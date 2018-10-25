@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import format, { clean } from './format';
-import { trigger } from './utils';
+import { trigger, queryInputElementInside } from './utils';
 import { isAndroid, isChrome } from './utils/env';
 
 /**
@@ -44,10 +44,12 @@ export default {
    * Called only once, when the directive is first bound to the element.
    * This is where you can do one-time setup work.
    *
-   * @param {HTMLInputElement} el
-   * @param {?String}          value
+   * @param {(HTMLInputElement|HTMLElement)} el
+   * @param {?String}                        value
    */
   bind(el, { value }) {
+    el = queryInputElementInside(el);
+
     updateMask(el, value);
     updateValue(el);
   },
@@ -59,11 +61,13 @@ export default {
    * but you can skip unnecessary updates by comparing the
    * binding’s current and old values.
    *
-   * @param {HTMLInputElement} el
-   * @param {?String}          value
-   * @param {?String}          oldValue
+   * @param {(HTMLInputElement|HTMLElement)} el
+   * @param {?String}                        value
+   * @param {?String}                        oldValue
    */
   componentUpdated(el, { value, oldValue }) {
+    el = queryInputElementInside(el);
+
     const isMaskChanged = value !== oldValue;
 
     // update mask first if changed
