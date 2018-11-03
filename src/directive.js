@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import format, { clean } from './format';
+import format, { unMask } from './format';
 import { trigger, queryInputElementInside } from './utils';
 import { isAndroid, isChrome } from './utils/env';
 
@@ -21,7 +21,7 @@ function updateValue(el, force = false) {
   }
 
   el.dataset.previousValue = value;
-  el.dataset.rawValue = clean(value, mask);
+  el.dataset.unmaskedValue = unMask(value, mask);
 }
 
 /**

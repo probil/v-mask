@@ -48,13 +48,15 @@ export const mask = (text, wholeMask) => {
 };
 
 /**
- * Cleans data.
+ * Returns text without mask-provided delimiters
+ * @example
+ * unMask('11:12', '##:##'); // -> 1112
  *
- * @param {String} text String to clean (input value)
- * @param {String} [wholeMask] Mask format, like `####-##`
+ * @param {String} text - String to clean (input value)
+ * @param {String} [wholeMask] - Mask format, like `####-##`
  * @returns {string} Cleaned text
  */
-export const clean = (text, wholeMask) => {
+export const unMask = (text, wholeMask) => {
   for (let maskIndex = 0; maskIndex < wholeMask.length; maskIndex += 1) {
     const maskChar = wholeMask.charAt(maskIndex);
     switch (maskChar) {
@@ -104,5 +106,5 @@ export const prepare = (text, wholeMask) => {
 export default function (text, wholeMask) {
   if (!wholeMask) return text;
 
-  return mask(clean(prepare(text, wholeMask), wholeMask), wholeMask);
+  return mask(unMask(prepare(text, wholeMask), wholeMask), wholeMask);
 }
