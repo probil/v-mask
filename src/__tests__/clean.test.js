@@ -1,7 +1,6 @@
 import { clean } from '../format';
 
 describe('format.js - clean function', () => {
-
   it('should return the entry value without the mask', () => {
     // time with seconds
     expect(clean('11:15:15', '##:##:##')).toBe('111515');

@@ -21,7 +21,7 @@ function updateValue(el, force = false) {
   }
 
   el.dataset.previousValue = value;
-  el.dataset.rawValue = clean(value, mask)
+  el.dataset.rawValue = clean(value, mask);
 }
 
 /**
