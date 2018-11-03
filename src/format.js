@@ -8,8 +8,6 @@
  * @returns {string} Formatted text
  */
 export const mask = (text, wholeMask) => {
-  if (!wholeMask) return text;
-
   let newText = '';
   let charOffset = 0;
 
@@ -57,8 +55,6 @@ export const mask = (text, wholeMask) => {
  * @returns {string} Cleaned text
  */
 export const clean = (text, wholeMask) => {
-  if (!wholeMask) return text;
-
   for (let maskIndex = 0; maskIndex < wholeMask.length; maskIndex += 1) {
     const maskChar = wholeMask.charAt(maskIndex);
     switch (maskChar) {
@@ -88,8 +84,6 @@ export const clean = (text, wholeMask) => {
  * @returns {string} Prepared text
  */
 export const prepare = (text, wholeMask) => {
-  if (!wholeMask) return text;
-
   const maskStartRegExp = /^([^#ANX]+)/;
 
   if (+text.length === 1 && maskStartRegExp.test(wholeMask)) {
