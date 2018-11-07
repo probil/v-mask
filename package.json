@@ -38,7 +38,7 @@
     "eslint": "5.8.0",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-plugin-import": "2.14.0",
-    "eslint-plugin-jest": "21.27.2",
+    "eslint-plugin-jest": "22.0.0",
     "jest": "23.6.0",
     "rollup": "0.67.0",
     "rollup-plugin-babel": "4.0.3",
