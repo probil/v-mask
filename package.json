@@ -44,9 +44,9 @@
     "rollup-plugin-babel": "4.3.2",
     "rollup-plugin-node-resolve": "4.0.0",
     "rollup-plugin-terser": "4.0.4",
-    "vue": "2.6.0",
-    "vue-server-renderer": "2.6.0",
-    "vue-template-compiler": "2.6.0"
+    "vue": "2.6.6",
+    "vue-server-renderer": "2.6.6",
+    "vue-template-compiler": "2.6.6"
   },
   "jest": {
     "roots": [
