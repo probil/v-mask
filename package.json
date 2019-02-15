@@ -34,7 +34,7 @@
     "@babel/preset-env": "7.3.1",
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
-    "conventional-changelog": "3.0.5",
+    "conventional-changelog": "3.0.6",
     "eslint": "5.13.0",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-plugin-import": "2.16.0",
