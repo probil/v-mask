@@ -1,12 +1,11 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (factory((global.VueMask = {})));
-}(this, (function (exports) { 'use strict';
+  (global = global || self, factory(global.VueMask = {}));
+}(this, function (exports) { 'use strict';
 
   function format (text, wholeMask) {
     if (!wholeMask) return text;
-
     var maskStartRegExp = /^([^#ANX]+)/;
 
     if (+text.length === 1 && maskStartRegExp.test(wholeMask)) {
@@ -18,32 +17,42 @@
 
     for (var maskIndex = 0; maskIndex < wholeMask.length; maskIndex += 1) {
       var mask = wholeMask.charAt(maskIndex);
+
       switch (mask) {
         case '#':
           break;
+
         case 'A':
           break;
+
         case '?':
           break;
+
         case 'N':
           break;
+
         case 'X':
           break;
+
         default:
           text = text.replace(mask, '');
       }
     }
+
     for (var _maskIndex = 0, x = 1; x && _maskIndex < wholeMask.length; _maskIndex += 1) {
       var char = text.charAt(_maskIndex - charOffset);
+
       var _mask = wholeMask.charAt(_maskIndex);
 
       switch (_mask) {
         case '#':
           /\d/.test(char) ? newText += char : x = 0;
           break;
+
         case 'A':
           /[a-z]/i.test(char) ? newText += char : x = 0;
           break;
+
         case 'N':
           /[a-z0-9]/i.test(char) ? newText += char : x = 0;
           break;
@@ -51,19 +60,22 @@
         case '?':
           charOffset += 1;
           break;
+
         case 'X':
           newText += char;
           break;
+
         default:
           newText += _mask;
 
           if (char && char !== _mask) {
-            text = ' ' + text;
+            text = " ".concat(text);
           }
 
           break;
       }
     }
+
     return newText;
   }
 
@@ -71,6 +83,9 @@
     var e = document.createEvent('HTMLEvents');
     e.initEvent(type, true, true);
     el.dispatchEvent(e);
+  };
+  var queryInputElementInside = function queryInputElementInside(el) {
+    return el instanceof HTMLInputElement ? el : el.querySelector('input') || el;
   };
 
   var inBrowser = typeof window !== 'undefined';
@@ -81,15 +96,16 @@
 
   function updateValue(el) {
     var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-    var value = el.value,
+    var _el$value = el.value,
+        value = _el$value === void 0 ? '' : _el$value,
         _el$dataset = el.dataset,
         _el$dataset$previousV = _el$dataset.previousValue,
-        previousValue = _el$dataset$previousV === undefined ? '' : _el$dataset$previousV,
         mask = _el$dataset.mask;
+    var hasValue = value.trim().length > 0;
 
-
-    if (force || value && value !== previousValue && value.length > previousValue.length) {
+    if (force || hasValue) {
       el.value = format(value, mask);
+
       if (isAndroid && isChrome) {
         setTimeout(function () {
           return trigger(el, 'input');
@@ -109,14 +125,14 @@
   var directive = {
     bind: function bind(el, _ref) {
       var value = _ref.value;
-
+      el = queryInputElementInside(el);
       updateMask(el, value);
       updateValue(el);
     },
     componentUpdated: function componentUpdated(el, _ref2) {
       var value = _ref2.value,
           oldValue = _ref2.oldValue;
-
+      el = queryInputElementInside(el);
       var isMaskChanged = value !== oldValue;
 
       if (isMaskChanged) {
@@ -131,10 +147,10 @@
     Vue.directive('mask', directive);
   });
 
-  exports.default = plugin;
-  exports.VueMaskPlugin = plugin;
   exports.VueMaskDirective = directive;
+  exports.VueMaskPlugin = plugin;
+  exports.default = plugin;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));
