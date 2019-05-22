@@ -16,7 +16,7 @@ export default {
       file: 'dist/v-mask.js',
     },
     {
-      format: 'es',
+      format: 'esm',
       file: 'dist/v-mask.esm.js',
     },
   ],
