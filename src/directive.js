@@ -9,9 +9,11 @@ import { isAndroid, isChrome } from './utils/env';
  * @param {Boolean}          force
  */
 function updateValue(el, force = false) {
-  const { value, dataset: { previousValue = '', mask } } = el;
+  const { value = '', dataset: { mask } } = el;
 
-  if (force || (value && value !== previousValue && value.length > previousValue.length)) {
+  const hasValue = value.trim().length > 0;
+
+  if (force || hasValue) {
     el.value = format(value, mask);
     if (isAndroid && isChrome) {
       setTimeout(() => trigger(el, 'input'), 0);
@@ -19,8 +21,6 @@ function updateValue(el, force = false) {
       trigger(el, 'input');
     }
   }
-
-  el.dataset.previousValue = value;
 }
 
 /**
