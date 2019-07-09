@@ -4,6 +4,11 @@
     "docker:enableMajor",
     "default:pinDigestsDisabled"
   ],
+  "automerge": true,
+  "major": {
+    "automerge": false
+  },
+  "automergeType": "branch",
   "packageRules": [
     {
       "packagePatterns": ["^eslint"],
