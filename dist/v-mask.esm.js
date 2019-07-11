@@ -1,6 +1,5 @@
 function format (text, wholeMask) {
   if (!wholeMask) return text;
-
   var maskStartRegExp = /^([^#ANX]+)/;
 
   if (+text.length === 1 && maskStartRegExp.test(wholeMask)) {
@@ -12,32 +11,42 @@ function format (text, wholeMask) {
 
   for (var maskIndex = 0; maskIndex < wholeMask.length; maskIndex += 1) {
     var mask = wholeMask.charAt(maskIndex);
+
     switch (mask) {
       case '#':
         break;
+
       case 'A':
         break;
+
       case '?':
         break;
+
       case 'N':
         break;
+
       case 'X':
         break;
+
       default:
         text = text.replace(mask, '');
     }
   }
+
   for (var _maskIndex = 0, x = 1; x && _maskIndex < wholeMask.length; _maskIndex += 1) {
     var char = text.charAt(_maskIndex - charOffset);
+
     var _mask = wholeMask.charAt(_maskIndex);
 
     switch (_mask) {
       case '#':
         /\d/.test(char) ? newText += char : x = 0;
         break;
+
       case 'A':
         /[a-z]/i.test(char) ? newText += char : x = 0;
         break;
+
       case 'N':
         /[a-z0-9]/i.test(char) ? newText += char : x = 0;
         break;
@@ -45,19 +54,22 @@ function format (text, wholeMask) {
       case '?':
         charOffset += 1;
         break;
+
       case 'X':
         newText += char;
         break;
+
       default:
         newText += _mask;
 
         if (char && char !== _mask) {
-          text = ' ' + text;
+          text = " ".concat(text);
         }
 
         break;
     }
   }
+
   return newText;
 }
 
@@ -65,6 +77,9 @@ var trigger = function trigger(el, type) {
   var e = document.createEvent('HTMLEvents');
   e.initEvent(type, true, true);
   el.dispatchEvent(e);
+};
+var queryInputElementInside = function queryInputElementInside(el) {
+  return el instanceof HTMLInputElement ? el : el.querySelector('input') || el;
 };
 
 var inBrowser = typeof window !== 'undefined';
@@ -78,12 +93,12 @@ function updateValue(el) {
   var value = el.value,
       _el$dataset = el.dataset,
       _el$dataset$previousV = _el$dataset.previousValue,
-      previousValue = _el$dataset$previousV === undefined ? '' : _el$dataset$previousV,
+      previousValue = _el$dataset$previousV === void 0 ? '' : _el$dataset$previousV,
       mask = _el$dataset.mask;
-
 
   if (force || value && value !== previousValue && value.length > previousValue.length) {
     el.value = format(value, mask);
+
     if (isAndroid && isChrome) {
       setTimeout(function () {
         return trigger(el, 'input');
@@ -103,14 +118,14 @@ function updateMask(el, mask) {
 var directive = {
   bind: function bind(el, _ref) {
     var value = _ref.value;
-
+    el = queryInputElementInside(el);
     updateMask(el, value);
     updateValue(el);
   },
   componentUpdated: function componentUpdated(el, _ref2) {
     var value = _ref2.value,
         oldValue = _ref2.oldValue;
-
+    el = queryInputElementInside(el);
     var isMaskChanged = value !== oldValue;
 
     if (isMaskChanged) {
@@ -126,4 +141,4 @@ var plugin = (function (Vue) {
 });
 
 export default plugin;
-export { plugin as VueMaskPlugin, directive as VueMaskDirective };
+export { directive as VueMaskDirective, plugin as VueMaskPlugin };
