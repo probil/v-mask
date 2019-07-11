@@ -1,35 +1,18 @@
 function format (text, wholeMask) {
   if (!wholeMask) return text;
 
-  var maskStartRegExp = /^([^#ANX]+)/;
+  return mask(clean(prepare(text, wholeMask), wholeMask), wholeMask);
+}
 
-  if (+text.length === 1 && maskStartRegExp.test(wholeMask)) {
-    text = maskStartRegExp.exec(wholeMask)[0] + text;
-  }
+var mask = function mask(text, wholeMask) {
+  if (!wholeMask) return text;
 
   var newText = '';
   var charOffset = 0;
 
-  for (var maskIndex = 0; maskIndex < wholeMask.length; maskIndex += 1) {
-    var mask = wholeMask.charAt(maskIndex);
-    switch (mask) {
-      case '#':
-        break;
-      case 'A':
-        break;
-      case '?':
-        break;
-      case 'N':
-        break;
-      case 'X':
-        break;
-      default:
-        text = text.replace(mask, '');
-    }
-  }
-  for (var _maskIndex = 0, x = 1; x && _maskIndex < wholeMask.length; _maskIndex += 1) {
-    var char = text.charAt(_maskIndex - charOffset);
-    var _mask = wholeMask.charAt(_maskIndex);
+  for (var maskIndex = 0, x = 1; x && maskIndex < wholeMask.length; maskIndex += 1) {
+    var char = text.charAt(maskIndex - charOffset);
+    var _mask = wholeMask.charAt(maskIndex);
 
     switch (_mask) {
       case '#':
@@ -59,7 +42,43 @@ function format (text, wholeMask) {
     }
   }
   return newText;
-}
+};
+
+var clean = function clean(text, wholeMask) {
+  if (!wholeMask) return text;
+
+  for (var maskIndex = 0; maskIndex < wholeMask.length; maskIndex += 1) {
+    var _mask2 = wholeMask.charAt(maskIndex);
+    switch (_mask2) {
+      case '#':
+        break;
+      case 'A':
+        break;
+      case '?':
+        break;
+      case 'N':
+        break;
+      case 'X':
+        break;
+      default:
+        text = text.replace(_mask2, '');
+    }
+  }
+
+  return text;
+};
+
+var prepare = function prepare(text, wholeMask) {
+  if (!wholeMask) return text;
+
+  var maskStartRegExp = /^([^#ANX]+)/;
+
+  if (+text.length === 1 && maskStartRegExp.test(wholeMask)) {
+    text = maskStartRegExp.exec(wholeMask)[0] + text;
+  }
+
+  return text;
+};
 
 var trigger = function trigger(el, type) {
   var e = document.createEvent('HTMLEvents');
@@ -79,11 +98,11 @@ function updateValue(el) {
       _el$dataset = el.dataset,
       _el$dataset$previousV = _el$dataset.previousValue,
       previousValue = _el$dataset$previousV === undefined ? '' : _el$dataset$previousV,
-      mask = _el$dataset.mask;
+      mask$$1 = _el$dataset.mask;
 
 
   if (force || value && value !== previousValue && value.length > previousValue.length) {
-    el.value = format(value, mask);
+    el.value = format(value, mask$$1);
     if (isAndroid && isChrome) {
       setTimeout(function () {
         return trigger(el, 'input');
@@ -94,10 +113,11 @@ function updateValue(el) {
   }
 
   el.dataset.previousValue = value;
+  el.dataset.rawValue = clean(value, mask$$1);
 }
 
-function updateMask(el, mask) {
-  el.dataset.mask = mask;
+function updateMask(el, mask$$1) {
+  el.dataset.mask = mask$$1;
 }
 
 var directive = {

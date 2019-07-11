@@ -11,33 +11,22 @@
 export default function (text, wholeMask) {
   if (!wholeMask) return text;
 
-  const maskStartRegExp = /^([^#ANX]+)/;
+  return mask(clean(prepare(text, wholeMask), wholeMask), wholeMask);
+}
 
-  if (+text.length === 1 && maskStartRegExp.test(wholeMask)) {
-    text = maskStartRegExp.exec(wholeMask)[0] + text;
-  }
+/**
+ * Applies mask to data.
+ *
+ * @param {String} text String to mask (input value)
+ * @param {String} [wholeMask] Mask format, like `####-##`
+ * @returns {string} Formatted text
+ */
+export const mask = (text, wholeMask) => {
+  if (!wholeMask) return text;
 
   let newText = '';
   let charOffset = 0;
 
-  // Cleans data to  avoid value loss on dynamic mask changing
-  for (let maskIndex = 0; maskIndex < wholeMask.length; maskIndex += 1) {
-    const mask = wholeMask.charAt(maskIndex);
-    switch (mask) {
-      case '#':
-        break;
-      case 'A':
-        break;
-      case '?':
-        break;
-      case 'N':
-        break;
-      case 'X':
-        break;
-      default:
-        text = text.replace(mask, '');
-    }
-  }
   for (let maskIndex = 0, x = 1; x && maskIndex < wholeMask.length; maskIndex += 1) {
     const char = text.charAt(maskIndex - charOffset);
     const mask = wholeMask.charAt(maskIndex);
@@ -72,4 +61,54 @@ export default function (text, wholeMask) {
     }
   }
   return newText;
+}
+
+/**
+ * Cleans data.
+ *
+ * @param {String} text String to clean (input value)
+ * @param {String} [wholeMask] Mask format, like `####-##`
+ * @returns {string} Cleaned text
+ */
+export const clean = (text, wholeMask) => {
+  if (!wholeMask) return text;
+
+  for (let maskIndex = 0; maskIndex < wholeMask.length; maskIndex += 1) {
+    const mask = wholeMask.charAt(maskIndex);
+    switch (mask) {
+      case '#':
+        break;
+      case 'A':
+        break;
+      case '?':
+        break;
+      case 'N':
+        break;
+      case 'X':
+        break;
+      default:
+        text = text.replace(mask, '');
+    }
+  }
+
+  return text;
+}
+
+/**
+ * Prepares data.
+ *
+ * @param {String} text String to prepare (input value)
+ * @param {String} [wholeMask] Mask format, like `####-##`
+ * @returns {string} Prepared text
+ */
+export const prepare = (text, wholeMask) => {
+  if (!wholeMask) return text;
+
+  const maskStartRegExp = /^([^#ANX]+)/;
+
+  if (+text.length === 1 && maskStartRegExp.test(wholeMask)) {
+    text = maskStartRegExp.exec(wholeMask)[0] + text;
+  }
+
+  return text;
 }
