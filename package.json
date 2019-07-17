@@ -50,10 +50,5 @@
   },
   "dependencies": {
     "text-mask-core": "5.1.2"
-  },
-  "jest": {
-    "roots": [
-      "<rootDir>/src"
-    ]
   }
 }
