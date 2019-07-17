@@ -48,6 +48,9 @@
     "vue-server-renderer": "2.6.10",
     "vue-template-compiler": "2.6.10"
   },
+  "dependencies": {
+    "text-mask-core": "5.1.2"
+  },
   "jest": {
     "roots": [
       "<rootDir>/src"
