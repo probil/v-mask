@@ -1,75 +1,64 @@
-/* eslint-disable no-param-reassign, no-unused-expressions */
+import conformToMask from 'text-mask-core/src/conformToMask';
+
+const NEXT_CHAR_OPTIONAL = {
+  __nextCharOptional__: true,
+};
 
 /**
- * Simple format function borrowed from PureMask.js
- * {@link https://github.com/romulobrasil/PureMask.js}
- *
  * @param {String} text String to mask (input value)
  * @param {String} [wholeMask] Mask format, like `####-##`
  * @returns {string} Formatted text
  */
 export default function (text, wholeMask) {
   if (!wholeMask) return text;
+  const replacementMap = {
+    '#': /\d/,
+    A: /[a-z]/i,
+    N: /[a-z0-9]/i,
+    '?': NEXT_CHAR_OPTIONAL,
+    X: /./,
+  };
 
-  const maskStartRegExp = /^([^#ANX]+)/;
+  const stringToRegexp = (str) => {
+    const lastSlash = str.lastIndexOf('/');
+    return new RegExp(
+      str.slice(1, lastSlash),
+      str.slice(lastSlash + 1),
+    );
+  };
+  const makeRegexpOptional = charRegexp => (
+    stringToRegexp(
+      charRegexp.toString()
+        .replace(
+          /.(\/)[gmiyus]{0,6}$/,
+          match => match.replace('/', '?/'),
+        ),
+    )
+  )
 
-  if (+text.length === 1 && maskStartRegExp.test(wholeMask)) {
-    text = maskStartRegExp.exec(wholeMask)[0] + text;
-  }
+  const escapeIfNeeded = char => ('[\\^$.|?*+()'.split('').includes(char) ? `\\${char}` : char);
+  const charRegexp = char => new RegExp(`/[${escapeIfNeeded(char)}]/`);
+  const isRegexp = entity => entity instanceof RegExp;
+  const castToRegexp = char => (isRegexp(char) ? char : charRegexp(char));
 
-  let newText = '';
-  let charOffset = 0;
+  const generatedMask = wholeMask
+    .split('')
+    .map((char, index, array) => {
+      const maskChar = replacementMap[char] || char;
+      const previousChar = array[index - 1];
+      const previousMaskChar = replacementMap[previousChar] || previousChar;
+      if (maskChar === NEXT_CHAR_OPTIONAL) {
+        return null;
+      }
+      if (previousMaskChar === NEXT_CHAR_OPTIONAL) {
+        const casted = castToRegexp(maskChar);
+        const optionalRegexp = makeRegexpOptional(casted);
+        return optionalRegexp;
+      }
+      return maskChar;
+    })
+    .filter(Boolean);
 
-  // Cleans data to  avoid value loss on dynamic mask changing
-  for (let maskIndex = 0; maskIndex < wholeMask.length; maskIndex += 1) {
-    const mask = wholeMask.charAt(maskIndex);
-    switch (mask) {
-      case '#':
-        break;
-      case 'A':
-        break;
-      case '?':
-        break;
-      case 'N':
-        break;
-      case 'X':
-        break;
-      default:
-        text = text.replace(mask, '');
-    }
-  }
-  for (let maskIndex = 0, x = 1; x && maskIndex < wholeMask.length; maskIndex += 1) {
-    const char = text.charAt(maskIndex - charOffset);
-    const mask = wholeMask.charAt(maskIndex);
-
-    switch (mask) {
-      case '#':
-        /\d/.test(char) ? newText += char : x = 0;
-        break;
-      case 'A':
-        /[a-z]/i.test(char) ? newText += char : x = 0;
-        break;
-      case 'N':
-        /[a-z0-9]/i.test(char) ? newText += char : x = 0;
-        break;
-      // Skips testing if optional field is specified
-      case '?':
-        charOffset += 1;
-        break;
-      case 'X':
-        newText += char;
-        break;
-      default:
-        newText += mask;
-
-        // preserve characters that are in the same spot we need to insert a mask
-        // character by shifting the data over to the right (issue #5, & #7)
-        if (char && char !== mask) {
-          text = ` ${text}`;
-        }
-
-        break;
-    }
-  }
-  return newText;
+  const { conformedValue } = conformToMask(text, generatedMask, { guide: false });
+  return conformedValue;
 }
