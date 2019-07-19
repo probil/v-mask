@@ -6,7 +6,7 @@
 [![Vue2](https://img.shields.io/badge/Vue-2.x-brightgreen.svg)](https://vuejs.org/)
 [![](https://data.jsdelivr.com/v1/package/npm/v-mask/badge?style=rounded)](https://www.jsdelivr.com/package/npm/v-mask)
 
-> Tiny input mask library for vue.js based on [text-mask-core](https://github.com/romulobrasil/PureMask.js) (~4kb) exposed as directive. No dependencies
+> Tiny input mask library for vue.js based on [text-mask-core](https://github.com/text-mask/text-mask/tree/master/core) (~4kb) exposed as directive. No dependencies
 
 ## :art: Playground on the Web
 
