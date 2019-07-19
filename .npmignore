@@ -121,3 +121,14 @@ Temporary Items
 # Exclude demo directory
 demo
 /e2e/
+RELEASE_NOTE_*.md
+renovate.json
+.circleci
+build
+scripts
+ISSUE_TEMPLATE.md
+src/**/__tests__/**
+jest.config.js
+.eslintignore
+.eslintrc.json
+.editorconfig
