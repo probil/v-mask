@@ -32,6 +32,8 @@ jobs:
       # catch build-time errors (if any)
       - run: npm run build
 
+      - run: npm run lint
+
       # run tests!
       - run: npm run test:coverage
 
