@@ -67,4 +67,19 @@ describe('directive usage', () => {
     await wrapper.vm.$nextTick();
     expect(wrapper.vm.$el.value).toBe('11.11.2011');
   });
+
+  it('updates model when input value triggered few times with the same value', async () => {
+    const wrapper = mountWithMask({
+      data: () => ({ mask: '##.##.####', value: undefined }),
+      template: '<input v-mask="mask" v-model="value"/>',
+    });
+    const pasteValue = '11112011';
+    wrapper.vm.$el.value = pasteValue;
+    wrapper.trigger('input');
+    wrapper.vm.$el.value = pasteValue;
+    wrapper.trigger('input');
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.vm.$el.value).toBe('11.11.2011');
+  });
 });
