@@ -35,7 +35,7 @@ export default function (text, wholeMask) {
           match => match.replace('/', '?/'),
         ),
     )
-  )
+  );
 
   const escapeIfNeeded = char => ('[\\^$.|?*+()'.split('').includes(char) ? `\\${char}` : char);
   const charRegexp = char => new RegExp(`/[${escapeIfNeeded(char)}]/`);
