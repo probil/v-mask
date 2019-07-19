@@ -1,6 +1,6 @@
-import format from '../format';
+import format, { unMask } from '../format';
 
-describe('format.js', () => {
+describe('default export', () => {
   it('should be a function', () => {
     expect(format).toEqual(expect.any(Function));
   });
@@ -78,5 +78,28 @@ describe('format.js', () => {
     expect(format('53288196000128', '##.###.###/####-##')).toBe('53.288.196/0001-28');
     // Social Security number
     expect(format('365038704', '###-##-####')).toBe('365-03-8704');
+  });
+});
+
+describe('.unMask()', () => {
+  it('should return the entry value without the mask', () => {
+    // time with seconds
+    expect(unMask('11:15:15', '##:##:##')).toBe('111515');
+    // hours and minutes
+    expect(unMask('20h15m', '##h##m')).toBe('2015');
+    // date-time
+    expect(unMask('27/10/2016 23:15', '##/##/#### ##:##')).toBe('271020162315');
+    // credit card
+    expect(unMask('4532 4782 5524 7634', '#### #### #### ####')).toBe('4532478255247634');
+    // phone number
+    expect(unMask('(999) 999-9999', '(###) ###-####')).toBe('9999999999');
+    // phone number (US)
+    expect(unMask('+1 (999) 999-9999', '+1 (###) ###-####')).toBe('9999999999');
+    // CPF
+    expect(unMask('390.533.447-05', '###.###.###-##')).toBe('39053344705');
+    // CPNJ
+    expect(unMask('53.288.196/0001-28', '##.###.###/####-##')).toBe('53288196000128');
+    // Social Security number
+    expect(unMask('365-03-8704', '###-##-####')).toBe('365038704');
   });
 });
