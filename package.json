@@ -13,7 +13,7 @@
     "bundle:min": "rollup -c build/rollup.conf.min.js",
     "release": "bash scripts/release.sh",
     "release:note": "node scripts/gen-release-note.js",
-    "lint": "eslint src scripts"
+    "lint": "eslint src scripts tests"
   },
   "repository": {
     "type": "git",
