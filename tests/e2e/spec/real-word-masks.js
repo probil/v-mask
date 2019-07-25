@@ -2,7 +2,7 @@ import { Selector } from 'testcafe';
 
 // eslint-disable-next-line no-unused-expressions
 fixture`Real-world masks`
-  .page`./index.html`;
+  .page`./real-word-masks.html`;
 
 test('Time and date input', async (t) => {
   const el = Selector('input#time-and-date-ex');
