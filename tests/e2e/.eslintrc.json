@@ -1,0 +1,13 @@
+{
+  "plugins": [
+    "testcafe"
+  ],
+  "extends": [
+    "airbnb-base",
+    "plugin:testcafe/recommended"
+  ],
+  "env" : {
+    "browser": false,
+    "node": true
+  }
+}
