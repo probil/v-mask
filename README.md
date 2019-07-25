@@ -4,7 +4,8 @@
 [![npm](https://img.shields.io/npm/dm/v-mask.svg)](https://www.npmjs.com/package/v-mask)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/probil/v-mask/master/LICENSE)
 [![Vue2](https://img.shields.io/badge/Vue-2.x-brightgreen.svg)](https://vuejs.org/)
-[![](https://data.jsdelivr.com/v1/package/npm/v-mask/badge?style=rounded)](https://www.jsdelivr.com/package/npm/v-mask)
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/v-mask/badge?style=rounded)](https://www.jsdelivr.com/package/npm/v-mask)
+[![Tested with TestCafe](https://img.shields.io/badge/tested%20with-TestCafe-2fa4cf.svg)](https://github.com/DevExpress/testcafe)
 
 > Tiny input mask library for vue.js based on [text-mask-core](https://github.com/text-mask/text-mask/tree/master/core) (~4kb) exposed as directive. No dependencies
 
@@ -79,16 +80,19 @@ List of supported placeholders:
 
 [Jest](https://github.com/facebook/jest) is used for unit-tests.
 
-You can run tests by typing this command in your console:
+Unit-tests can be executed by typing this command in your terminal:
 
 ```bash
 npm test
 ```
 
-[Nightwatch](http://nightwatchjs.org/) is used of E2E testing.
+[TestCafe](https://github.com/DevExpress/testcafe) is used of E2E testing.
 
-Check the [v-mask--demo](https://github.com/probil/v-mask--demo) repo for more details
+E2E-tests can be executed by typing this command in your terminal:
 
+```bash
+npm test:e2e
+```
 
 ## :anchor: Semantic Versioning Policy
 

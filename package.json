@@ -7,12 +7,13 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
+    "test:e2e": "npx testcafe `npx testcafe -b | paste -sd \",\" -` tests/e2e/**",
     "build": "npm run bundle && npm run bundle:min",
     "bundle": "rollup -c build/rollup.conf.js",
     "bundle:min": "rollup -c build/rollup.conf.min.js",
     "release": "bash scripts/release.sh",
     "release:note": "node scripts/gen-release-note.js",
-    "lint": "eslint src scripts"
+    "lint": "eslint src scripts tests"
   },
   "repository": {
     "type": "git",
@@ -39,11 +40,13 @@
     "eslint-config-airbnb-base": "13.2.0",
     "eslint-plugin-import": "2.18.2",
     "eslint-plugin-jest": "22.13.6",
+    "eslint-plugin-testcafe": "^0.2.1",
     "jest": "24.8.0",
     "rollup": "1.17.0",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-terser": "5.1.1",
+    "testcafe": "1.3.3",
     "text-mask-core": "5.1.2",
     "vue": "2.6.10",
     "vue-server-renderer": "2.6.10",

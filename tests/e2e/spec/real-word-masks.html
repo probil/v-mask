@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Test</title>
+</head>
+<body>
+<div id="app">
+  <input
+    id="time-and-date-ex"
+    type="text"
+    placeholder="27/10/2016 23:15"
+    v-mask="'##/##/#### ##:##'"
+    v-model="models.timeAndDate"
+  />
+
+  <input
+    id="time-ex"
+    type="text"
+    placeholder="11:23:15"
+    v-mask="'##:##:##'"
+    v-model="models.timeWithSeconds"
+  />
+
+  <input
+    id="credit-cart-ex"
+    type="text"
+    placeholder="4444 4444 4444 4444"
+    v-mask="'#### #### #### ####'"
+    v-model="models.cardNumber"
+  />
+
+  <input
+    id="phone-number-ex"
+    type="text"
+    placeholder="(999) 999-9999"
+    v-mask="'(###) ###-####'"
+    v-model="models.phoneNumber"
+  />
+
+  <input
+    id="us-phone-number-ex"
+    type="text"
+    placeholder="+1(999)-999-9999"
+    v-mask="'+1(###)-###-####'"
+    v-model="models.usPhoneNumber"
+  />
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script src="../../../dist/v-mask.min.js"></script>
+<script>
+  Vue.use(VueMask.VueMaskPlugin);
+
+  new Vue({
+    el: '#app',
+    data: function () {
+      return {
+        models: {
+          timeAndDate: '',
+          timeWithSeconds: '',
+          cardNumber: '',
+          phoneNumber: '',
+          usPhoneNumber: ''
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>
