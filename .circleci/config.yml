@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:latest
+      - image: circleci/node:latest-browsers
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -34,6 +34,9 @@ jobs:
 
       - run: npm run lint
 
-      # run tests!
       - run: npm run test:coverage
 
+      - run: npm run test:e2e:ci
+
+      - store_test_results:
+           path: /tmp/test-results
