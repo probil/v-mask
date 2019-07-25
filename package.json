@@ -7,6 +7,7 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
+    "test:e2e": "npx testcafe `npx testcafe -b | paste -sd \",\" -` tests/e2e/**",
     "build": "npm run bundle && npm run bundle:min",
     "bundle": "rollup -c build/rollup.conf.js",
     "bundle:min": "rollup -c build/rollup.conf.min.js",
