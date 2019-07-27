@@ -16,7 +16,7 @@
     v-mask="'##/##/#### ##:##'"
     v-model="models.timeAndDate"
   />
-
+  <hr>
   <input
     id="time-ex"
     type="text"
@@ -24,7 +24,15 @@
     v-mask="'##:##:##'"
     v-model="models.timeWithSeconds"
   />
-
+  <hr>
+  <input
+    id="hours-and-minutes-ex"
+    type="text"
+    placeholder="12h15m"
+    v-mask="'##h##m'"
+    v-model="models.hoursAndMinutes"
+  />
+  <hr>
   <input
     id="credit-cart-ex"
     type="text"
@@ -32,7 +40,7 @@
     v-mask="'#### #### #### ####'"
     v-model="models.cardNumber"
   />
-
+  <hr>
   <input
     id="phone-number-ex"
     type="text"
@@ -40,13 +48,37 @@
     v-mask="'(###) ###-####'"
     v-model="models.phoneNumber"
   />
-
+  <hr>
   <input
     id="us-phone-number-ex"
     type="text"
     placeholder="+1(999)-999-9999"
     v-mask="'+1(###)-###-####'"
     v-model="models.usPhoneNumber"
+  />
+  <hr>
+  <input
+    id="cpf-ex"
+    type="text"
+    placeholder="123.123.123-12"
+    v-mask="'###.###.###-##'"
+    v-model="models.cpf"
+  />
+  <hr>
+  <input
+    id="cpnj-ex"
+    type="text"
+    placeholder="53.288.196/0001-28"
+    v-mask="'##.###.###/####-##'"
+    v-model="models.cpnj"
+  />
+  <hr>
+  <input
+    id="social-security-number-ex"
+    type="text"
+    placeholder="365-03-8704"
+    v-mask="'###-##-####'"
+    v-model="models.socialSecurityNumber"
   />
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
@@ -61,9 +93,13 @@
         models: {
           timeAndDate: '',
           timeWithSeconds: '',
+          hoursAndMinutes: '',
           cardNumber: '',
           phoneNumber: '',
-          usPhoneNumber: ''
+          usPhoneNumber: '',
+          cpf: '',
+          cpnj: '',
+          socialSecurityNumber: ''
         }
       }
     }
