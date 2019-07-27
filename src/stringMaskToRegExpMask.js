@@ -1,5 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import conformToMask from 'text-mask-core/src/conformToMask';
 import { defaultMaskReplacers, NEXT_CHAR_OPTIONAL } from './constants';
 import { castToRegexp, makeRegexpOptional } from './utils/regexp';
 
@@ -8,7 +6,7 @@ import { castToRegexp, makeRegexpOptional } from './utils/regexp';
  * @param {String} stringMask
  * @return {RegExp[]}
  */
-function stringMaskToRegExpMask(stringMask) {
+export default function stringMaskToRegExpMask(stringMask) {
   return stringMask
     .split('')
     .map((char, index, array) => {
@@ -24,18 +22,4 @@ function stringMaskToRegExpMask(stringMask) {
       return maskChar;
     })
     .filter(Boolean);
-}
-
-/**
- * @param {String} text String to mask (input value)
- * @param {String} [wholeMask] Mask format, like `####-##`
- * @returns {string} Formatted text
- */
-export default function (text, wholeMask) {
-  if (!wholeMask) return text;
-
-  const generatedMask = stringMaskToRegExpMask(wholeMask);
-
-  const { conformedValue } = conformToMask(text, generatedMask, { guide: false });
-  return conformedValue;
 }

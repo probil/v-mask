@@ -1,7 +1,12 @@
 /* eslint-disable no-param-reassign */
-import format from './format';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import conformToMask from 'text-mask-core/src/conformToMask';
+import stringMaskToRegExpMask from './stringMaskToRegExpMask';
 import { trigger, queryInputElementInside } from './utils';
 import { isAndroid, isChrome } from './utils/env';
+import createOptions from './createOptions';
+
+const options = createOptions();
 
 /**
  * Event handler
@@ -9,10 +14,12 @@ import { isAndroid, isChrome } from './utils/env';
  * @param {Boolean}          force
  */
 function updateValue(el, force = false) {
-  const { value, dataset: { previousValue = '', mask } } = el;
+  const { value } = el;
+  const { previousValue, mask } = options.get(el);
 
   if (force || (value && value !== previousValue && value.length > previousValue.length)) {
-    el.value = format(value, mask);
+    const { conformedValue } = conformToMask(value, mask, { guide: false });
+    el.value = conformedValue;
     if (isAndroid && isChrome) {
       setTimeout(() => trigger(el, 'input'), 0);
     } else {
@@ -20,7 +27,7 @@ function updateValue(el, force = false) {
     }
   }
 
-  el.dataset.previousValue = value;
+  options.partiallyUpdate(el, { previousValue: value });
 }
 
 /**
@@ -29,8 +36,7 @@ function updateValue(el, force = false) {
  * @param {String}           mask
  */
 function updateMask(el, mask) {
-  // change format
-  el.dataset.mask = mask;
+  options.partiallyUpdate(el, { mask: stringMaskToRegExpMask(mask) });
 }
 
 
@@ -76,5 +82,10 @@ export default {
 
     // update value
     updateValue(el, isMaskChanged);
+  },
+
+  unbind(el) {
+    el = queryInputElementInside(el);
+    options.remove(el);
   },
 };
