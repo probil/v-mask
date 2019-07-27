@@ -26,7 +26,11 @@ function updateValue(el, force = false) {
   const { value } = el;
   const { previousValue, mask } = options.get(el);
 
-  if (force || (value && value !== previousValue && value.length > previousValue.length)) {
+  const isValueChanged = value !== previousValue;
+  const isLengthIncreased = value.length > previousValue.length;
+  const isUpdateNeeded = value && isValueChanged && isLengthIncreased;
+
+  if (force || isUpdateNeeded) {
     const { conformedValue } = conformToMask(value, mask, { guide: false });
     el.value = conformedValue;
     triggerInputUpdate(el);
