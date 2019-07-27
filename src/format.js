@@ -1,9 +1,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import conformToMask from 'text-mask-core/src/conformToMask';
-
-const NEXT_CHAR_OPTIONAL = {
-  __nextCharOptional__: true,
-};
+import {
+  NEXT_CHAR_OPTIONAL,
+  defaultMaskReplacers,
+} from './constants';
 
 /**
  * @param {String} text String to mask (input value)
@@ -12,13 +12,7 @@ const NEXT_CHAR_OPTIONAL = {
  */
 export default function (text, wholeMask) {
   if (!wholeMask) return text;
-  const replacementMap = {
-    '#': /\d/,
-    A: /[a-z]/i,
-    N: /[a-z0-9]/i,
-    '?': NEXT_CHAR_OPTIONAL,
-    X: /./,
-  };
+
 
   const stringToRegexp = (str) => {
     const lastSlash = str.lastIndexOf('/');
@@ -45,9 +39,9 @@ export default function (text, wholeMask) {
   const generatedMask = wholeMask
     .split('')
     .map((char, index, array) => {
-      const maskChar = replacementMap[char] || char;
+      const maskChar = defaultMaskReplacers[char] || char;
       const previousChar = array[index - 1];
-      const previousMaskChar = replacementMap[previousChar] || previousChar;
+      const previousMaskChar = defaultMaskReplacers[previousChar] || previousChar;
       if (maskChar === NEXT_CHAR_OPTIONAL) {
         return null;
       }
