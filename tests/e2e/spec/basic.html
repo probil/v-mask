@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Test</title>
+</head>
+<body>
+<div id="app">
+  <input
+    id="time-ex"
+    type="text"
+    placeholder="11:23"
+    v-mask="'##:##'"
+    v-model="models.time"
+  />
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script src="../../../dist/v-mask.min.js"></script>
+<script>
+  Vue.use(VueMask.VueMaskPlugin);
+
+  new Vue({
+    el: '#app',
+    data: function () {
+      return {
+        models: {
+          time: '',
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>
