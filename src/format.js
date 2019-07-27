@@ -1,42 +1,15 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import conformToMask from 'text-mask-core/src/conformToMask';
-import {
-  NEXT_CHAR_OPTIONAL,
-  defaultMaskReplacers,
-} from './constants';
+import { defaultMaskReplacers, NEXT_CHAR_OPTIONAL } from './constants';
+import { castToRegexp, makeRegexpOptional } from './utils/regexp';
 
 /**
- * @param {String} text String to mask (input value)
- * @param {String} [wholeMask] Mask format, like `####-##`
- * @returns {string} Formatted text
+ * Converts mask from `v-mask` format to `text-mask-core` format
+ * @param {String} stringMask
+ * @return {RegExp[]}
  */
-export default function (text, wholeMask) {
-  if (!wholeMask) return text;
-
-
-  const stringToRegexp = (str) => {
-    const lastSlash = str.lastIndexOf('/');
-    return new RegExp(
-      str.slice(1, lastSlash),
-      str.slice(lastSlash + 1),
-    );
-  };
-  const makeRegexpOptional = charRegexp => (
-    stringToRegexp(
-      charRegexp.toString()
-        .replace(
-          /.(\/)[gmiyus]{0,6}$/,
-          match => match.replace('/', '?/'),
-        ),
-    )
-  );
-
-  const escapeIfNeeded = char => ('[\\^$.|?*+()'.split('').includes(char) ? `\\${char}` : char);
-  const charRegexp = char => new RegExp(`/[${escapeIfNeeded(char)}]/`);
-  const isRegexp = entity => entity instanceof RegExp;
-  const castToRegexp = char => (isRegexp(char) ? char : charRegexp(char));
-
-  const generatedMask = wholeMask
+function stringMaskToRegExpMask(stringMask) {
+  return stringMask
     .split('')
     .map((char, index, array) => {
       const maskChar = defaultMaskReplacers[char] || char;
@@ -46,13 +19,22 @@ export default function (text, wholeMask) {
         return null;
       }
       if (previousMaskChar === NEXT_CHAR_OPTIONAL) {
-        const casted = castToRegexp(maskChar);
-        const optionalRegexp = makeRegexpOptional(casted);
-        return optionalRegexp;
+        return makeRegexpOptional(castToRegexp(maskChar));
       }
       return maskChar;
     })
     .filter(Boolean);
+}
+
+/**
+ * @param {String} text String to mask (input value)
+ * @param {String} [wholeMask] Mask format, like `####-##`
+ * @returns {string} Formatted text
+ */
+export default function (text, wholeMask) {
+  if (!wholeMask) return text;
+
+  const generatedMask = stringMaskToRegExpMask(wholeMask);
 
   const { conformedValue } = conformToMask(text, generatedMask, { guide: false });
   return conformedValue;
