@@ -32,11 +32,23 @@ jobs:
       # catch build-time errors (if any)
       - run: npm run build
 
-      - run: npm run lint
+      - run:
+          name: Run code-style check
+          command: npm run lint -- --format junit -o /tmp/test-results/code-style-test-results.xml
 
-      - run: npm run test:coverage
+      - run:
+          name: Install `jest-junit` coverage reporter
+          command: npm i --save-dev jest-junit
 
-      - run: npm run test:e2e:ci
+      - run:
+          name: Run unit-tests
+          command: npm run test:coverage -- --ci --runInBand --reporters=default --reporters=jest-junit
+          environment:
+            JEST_JUNIT_OUTPUT: "/tmp/test-results/unit-test-results.xml"
+
+      - run:
+          name: Run E2E tests
+          command: npm run test:e2e:ci -- -r xunit:/tmp/test-results/e2e-test-results.xml
 
       - store_test_results:
            path: /tmp/test-results
