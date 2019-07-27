@@ -8,6 +8,15 @@ import createOptions from './createOptions';
 
 const options = createOptions();
 
+function triggerInputUpdate(el) {
+  const fn = trigger.bind(null, el, 'input');
+  if (isAndroid && isChrome) {
+    setTimeout(fn, 0);
+  } else {
+    fn();
+  }
+}
+
 /**
  * Event handler
  * @param {HTMLInputElement} el
@@ -20,11 +29,7 @@ function updateValue(el, force = false) {
   if (force || (value && value !== previousValue && value.length > previousValue.length)) {
     const { conformedValue } = conformToMask(value, mask, { guide: false });
     el.value = conformedValue;
-    if (isAndroid && isChrome) {
-      setTimeout(() => trigger(el, 'input'), 0);
-    } else {
-      trigger(el, 'input');
-    }
+    triggerInputUpdate(el);
   }
 
   options.partiallyUpdate(el, { previousValue: value });
