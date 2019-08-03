@@ -8,7 +8,7 @@ module.exports = {
           browsers: [
             '> 1%',
             'last 2 versions',
-            'not ie <= 8',
+            'not dead',
           ],
         },
       },
