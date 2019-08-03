@@ -38,6 +38,10 @@ jobs:
       # catch build-time errors (if any)
       - run: npm run build
 
+      - store_artifacts:
+          path: ./dist/v-mask.min.js
+          destination: v-mask.min.js
+
       - run:
           name: Run code-style check
           command: npm run lint -- --format junit -o /tmp/test-results/code-style-test-results.xml
