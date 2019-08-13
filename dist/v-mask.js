@@ -403,6 +403,11 @@
   var directive = {
     bind: function bind(el, _ref) {
       var value = _ref.value;
+
+      if (!value) {
+        return;
+      }
+
       el = queryInputElementInside(el);
       updateMask(el, value);
       updateValue(el);
@@ -410,6 +415,11 @@
     componentUpdated: function componentUpdated(el, _ref2) {
       var value = _ref2.value,
           oldValue = _ref2.oldValue;
+
+      if (!value) {
+        return;
+      }
+
       el = queryInputElementInside(el);
       var isMaskChanged = value !== oldValue;
 

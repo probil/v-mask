@@ -62,6 +62,10 @@ export default {
    * @param {?String}                        value
    */
   bind(el, { value }) {
+    if (!value) {
+      return;
+    }
+
     el = queryInputElementInside(el);
 
     updateMask(el, value);
@@ -80,6 +84,10 @@ export default {
    * @param {?String}                        oldValue
    */
   componentUpdated(el, { value, oldValue }) {
+    if (!value) {
+      return;
+    }
+
     el = queryInputElementInside(el);
 
     const isMaskChanged = value !== oldValue;
