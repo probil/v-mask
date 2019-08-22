@@ -19,12 +19,12 @@ const stringToRegexp = (str) => {
  * @param {RegExp} charRegexp
  * @return {RegExp}
  */
-export const makeRegexpOptional = charRegexp => (
+export const makeRegexpOptional = (charRegexp) => (
   stringToRegexp(
     charRegexp.toString()
       .replace(
         /.(\/)[gmiyus]{0,6}$/,
-        match => match.replace('/', '?/'),
+        (match) => match.replace('/', '?/'),
       ),
   )
 );
@@ -33,7 +33,7 @@ export const makeRegexpOptional = charRegexp => (
  * @param {String} char
  * @return {String}
  */
-const escapeIfNeeded = char => (
+const escapeIfNeeded = (char) => (
   '[\\^$.|?*+()'.indexOf(char) > -1
     ? `\\${char}`
     : char
@@ -44,17 +44,17 @@ const escapeIfNeeded = char => (
  * @param {String} char
  * @return {RegExp}
  */
-const charRegexp = char => new RegExp(`/[${escapeIfNeeded(char)}]/`);
+const charRegexp = (char) => new RegExp(`/[${escapeIfNeeded(char)}]/`);
 
 /**
  * Determines if value is regular expression
  * @param {String|RegExp} entity
  * @return {boolean}
  */
-const isRegexp = entity => entity instanceof RegExp;
+const isRegexp = (entity) => entity instanceof RegExp;
 
 /**
  * @param {String|RegExp} char
  * @return {RegExp}
  */
-export const castToRegexp = char => (isRegexp(char) ? char : charRegexp(char));
+export const castToRegexp = (char) => (isRegexp(char) ? char : charRegexp(char));
