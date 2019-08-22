@@ -16,7 +16,7 @@ export const trigger = (el, type) => {
  * @param {HTMLElement} el
  * @returns {HTMLElement|HTMLInputElement}
  */
-export const queryInputElementInside = el => (
+export const queryInputElementInside = (el) => (
   el instanceof HTMLInputElement
     ? el
     : el.querySelector('input') || el
