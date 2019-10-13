@@ -7,46 +7,44 @@
 [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/v-mask/badge?style=rounded)](https://www.jsdelivr.com/package/npm/v-mask)
 [![Tested with TestCafe](https://img.shields.io/badge/tested%20with-TestCafe-2fa4cf.svg)](https://github.com/DevExpress/testcafe)
 
-* [Leia esta página em português](https://github.com/probil/v-mask/blob/master/README-pt.md)
+> Biblioteca enxuta baseado no [text-mask-core](https://github.com/text-mask/text-mask/tree/master/core) (~4kb) apenas diretiva. sem dependências.
 
-> Tiny input mask library for vue.js based on [text-mask-core](https://github.com/text-mask/text-mask/tree/master/core) (~4kb) exposed as directive. No dependencies
+## :art: Playground na Web
 
-## :art: Playground on the Web
-
-- https://codesandbox.io/s/m3q1m5yp9x (interactive playground with webpack and ESM)
-- https://jsfiddle.net/probil/c6fjjzn6/ (simple interactive playground with UMD)
-- https://v-mask-demo.netlify.com/ (just preview)
+- https://codesandbox.io/s/m3q1m5yp9x ( playground interativo com webpack e ESM)
+- https://jsfiddle.net/probil/c6fjjzn6/ ( playground interativo simples com UMD)
+- https://v-mask-demo.netlify.com/ ( Demo v-mask )
 
 
-## :heavy_check_mark: Browser Support
+## :heavy_check_mark: Navegadores suportados
 
 |![Chrome](https://raw.github.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.github.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![Safari](https://raw.github.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Opera](https://raw.github.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Edge](https://raw.github.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![IE](https://raw.github.com/alrra/browser-logos/master/src/archive/internet-explorer_9-11/internet-explorer_9-11_48x48.png) | ![iOS Safari](https://raw.github.com/alrra/browser-logos/master/src/safari-ios/safari-ios_48x48.png) | ![Android WebView](https://raw.github.com/alrra/browser-logos/master/src/android-webview-beta/android-webview-beta_48x48.png) | ![Android WebView](https://raw.github.com/alrra/browser-logos/master/src/samsung-internet/samsung-internet_48x48.png)
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 74+ :heavy_check_mark: | 66+ :heavy_check_mark:  | 12+ :heavy_check_mark: | 46+ :heavy_check_mark: | 17+ :heavy_check_mark: | 11+ :heavy_check_mark: | 12+ :heavy_check_mark: | 67+ :heavy_check_mark: | 8.2+ :heavy_check_mark:
 
-We support only browsers with global usage statistics greater then 1%, last 2 version of each browser but not dead browsers. Library may work in older browser but we don't not guarantee that. You may need addition polyfills to make it work. 
+Suportamos apenas navegadores com estatísticas de uso global superiores a 1%, última versão 2 de cada navegador, mas não navegadores inativos. A biblioteca pode funcionar em navegadores antigos, mas não garantimos isso. Você pode precisar de polyfills adicionais para fazê-lo funcionar.
 
 
-## :cd: Installation
+## :cd: Intalação
 
-This version requires Vue 2.X. If you are looking for Vue 1.X, [check it here](https://github.com/probil/v-mask/tree/vue-1.x).
+Esta versão requer o Vue 2.X. Se você está utilizando o Vue 1.X [clique aqui](https://github.com/probil/v-mask/tree/vue-1.x).
 
 ```sh
 npm install v-mask
 ```
 
-## Initialization
+## Inicialização
 
 ### ES2015 (Webpack/Rollup/Browserify/etc)
 
 ```javascript
 import Vue from 'vue'
 
-// As a plugin
+// usar o plugin
 import VueMask from 'v-mask'
 Vue.use(VueMask);
 
-// Or as a directive
+// usar a diretiva
 import { VueMaskDirective } from 'v-mask'
 Vue.directive('mask', VueMaskDirective);
 ```
@@ -57,69 +55,71 @@ Vue.directive('mask', VueMaskDirective);
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/v-mask/dist/v-mask.min.js"></script>
 <script>
-// As a plugin
+// usar o plugin
 Vue.use(VueMask.VueMaskPlugin);
 
-// Or as a directive
+// usar a diretiva
 Vue.directive('mask', VueMask.VueMaskDirective);
 </script>
 ```
 
-## :rocket: Usage
+## :rocket: Utilizando
 
 ```html
 <input type="text" v-mask="'####-##'" v-model="myInputModel">
-<!-- OR -->
+<!-- OU -->
 <input type="text" v-mask="nameOfVariableWithMask" v-model="myInputModel">
 ```
-**Notice:** `v-model` is required starting from `v1.1.0`, because [a lot](https://github.com/probil/v-mask/issues/16) [of](https://github.com/probil/v-mask/issues/30) [bugs](https://github.com/probil/v-mask/issues/29) with HTMLElement event listeners and sync with Vue internals.
+**Notice:** `v-model` é necessário a partir da versão `v1.1.0`, porque acabam [existindo](https://github.com/probil/v-mask/issues/16) [muitos](https://github.com/probil/v-mask/issues/30) [bugs](https://github.com/probil/v-mask/issues/29) 
+com ouvintes de eventos HTMLElement e sincronização dos mesmos com o Vue.
 
-There is no reason to support using this lib for using without `v-model` but open the door for using on [custom inputs](http://vuejs.org/v2/guide/components.html#Form-Input-Components-using-Custom-Events).
+Não há razão para suportar o uso dessa lib para uso sem o modelo `v-model`, mas abra a porta para uso em [inputs personalizados](http://vuejs.org/v2/guide/components.html#Form-Input-Components-using-Custom-Events).
 
-## :gear: Configs
+## :gear: Configurações
 
-List of supported placeholders:
+Lista de simbolos reservados para máscara:
 
 | Value | Format                       |
 |-------|------------------------------|
-| #     | Number (0-9)                 |
-| A     | Letter in any case (a-z,A-Z) |
-| N     | Number or letter             |
-| X     | Any symbol                   |
-| ?     | Optional (next character)    |
+| #     | Números (0-9)                 |
+| A     | Caractere de qualquer case (a-z,A-Z) |
+| N     | Caractere ou Números             |
+| X     | Qualquer símbolo                 |
+| ?     | Opcional (próximo caractere)    |
 
 ## :syringe: Tests
 
-[Jest](https://github.com/facebook/jest) is used for unit-tests.
+[Jest](https://github.com/facebook/jest) é usado para fazer os testes-unitários
 
-Unit-tests can be executed by typing this command in your terminal:
+Testes unitários podem ser executados utilizando o seguinte comando:
 
 ```bash
 npm test
 ```
 
-[TestCafe](https://github.com/DevExpress/testcafe) is used of E2E testing.
+[TestCafe](https://github.com/DevExpress/testcafe) é usando para fazer testes E2E.
 
-E2E-tests can be executed by typing this command in your terminal:
+E2E-tests podem ser executados utilizando o seguinte comando:
 
 ```bash
 npm test:e2e
 ```
 
-## :anchor: Semantic Versioning Policy
+## :anchor: Versionamento Semântico
 
-This plugin follows [semantic versioning](http://semver.org/).
+Este plugin segue [semantic versioning](http://semver.org/).
 
 ## :newspaper: Changelog
 
-We're using [GitHub Releases](https://github.com/probil/v-mask/releases).
+Estamos usando [GitHub Releases](https://github.com/probil/v-mask/releases).
 
-## :beers: Contributing
+## :beers: Contribuições
 
-We're more than happy to see potential contributions, so don't hesitate. If you have any suggestions, ideas or problems feel free to add new [issue](https://github.com/probil/v-mask/issues), but first please make sure your question does not repeat previous ones.
 
-**Notice:** You should make your changes only in `src` folder, don't try to edit files from `dist` as it compiled from `src` by babel and shouldn't be changes manually.
+Estamos muito felizes em ver contribuições em potencial, então não hesite. Se você tiver alguma sugestão, ideia ou problema, sinta-se à vontade para adicionar um novo [issue](https://github.com/probil/v-mask/issues), mas primeiro verifique se a sua pergunta não repete as anteriores.
 
-## :lock: License
+Aviso: Você deve fazer suas alterações apenas na pasta `src`, não tente editar arquivos do `dist`, pois ele foi compilado a partir do `src` a partir do babel e não deve ser alterado manualmente.
 
-See the [LICENSE](LICENSE) file for license rights and limitations (MIT).
+## :lock: Licença
+
+Consulte o arquivo [LICENSE](LICENSE) para obter os direitos e limitações da licença (MIT).
