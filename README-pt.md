@@ -9,6 +9,16 @@
 
 > Biblioteca enxuta baseado no [text-mask-core](https://github.com/text-mask/text-mask/tree/master/core) (~4kb) apenas diretiva. sem dependências.
 
+<div align="center">
+  <h4>
+    <a href="https://github.com/probil/v-mask/blob/master/README.md">English</a>
+    <span> | </span>
+    <strong>
+      <a href="https://github.com/probil/v-mask/blob/master/README-pt.md">Português</a>
+    </strong>
+  </h4>
+</div>
+
 ## :art: Playground na Web
 
 - https://codesandbox.io/s/m3q1m5yp9x ( playground interativo com webpack e ESM)
