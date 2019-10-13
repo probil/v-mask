@@ -10,13 +10,13 @@
 > Biblioteca enxuta baseado no [text-mask-core](https://github.com/text-mask/text-mask/tree/master/core) (~4kb) apenas diretiva. sem dependências.
 
 <div align="center">
-  <h4>
+  <h3>
     <a href="https://github.com/probil/v-mask/blob/master/README.md">English</a>
     <span> | </span>
     <strong>
       <a href="https://github.com/probil/v-mask/blob/master/README-pt.md">Português</a>
     </strong>
-  </h4>
+  </h3>
 </div>
 
 ## :art: Playground na Web

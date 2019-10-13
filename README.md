@@ -10,13 +10,13 @@
 > Tiny input mask library for vue.js based on [text-mask-core](https://github.com/text-mask/text-mask/tree/master/core) (~4kb) exposed as directive. No dependencies
 
 <div align="center">
-  <h4>
+  <h3>
     <strong>
       <a href="https://github.com/probil/v-mask/blob/master/README.md">English</a>
     </strong>  
     <span> | </span>
     <a href="https://github.com/probil/v-mask/blob/master/README-pt.md">Português</a>
-  </h4>
+  </h3>
 </div>
 
 ## :art: Playground on the Web
