@@ -389,8 +389,9 @@ function updateValue(el) {
 }
 
 function updateMask(el, mask) {
+  var newMask = typeof mask === 'string' ? stringMaskToRegExpMask(mask) : mask;
   options.partiallyUpdate(el, {
-    mask: stringMaskToRegExpMask(mask)
+    mask: newMask
   });
 }
 
