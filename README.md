@@ -86,7 +86,7 @@ There is no reason to support using this lib for using without `v-model` but ope
 
 ## :gear: Configs
 
-List of supported placeholders:
+List of supported placeholders for string inputs:
 
 | Value | Format                       |
 |-------|------------------------------|
@@ -95,6 +95,9 @@ List of supported placeholders:
 | N     | Number or letter             |
 | X     | Any symbol                   |
 | ?     | Optional (next character)    |
+
+For more complex masks (i.e. currency) you can pass an array or function. This is especially useful if you use the [text-mask](https://github.com/text-mask/text-mask/) addon [create-number-mask](https://github.com/text-mask/text-mask/tree/master/addons/#createnumbermask)
+
 
 ## :syringe: Tests
 
