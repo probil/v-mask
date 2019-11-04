@@ -1,15 +1,16 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
-import conformToMask from 'text-mask-core/src/conformToMask';
-import stringMaskToRegExpMask from './stringMaskToRegExpMask';
-import { trigger, queryInputElementInside } from './utils';
-import { isAndroid, isChrome } from './utils/env';
-import createOptions from './createOptions';
+import conformToMask from "text-mask-core/src/conformToMask";
+import createNumberMask from "text-mask-addons/src/createNumberMask";
+import stringMaskToRegExpMask from "./stringMaskToRegExpMask";
+import { trigger, queryInputElementInside } from "./utils";
+import { isAndroid, isChrome } from "./utils/env";
+import createOptions from "./createOptions";
 
 const options = createOptions();
 
 function triggerInputUpdate(el) {
-  const fn = trigger.bind(null, el, 'input');
+  const fn = trigger.bind(null, el, "input");
   if (isAndroid && isChrome) {
     setTimeout(fn, 0);
   } else {
@@ -40,20 +41,39 @@ function updateValue(el, force = false) {
 }
 
 /**
+ * Conform an object to its appropriate mask
+ * @param {Object} mask
+ * @param {string} mask.type
+ * @param {Object} mask.options
+ * @throws
+ */
+function conformObjectToMask({ type, options = {} }) {
+  switch (type) {
+    case "number":
+      return createNumberMask(options);
+    default:
+      throw new Error('Object mask type does not conform to text-mask-addon');
+  }
+}
+
+/**
  * Fires on handler update
  * @param {HTMLInputElement} el
  * @param {String}           mask
  */
 function updateMask(el, mask) {
-  options.partiallyUpdate(el, { mask: stringMaskToRegExpMask(mask) });
+  options.partiallyUpdate(el, {
+    mask:
+      typeof mask === "string"
+        ? stringMaskToRegExpMask(mask)
+        : conformObjectToMask(mask),
+  });
 }
-
 
 /**
  * Vue directive definition
  */
 export default {
-
   /**
    * Called only once, when the directive is first bound to the element.
    * This is where you can do one-time setup work.

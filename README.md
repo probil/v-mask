@@ -1,4 +1,4 @@
-# :abcd: Vue input mask 
+# :abcd: Vue input mask
 [![npm](https://img.shields.io/npm/v/v-mask.svg)](https://www.npmjs.com/package/v-mask)
 [![Github file size](https://img.shields.io/github/size/probil/v-mask/dist/v-mask.min.js.svg)](https://raw.githubusercontent.com/probil/v-mask/master/dist/v-mask.min.js)
 [![npm](https://img.shields.io/npm/dm/v-mask.svg)](https://www.npmjs.com/package/v-mask)
@@ -13,7 +13,7 @@
   <h3>
     <strong>
       <a href="https://github.com/probil/v-mask/blob/master/README.md">English</a>
-    </strong>  
+    </strong>
     <span> | </span>
     <a href="https://github.com/probil/v-mask/blob/master/README-pt.md">Português</a>
   </h3>
@@ -32,7 +32,7 @@
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 74+ :heavy_check_mark: | 66+ :heavy_check_mark:  | 12+ :heavy_check_mark: | 46+ :heavy_check_mark: | 17+ :heavy_check_mark: | 11+ :heavy_check_mark: | 12+ :heavy_check_mark: | 67+ :heavy_check_mark: | 8.2+ :heavy_check_mark:
 
-We support only browsers with global usage statistics greater then 1%, last 2 version of each browser but not dead browsers. Library may work in older browser but we don't not guarantee that. You may need addition polyfills to make it work. 
+We support only browsers with global usage statistics greater then 1%, last 2 version of each browser but not dead browsers. Library may work in older browser but we don't not guarantee that. You may need addition polyfills to make it work.
 
 
 ## :cd: Installation
@@ -88,13 +88,24 @@ There is no reason to support using this lib for using without `v-model` but ope
 
 List of supported placeholders:
 
-| Value | Format                       |
-|-------|------------------------------|
-| #     | Number (0-9)                 |
-| A     | Letter in any case (a-z,A-Z) |
-| N     | Number or letter             |
-| X     | Any symbol                   |
-| ?     | Optional (next character)    |
+| Value  | Format                                                                                                                      |
+|--------|-----------------------------------------------------------------------------------------------------------------------------|
+| #      | Number (0-9)                                                                                                                |
+| A      | Letter in any case (a-z,A-Z)                                                                                                |
+| N      | Number or letter                                                                                                            |
+| X      | Any symbol                                                                                                                  |
+| ?      | Optional (next character)                                                                                                   |
+| Object | An object containing a mask type and options to take advange of text-mask-addons. [See what's supported](#text-mask-addons) |
+
+## Text Mask Addons
+
+Currently this library supports the [createNumberMask](https://github.com/text-mask/text-mask/tree/master/addons/#createnumbermask) text-mask-addon only. To use this mask use the following syntax:
+
+```
+<input v-mask="{type: 'number', options: {...numberMaskOptions}">
+```
+
+View the [createNumberMask](https://github.com/text-mask/text-mask/tree/master/addons/#createnumbermask) documentation for a full list of options available.
 
 ## :syringe: Tests
 

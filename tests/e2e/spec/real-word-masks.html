@@ -1,109 +1,120 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Test</title>
-</head>
-<body>
-<div id="app">
-  <input
-    id="time-and-date-ex"
-    type="text"
-    placeholder="27/10/2016 23:15"
-    v-mask="'##/##/#### ##:##'"
-    v-model="models.timeAndDate"
-  />
-  <hr>
-  <input
-    id="time-ex"
-    type="text"
-    placeholder="11:23:15"
-    v-mask="'##:##:##'"
-    v-model="models.timeWithSeconds"
-  />
-  <hr>
-  <input
-    id="hours-and-minutes-ex"
-    type="text"
-    placeholder="12h15m"
-    v-mask="'##h##m'"
-    v-model="models.hoursAndMinutes"
-  />
-  <hr>
-  <input
-    id="credit-cart-ex"
-    type="text"
-    placeholder="4444 4444 4444 4444"
-    v-mask="'#### #### #### ####'"
-    v-model="models.cardNumber"
-  />
-  <hr>
-  <input
-    id="phone-number-ex"
-    type="text"
-    placeholder="(999) 999-9999"
-    v-mask="'(###) ###-####'"
-    v-model="models.phoneNumber"
-  />
-  <hr>
-  <input
-    id="us-phone-number-ex"
-    type="text"
-    placeholder="+1(999)-999-9999"
-    v-mask="'+1(###)-###-####'"
-    v-model="models.usPhoneNumber"
-  />
-  <hr>
-  <input
-    id="cpf-ex"
-    type="text"
-    placeholder="123.123.123-12"
-    v-mask="'###.###.###-##'"
-    v-model="models.cpf"
-  />
-  <hr>
-  <input
-    id="cpnj-ex"
-    type="text"
-    placeholder="53.288.196/0001-28"
-    v-mask="'##.###.###/####-##'"
-    v-model="models.cpnj"
-  />
-  <hr>
-  <input
-    id="social-security-number-ex"
-    type="text"
-    placeholder="365-03-8704"
-    v-mask="'###-##-####'"
-    v-model="models.socialSecurityNumber"
-  />
-</div>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
-<script src="../../../dist/v-mask.min.js"></script>
-<script>
-  Vue.use(VueMask.VueMaskPlugin);
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Test</title>
+  </head>
+  <body>
+    <div id="app">
+      <input
+        id="time-and-date-ex"
+        type="text"
+        placeholder="27/10/2016 23:15"
+        v-mask="'##/##/#### ##:##'"
+        v-model="models.timeAndDate"
+      />
+      <hr />
+      <input
+        id="time-ex"
+        type="text"
+        placeholder="11:23:15"
+        v-mask="'##:##:##'"
+        v-model="models.timeWithSeconds"
+      />
+      <hr />
+      <input
+        id="hours-and-minutes-ex"
+        type="text"
+        placeholder="12h15m"
+        v-mask="'##h##m'"
+        v-model="models.hoursAndMinutes"
+      />
+      <hr />
+      <input
+        id="credit-cart-ex"
+        type="text"
+        placeholder="4444 4444 4444 4444"
+        v-mask="'#### #### #### ####'"
+        v-model="models.cardNumber"
+      />
+      <hr />
+      <input
+        id="phone-number-ex"
+        type="text"
+        placeholder="(999) 999-9999"
+        v-mask="'(###) ###-####'"
+        v-model="models.phoneNumber"
+      />
+      <hr />
+      <input
+        id="us-phone-number-ex"
+        type="text"
+        placeholder="+1(999)-999-9999"
+        v-mask="'+1(###)-###-####'"
+        v-model="models.usPhoneNumber"
+      />
+      <hr />
+      <input
+        id="cpf-ex"
+        type="text"
+        placeholder="123.123.123-12"
+        v-mask="'###.###.###-##'"
+        v-model="models.cpf"
+      />
+      <hr />
+      <input
+        id="cpnj-ex"
+        type="text"
+        placeholder="53.288.196/0001-28"
+        v-mask="'##.###.###/####-##'"
+        v-model="models.cpnj"
+      />
+      <hr />
+      <input
+        id="social-security-number-ex"
+        type="text"
+        placeholder="365-03-8704"
+        v-mask="'###-##-####'"
+        v-model="models.socialSecurityNumber"
+      />
+      <hr />
+      <input
+        id="currency"
+        type="text"
+        placeholder="$1,000"
+        v-mask="{type: 'number'}"
+        v-model="models.currency"
+      />
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+    <script src="../../../dist/v-mask.min.js"></script>
+    <script>
+      Vue.use(VueMask.VueMaskPlugin);
 
-  new Vue({
-    el: '#app',
-    data: function () {
-      return {
-        models: {
-          timeAndDate: '',
-          timeWithSeconds: '',
-          hoursAndMinutes: '',
-          cardNumber: '',
-          phoneNumber: '',
-          usPhoneNumber: '',
-          cpf: '',
-          cpnj: '',
-          socialSecurityNumber: ''
-        }
-      }
-    }
-  })
-</script>
-</body>
+      new Vue({
+        el: "#app",
+        data: function() {
+          return {
+            models: {
+              timeAndDate: "",
+              timeWithSeconds: "",
+              hoursAndMinutes: "",
+              cardNumber: "",
+              phoneNumber: "",
+              usPhoneNumber: "",
+              cpf: "",
+              cpnj: "",
+              socialSecurityNumber: "",
+              currency: "",
+            },
+          };
+        },
+      });
+    </script>
+  </body>
 </html>

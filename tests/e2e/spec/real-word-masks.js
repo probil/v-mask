@@ -66,3 +66,11 @@ test('Social Security number input', async (t) => {
     .typeText(el, '365038704')
     .expect(el.value).eql('365-03-8704');
 });
+
+test('Currency number input', async (t) => {
+  const el = Selector('input#currency');
+
+  await t
+    .typeText(el, '1000')
+    .expect(el.value).eql('$1,000');
+});
