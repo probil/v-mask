@@ -31,7 +31,7 @@ function updateValue(el, force = false) {
   const isUpdateNeeded = value && isValueChanged && isLengthIncreased;
 
   if (force || isUpdateNeeded) {
-    const { conformedValue } = conformToMask(value, mask, { guide: false });
+    const { conformedValue } = mask ? conformToMask(value, mask, { guide: false }) : value;
     el.value = conformedValue;
     triggerInputUpdate(el);
   }

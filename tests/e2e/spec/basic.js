@@ -30,3 +30,19 @@ test('Does nothing if backspace is pressed multiple times on empty field', async
     .pressKey('backspace')
     .expect(el.value).eql(''); // eslint-disable-line newline-per-chained-call
 });
+
+test('Does not affect the input', async (t) => {
+  const el = Selector('input#no-mask');
+  await t
+    .typeText(el, '2315')
+    .expect(el.value).eql('2315')
+    .typeText(el, 'ABCD')
+    .expect(el.value).eql('2315ABCD')
+	.pressKey('backspace')
+    .pressKey('backspace')
+    .pressKey('backspace')
+	.pressKey('backspace')
+	.expect(el.value).eql('2315')
+	.typeText(el, 'efgh')
+	.expect(el.value).eql('2315efgh')
+});
