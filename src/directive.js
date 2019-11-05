@@ -45,7 +45,7 @@ function updateValue(el, force = false) {
  * @param {String}           mask
  */
 function updateMask(el, mask) {
-  options.partiallyUpdate(el, { mask: stringMaskToRegExpMask(mask) });
+  options.partiallyUpdate(el, { mask: mask ? stringMaskToRegExpMask(mask) : false });
 }
 
 
