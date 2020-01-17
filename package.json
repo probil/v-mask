@@ -47,7 +47,7 @@
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-terser": "5.2.0",
-    "testcafe": "1.7.1",
+    "testcafe": "1.8.0",
     "text-mask-core": "5.1.2",
     "vue": "2.6.11",
     "vue-server-renderer": "2.6.11",
