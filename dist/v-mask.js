@@ -2,9 +2,11 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
   (global = global || self, factory(global.VueMask = {}));
-}(this, function (exports) { 'use strict';
+}(this, (function (exports) { 'use strict';
 
   function _typeof(obj) {
+    "@babel/helpers - typeof";
+
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
       _typeof = function (obj) {
         return typeof obj;
@@ -52,13 +54,13 @@
       var source = arguments[i] != null ? arguments[i] : {};
 
       if (i % 2) {
-        ownKeys(source, true).forEach(function (key) {
+        ownKeys(Object(source), true).forEach(function (key) {
           _defineProperty(target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
         Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
       } else {
-        ownKeys(source).forEach(function (key) {
+        ownKeys(Object(source)).forEach(function (key) {
           Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
         });
       }
@@ -323,12 +325,6 @@
     return el instanceof HTMLInputElement ? el : el.querySelector('input') || el;
   };
 
-  var inBrowser = typeof window !== 'undefined';
-  var UA = inBrowser && window.navigator.userAgent.toLowerCase();
-  var isEdge = UA && UA.indexOf('edge/') > 0;
-  var isAndroid = UA && UA.indexOf('android') > 0;
-  var isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;
-
   function createOptions() {
     var elementOptions = new Map();
     var defaultOptions = {
@@ -358,13 +354,7 @@
   var options = createOptions();
 
   function triggerInputUpdate(el) {
-    var fn = trigger.bind(null, el, 'input');
-
-    if (isAndroid && isChrome) {
-      setTimeout(fn, 0);
-    } else {
-      fn();
-    }
+    trigger.bind(null, el, 'input')();
   }
 
   function updateValue(el) {
@@ -435,4 +425,4 @@
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));

@@ -3,18 +3,12 @@
 import conformToMask from 'text-mask-core/src/conformToMask';
 import stringMaskToRegExpMask from './stringMaskToRegExpMask';
 import { trigger, queryInputElementInside } from './utils';
-import { isAndroid, isChrome } from './utils/env';
 import createOptions from './createOptions';
 
 const options = createOptions();
 
 function triggerInputUpdate(el) {
-  const fn = trigger.bind(null, el, 'input');
-  if (isAndroid && isChrome) {
-    setTimeout(fn, 0);
-  } else {
-    fn();
-  }
+  trigger.bind(null, el, 'input')();
 }
 
 /**
