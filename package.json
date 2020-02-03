@@ -1,5 +1,5 @@
 {
-  "name": "v-mask",
+  "name": "@luizmacfilho/v-mask",
   "version": "2.0.3",
   "description": "Tiny input mask library for Vue.js based on text-mask-core (~4kb) exposed as directive. No dependencies",
   "main": "dist/v-mask.js",
