@@ -32,7 +32,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   # generate release note
   npm run release:note $VERSION
   # tag version
-  npm version $VERSION --message "build: release $VERSION" --allow-same-version
+  npm version $VERSION --message "build: release $VERSION"
 
   # publish
   git push origin refs/tags/v$VERSION
