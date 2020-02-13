@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import conformToMask from 'text-mask-core/src/conformToMask';
-import stringMaskToRegExpMask from './stringMaskToRegExpMask';
+import { stringMaskToRegExpMask } from './maskToRegExpMask';
 
 /**
  * Vue filter definition
