@@ -1,4 +1,4 @@
-# :abcd: Vue input mask 
+# :abcd: Vue input mask
 [![npm](https://img.shields.io/npm/v/v-mask.svg)](https://www.npmjs.com/package/v-mask)
 [![Github file size](https://img.shields.io/github/size/probil/v-mask/dist/v-mask.min.js.svg)](https://raw.githubusercontent.com/probil/v-mask/master/dist/v-mask.min.js)
 [![npm](https://img.shields.io/npm/dm/v-mask.svg)](https://www.npmjs.com/package/v-mask)
@@ -57,6 +57,10 @@ Vue.use(VueMask);
 // usar a diretiva
 import { VueMaskDirective } from 'v-mask'
 Vue.directive('mask', VueMaskDirective);
+
+// usar apenas o filtro
+import { VueMaskFilter } from 'v-mask'
+Vue.filter('VMask', VueMaskFilter)
 ```
 
 ### UMD (Browser)
@@ -80,22 +84,27 @@ Vue.directive('mask', VueMask.VueMaskDirective);
 <!-- OU -->
 <input type="text" v-mask="nameOfVariableWithMask" v-model="myInputModel">
 ```
-**Notice:** `v-model` é necessário a partir da versão `v1.1.0`, porque acabam [existindo](https://github.com/probil/v-mask/issues/16) [muitos](https://github.com/probil/v-mask/issues/30) [bugs](https://github.com/probil/v-mask/issues/29) 
+**Notice:** `v-model` é necessário a partir da versão `v1.1.0`, porque acabam [existindo](https://github.com/probil/v-mask/issues/16) [muitos](https://github.com/probil/v-mask/issues/30) [bugs](https://github.com/probil/v-mask/issues/29)
 com ouvintes de eventos HTMLElement e sincronização dos mesmos com o Vue.
 
 Não há razão para suportar o uso dessa lib para uso sem o modelo `v-model`, mas abra a porta para uso em [inputs personalizados](http://vuejs.org/v2/guide/components.html#Form-Input-Components-using-Custom-Events).
+
+### Utilizando o filtro
+```html
+<span>{{ '9999999999' | VMask('(###) ###-####') }}</span>
+```
 
 ## :gear: Configurações
 
 Lista de simbolos reservados para máscara:
 
-| Value | Format                       |
-|-------|------------------------------|
-| #     | Números (0-9)                 |
+| Value | Format                               |
+|-------|--------------------------------------|
+| #     | Números (0-9)                        |
 | A     | Caractere de qualquer case (a-z,A-Z) |
-| N     | Caractere ou Números             |
-| X     | Qualquer símbolo                 |
-| ?     | Opcional (próximo caractere)    |
+| N     | Caractere ou Números                 |
+| X     | Qualquer símbolo                     |
+| ?     | Opcional (próximo caractere)         |
 
 ## :syringe: Tests
 

@@ -1,4 +1,4 @@
-# :abcd: Vue input mask 
+# :abcd: Vue input mask
 [![npm](https://img.shields.io/npm/v/v-mask.svg)](https://www.npmjs.com/package/v-mask)
 [![Github file size](https://img.shields.io/github/size/probil/v-mask/dist/v-mask.min.js.svg)](https://raw.githubusercontent.com/probil/v-mask/master/dist/v-mask.min.js)
 [![npm](https://img.shields.io/npm/dm/v-mask.svg)](https://www.npmjs.com/package/v-mask)
@@ -13,7 +13,7 @@
   <h3>
     <strong>
       <a href="https://github.com/probil/v-mask/blob/master/README.md">English</a>
-    </strong>  
+    </strong>
     <span> | </span>
     <a href="https://github.com/probil/v-mask/blob/master/README-pt.md">Português</a>
   </h3>
@@ -32,7 +32,7 @@
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 74+ :heavy_check_mark: | 66+ :heavy_check_mark:  | 12+ :heavy_check_mark: | 46+ :heavy_check_mark: | 17+ :heavy_check_mark: | 11+ :heavy_check_mark: | 12+ :heavy_check_mark: | 67+ :heavy_check_mark: | 8.2+ :heavy_check_mark:
 
-We support only browsers with global usage statistics greater then 1%, last 2 version of each browser but not dead browsers. Library may work in older browser but we don't not guarantee that. You may need addition polyfills to make it work. 
+We support only browsers with global usage statistics greater then 1%, last 2 version of each browser but not dead browsers. Library may work in older browser but we don't not guarantee that. You may need addition polyfills to make it work.
 
 
 ## :cd: Installation
@@ -57,6 +57,10 @@ Vue.use(VueMask);
 // Or as a directive
 import { VueMaskDirective } from 'v-mask'
 Vue.directive('mask', VueMaskDirective);
+
+// Or only as a filter
+import { VueMaskFilter } from 'v-mask'
+Vue.filter('VMask', VueMaskFilter)
 ```
 
 ### UMD (Browser)
@@ -83,6 +87,11 @@ Vue.directive('mask', VueMask.VueMaskDirective);
 **Notice:** `v-model` is required starting from `v1.1.0`, because [a lot](https://github.com/probil/v-mask/issues/16) [of](https://github.com/probil/v-mask/issues/30) [bugs](https://github.com/probil/v-mask/issues/29) with HTMLElement event listeners and sync with Vue internals.
 
 There is no reason to support using this lib for using without `v-model` but open the door for using on [custom inputs](http://vuejs.org/v2/guide/components.html#Form-Input-Components-using-Custom-Events).
+
+### Filter usage
+```html
+<span>{{ '9999999999' | VMask('(###) ###-####') }}</span>
+```
 
 ## :gear: Configs
 

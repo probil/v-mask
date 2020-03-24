@@ -1,4 +1,5 @@
 import directive from './directive';
+import filter from './filter';
 
 /**
  * Vue plugin definition
@@ -6,4 +7,5 @@ import directive from './directive';
  */
 export default (Vue) => {
   Vue.directive('mask', directive);
+  Vue.filter('VMask', filter);
 };
