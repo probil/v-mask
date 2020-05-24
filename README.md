@@ -271,8 +271,6 @@ Library supports [Text Mask Addons](https://www.npmjs.com/package/text-mask-addo
 
 The usage is simple. Configure the addon as want and pass the result to the `v-mask` as you would to `text-mask-core`.
 
-View the [createNumberMask](https://github.com/text-mask/text-mask/tree/master/addons/#createnumbermask) documentation for a full list of options available.
-
 `app.js`:
 ```js
 import Vue from 'vue'
@@ -304,6 +302,8 @@ Vue.use(VueMask)
 In this example:
 - entering `1000000.00` in the input field will produce `$1,000,000.00` in `myInputModel` variable
 - while entering `100` in the input field will produce `$100`
+
+View the [createNumberMask](https://github.com/text-mask/text-mask/tree/master/addons/#createnumbermask) documentation for a full list of options available.
 
 ## :syringe: Tests
 
