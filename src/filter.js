@@ -7,8 +7,8 @@ import { stringMaskToRegExpMask } from './maskToRegExpMask';
  * @param {String} value
  * @param {String} stringMask
  */
-export default function (value, stringMask) {
+export default (value, stringMask) => {
   const mask = stringMaskToRegExpMask(stringMask);
   const { conformedValue } = conformToMask(value, mask, { guide: false });
   return conformedValue;
-}
+};
