@@ -1,4 +1,5 @@
 import { createLocalVue, mount } from '@vue/test-utils';
+import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import VueMask, { VueMaskDirective, VueMaskPlugin } from '../index';
 import { timeRangeMask } from '../utils/timeRangeMask';
 
@@ -155,5 +156,22 @@ describe('directive usage', () => {
       template: '<input v-mask="mask" v-model="value"/>',
     }, { localVue });
     expect(wrapper.vm.$el.value).toBe('07-55-55-55-55');
+  });
+
+  it('should be possible to use createNumberMask from text-mask-addons', () => {
+    const currencyMask = createNumberMask({
+      prefix: '$',
+      allowDecimal: true,
+      includeThousandsSeparator: true,
+      allowNegative: false,
+    });
+    const wrapper = mountWithMask({
+      data: () => ({
+        mask: currencyMask,
+        value: '1000000.00',
+      }),
+      template: '<input v-mask="mask" v-model="value"/>',
+    });
+    expect(wrapper.vm.$el.value).toBe('$1,000,000.00');
   });
 });
