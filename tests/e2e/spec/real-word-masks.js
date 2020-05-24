@@ -82,3 +82,11 @@ test('Time range input invalid', async (t) => {
     .expect(el.value)
     .eql('23:59');
 });
+
+test('Currency number input', async (t) => {
+  const el = Selector('input#currency');
+
+  await t
+    .typeText(el, '1000')
+    .expect(el.value).eql('$1,000');
+});
