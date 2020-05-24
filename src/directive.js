@@ -48,6 +48,17 @@ function updateMask(el, mask) {
   options.partiallyUpdate(el, { mask: stringMaskToRegExpMask(mask) });
 }
 
+/**
+ * Ensure that el is a HTMLInputElement or try finding it.
+ * @param {HTMLInputElement | *} el
+ * @returns {HTMLInputElement | *}
+ */
+function getNativeInput(el){
+  if(el instanceof HTMLInputElement)
+    return el;
+  
+  return el.querySelector('input');
+}
 
 /**
  * Vue directive definition
@@ -62,6 +73,7 @@ export default {
    * @param {?String}                        value
    */
   bind(el, { value }) {
+    el = getNativeInput(el);
     el = queryInputElementInside(el);
 
     updateMask(el, value);
@@ -80,6 +92,7 @@ export default {
    * @param {?String}                        oldValue
    */
   componentUpdated(el, { value, oldValue }) {
+    el = getNativeInput(el);
     el = queryInputElementInside(el);
 
     const isMaskChanged = value !== oldValue;
