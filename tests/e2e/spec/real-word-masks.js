@@ -66,3 +66,19 @@ test('Social Security number input', async (t) => {
     .typeText(el, '365038704')
     .expect(el.value).eql('365-03-8704');
 });
+
+test('Time range input valid', async (t) => {
+  const el = Selector('input#time-range-ex');
+  await t
+    .typeText(el, '02532137')
+    .expect(el.value)
+    .eql('02:53-21:37');
+});
+
+test('Time range input invalid', async (t) => {
+  const el = Selector('input#time-range-ex');
+  await t
+    .typeText(el, '23599999')
+    .expect(el.value)
+    .eql('23:59');
+});
