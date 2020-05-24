@@ -47,7 +47,7 @@ describe('directive usage', () => {
     const wrapper = mountWithMask({
       template: '<input />',
     });
-    expect(wrapper.is('input')).toBe(true);
+    expect(wrapper.element.tagName).toBe('INPUT');
   });
 
   it('should update model value after directive bind', () => {
@@ -147,7 +147,7 @@ describe('directive usage', () => {
     const localVue = createLocalVue();
     localVue.use(VueMask, {
       placeholders: {
-        P: /(6|7)/,
+        P: /([67])/,
       },
     });
     const wrapper = mount({
