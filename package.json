@@ -48,7 +48,7 @@
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-terser": "6.0.1",
     "testcafe": "1.8.5",
-    "text-mask-addons": "^3.8.0",
+    "text-mask-addons": "3.8.0",
     "text-mask-core": "5.1.2",
     "vue": "2.6.11",
     "vue-server-renderer": "2.6.11",
