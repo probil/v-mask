@@ -265,6 +265,46 @@ Vue.use(VueMask)
 ```
 In this example entering `02532137` in the input field will produce valid time range `02:53-21:37` in `myInputModel` variable.
 
+### Text Mask Addons
+
+Library supports [Text Mask Addons](https://www.npmjs.com/package/text-mask-addons), they are basically pre-generated functions (describe above) for advanced functionality like currency masking.
+
+The usage is simple. Configure the addon as want and pass the result to the `v-mask` as you would to `text-mask-core`.
+
+View the [createNumberMask](https://github.com/text-mask/text-mask/tree/master/addons/#createnumbermask) documentation for a full list of options available.
+
+`app.js`:
+```js
+import Vue from 'vue'
+import VueMask from 'v-mask'
+Vue.use(VueMask)
+```
+
+`<your_component>.vue`:
+```vue
+<template>
+  <input type="text" v-mask="mask" v-model="myInputModel" placeholder="$100.00">
+</template>
+<script>
+  import createNumberMask from 'text-mask-addons/dist/createNumberMask';
+  const currencyMask = createNumberMask({
+    prefix: '$',
+    allowDecimal: true,
+    includeThousandsSeparator: true,
+    allowNegative: false,
+  });
+  export default {
+    data: () => ({
+      mask: currencyMask,
+      myInputModel: ''
+    })
+  }
+</script>
+```
+In this example:
+- entering `1000000.00` in the input field will produce `$1,000,000.00` in `myInputModel` variable
+- while entering `100` in the input field will produce `$100`
+
 ## :syringe: Tests
 
 [Jest](https://github.com/facebook/jest) is used for unit-tests.
