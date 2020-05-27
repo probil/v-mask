@@ -118,15 +118,19 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Exclude demo directory
-demo
-/e2e/
-renovate.json
-.circleci
-build
-ISSUE_TEMPLATE.md
+## Exclude tests/lint files and configuration
+tests/
 src/**/__tests__/**
 jest.config.js
 .eslintignore
 .eslintrc.json
+
+## CI
+.circleci/
+.github/
+
+## Other files
+renovate.json
+build/
+ISSUE_TEMPLATE.md
 .editorconfig
