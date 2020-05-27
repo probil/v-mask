@@ -120,8 +120,7 @@ Temporary Items
 
 
 ### E2E
-
 /e2e/reports/
 
-### Docs
-RELEASE_NOTE*.md
+### Dist folder
+/dist/
