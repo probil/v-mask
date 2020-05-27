@@ -12,9 +12,7 @@
     "build": "npm run bundle && npm run bundle:min",
     "bundle": "rollup -c build/rollup.conf.js",
     "bundle:min": "rollup -c build/rollup.conf.min.js",
-    "release": "bash scripts/release.sh",
-    "release:note": "node scripts/gen-release-note.js",
-    "lint": "eslint src scripts tests"
+    "lint": "eslint src tests"
   },
   "repository": {
     "type": "git",
@@ -36,7 +34,6 @@
     "@babel/preset-env": "7.10.0",
     "@vue/test-utils": "1.0.3",
     "babel-core": "7.0.0-bridge.0",
-    "conventional-changelog": "3.1.21",
     "eslint": "7.1.0",
     "eslint-config-airbnb-base": "14.1.0",
     "eslint-plugin-import": "2.20.2",
