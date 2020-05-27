@@ -1,7 +1,7 @@
 {
   "name": "v-mask",
   "version": "0.0.0-semantically-released",
-  "description": "Tiny input mask library for Vue.js based on text-mask-core (~4kb) exposed as directive. No dependencies",
+  "description": "Tiny input mask library for Vue.js based on text-mask-core (~5kb) exposed as directive. No dependencies",
   "main": "dist/v-mask.js",
   "module": "dist/v-mask.esm.js",
   "scripts": {

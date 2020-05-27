@@ -7,7 +7,7 @@
 [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/v-mask/badge?style=rounded)](https://www.jsdelivr.com/package/npm/v-mask)
 [![Tested with TestCafe](https://img.shields.io/badge/tested%20with-TestCafe-2fa4cf.svg)](https://github.com/DevExpress/testcafe)
 
-> Biblioteca enxuta baseado no [text-mask-core](https://github.com/text-mask/text-mask/tree/master/core) (~4kb) apenas diretiva. sem dependências.
+> Biblioteca enxuta baseado no [text-mask-core](https://github.com/text-mask/text-mask/tree/master/core) (~5kb) apenas diretiva. sem dependências.
 
 <div align="center">
   <h3>
