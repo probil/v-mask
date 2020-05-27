@@ -132,5 +132,4 @@ jest.config.js
 ## Other files
 renovate.json
 build/
-ISSUE_TEMPLATE.md
 .editorconfig
