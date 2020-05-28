@@ -30,8 +30,8 @@
   },
   "homepage": "https://github.com/probil/v-mask#readme",
   "devDependencies": {
-    "@babel/core": "7.10.0",
-    "@babel/preset-env": "7.10.0",
+    "@babel/core": "7.10.1",
+    "@babel/preset-env": "7.10.1",
     "@vue/test-utils": "1.0.3",
     "babel-core": "7.0.0-bridge.0",
     "eslint": "7.1.0",
