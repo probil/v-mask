@@ -3,19 +3,19 @@
 import conformToMask from 'text-mask-core/src/conformToMask';
 import { stringMaskToRegExpMask, arrayMaskToRegExpMask } from './maskToRegExpMask';
 import { trigger, queryInputElementInside } from './utils';
-import { isAndroid, isChrome } from './utils/env';
 import createOptions from './createOptions';
 import { defaultMaskReplacers } from './constants';
 
 const options = createOptions();
 
+/**
+ * Convenience wrapper for `trigger(el, 'input')`, which raises
+ * an event for Vue to detect a value change.
+ *
+ * @param {HTMLInputElement} el
+ */
 function triggerInputUpdate(el) {
-  const fn = trigger.bind(null, el, 'input');
-  if (isAndroid && isChrome) {
-    setTimeout(fn, 0);
-  } else {
-    fn();
-  }
+  trigger(el, 'input');
 }
 
 /**
@@ -62,7 +62,7 @@ function updateMask(el, inputMask, maskReplacers) {
 /**
  * Merge custom mask replacers with default mask replacers
  * @param {Object<string, RegExp>} maskReplacers
- * @param {Objext<string, RegExp>} baseMaskReplacers
+ * @param {Object<string, RegExp>} baseMaskReplacers
  * @return {Object} The extended mask replacers
  */
 function extendMaskReplacers(maskReplacers, baseMaskReplacers = defaultMaskReplacers) {
