@@ -36,7 +36,7 @@
     "babel-core": "7.0.0-bridge.0",
     "eslint": "7.2.0",
     "eslint-config-airbnb-base": "14.1.0",
-    "eslint-plugin-import": "2.21.1",
+    "eslint-plugin-import": "2.21.2",
     "eslint-plugin-jest": "23.13.2",
     "eslint-plugin-testcafe": "0.2.1",
     "jest": "26.0.1",
