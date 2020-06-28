@@ -177,7 +177,7 @@ Vue.use(VueMask, {
 Entering `123456` in that input field will produce value `###-123-###-456` in `myInputModel` variable.
 
 ### Array of RegExp
-In some cases you might not want to define global placeholders either because you are dealing with unique input or you are facing conflicts for placeholders in sevaral places.
+In some cases you might not want to define global placeholders either because you are dealing with unique input or you are facing conflicts for placeholders in several places.
 
 In such cases you can supply array of per-char regular excursions or static characters to `v-mask`.
 
