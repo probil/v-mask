@@ -2,7 +2,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import conformToMask from 'text-mask-core/src/conformToMask';
 import { stringMaskToRegExpMask, arrayMaskToRegExpMask } from './maskToRegExpMask';
-import { trigger, queryInputElementInside } from './utils';
+import {
+  trigger, queryInputElementInside, isFunction, isString, isRegexp,
+} from './utils';
 import createOptions from './createOptions';
 import { defaultMaskReplacers } from './constants';
 
@@ -31,7 +33,7 @@ function updateValue(el, force = false) {
   const isLengthIncreased = value.length > previousValue.length;
   const isUpdateNeeded = value && isValueChanged && isLengthIncreased;
 
-  if (force || isUpdateNeeded) {
+  if ((force || isUpdateNeeded) && mask) {
     const { conformedValue } = conformToMask(value, mask, { guide: false });
     el.value = conformedValue;
     triggerInputUpdate(el);
@@ -42,18 +44,20 @@ function updateValue(el, force = false) {
 
 /**
  * Fires on handler update
- * @param {HTMLInputElement}                      el
- * @param {String|Array.<String|RegExp>|Function} inputMask
+ * @param {HTMLInputElement}                           el
+ * @param {String|Array.<String|RegExp>|Function|null} inputMask
  */
 function updateMask(el, inputMask, maskReplacers) {
-  let mask = null;
+  let mask;
 
   if (Array.isArray(inputMask)) {
     mask = arrayMaskToRegExpMask(inputMask, maskReplacers);
-  } else if (typeof inputMask === 'function') {
+  } else if (isFunction(inputMask)) {
     mask = inputMask;
-  } else {
+  } else if (isString(inputMask) && inputMask.length > 0) {
     mask = stringMaskToRegExpMask(inputMask, maskReplacers);
+  } else {
+    mask = inputMask;
   }
 
   options.partiallyUpdate(el, { mask });
@@ -87,7 +91,7 @@ function extendMaskReplacers(maskReplacers, baseMaskReplacers = defaultMaskRepla
  */
 function maskToString(mask) {
   const maskArray = Array.isArray(mask) ? mask : [mask];
-  const filteredMaskArray = maskArray.filter((part) => typeof part === 'string' || part instanceof RegExp);
+  const filteredMaskArray = maskArray.filter((part) => isString(part) || isRegexp(part));
   return filteredMaskArray.toString();
 }
 
@@ -135,15 +139,13 @@ export function createDirective(directiveOptions = {}) {
     componentUpdated(el, { value, oldValue }) {
       el = queryInputElementInside(el);
 
-      const isMaskChanged = typeof value === 'function'
+      const isMaskChanged = isFunction(value)
         || maskToString(oldValue) !== maskToString(value);
 
-      // update mask first if changed
       if (isMaskChanged) {
         updateMask(el, value, instanceMaskReplacers);
       }
 
-      // update value
       updateValue(el, isMaskChanged);
     },
 

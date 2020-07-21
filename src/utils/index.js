@@ -21,3 +21,24 @@ export const queryInputElementInside = (el) => (
     ? el
     : el.querySelector('input') || el
 );
+
+/**
+ * Determines whether the passed value is a function
+ * @param {*} val
+ * @returns {boolean}
+ */
+export const isFunction = (val) => typeof val === 'function';
+
+/**
+ * Determines whether the passed value is a string
+ * @param {*} val
+ * @returns {boolean}
+ */
+export const isString = (val) => typeof val === 'string';
+
+/**
+ * Determines whether the passed value is a string
+ * @param {*} val
+ * @returns {boolean}
+ */
+export const isRegexp = (val) => val instanceof RegExp;
