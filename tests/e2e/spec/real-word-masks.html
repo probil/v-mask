@@ -96,6 +96,14 @@
     v-mask="currencyMask"
     v-model="models.currency"
   />
+  <hr>
+  <input
+    id="empty-mask"
+    type="text"
+    placeholder="anything"
+    v-mask="false"
+    v-model="models.emptyMask"
+  />
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/text-mask-addons@3.8.0/dist/textMaskAddons.min.js"></script>
@@ -130,6 +138,7 @@
           socialSecurityNumber: '',
           timeRange: '',
           currency: '',
+          emptyMask: ''
         }
       }
     },
