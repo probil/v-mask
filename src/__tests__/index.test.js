@@ -219,4 +219,18 @@ describe('directive usage', () => {
     await wrapper.vm.$nextTick();
     expect(wrapper.vm.$el.value).toBe('11112011BC');
   });
+
+  it('should preserve entered value after setting mask to falsy value', async () => {
+    const wrapper = mountWithMask({
+      data: () => ({ mask: '##:##', value: undefined }),
+      template: '<input v-mask="mask" v-model="value"/>',
+    });
+    wrapper.vm.$el.value = '19323V';
+    wrapper.trigger('input');
+    await wrapper.vm.$nextTick();
+    wrapper.setData({ mask: '' });
+    wrapper.trigger('input');
+    await wrapper.vm.$nextTick();
+    expect(wrapper.vm.$el.value).toBe('19:32');
+  });
 });
