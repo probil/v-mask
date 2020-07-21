@@ -174,4 +174,49 @@ describe('directive usage', () => {
     });
     expect(wrapper.vm.$el.value).toBe('$1,000,000.00');
   });
+
+  it.each([
+    false, null, '', undefined,
+  ])('allows input any value for `%p` mask', async (mask) => {
+    const wrapper = mountWithMask({
+      data: () => ({ mask, value: undefined }),
+      template: '<input v-mask="mask" v-model="value"/>',
+    });
+    wrapper.vm.$el.value = '11112011BC';
+    wrapper.trigger('input');
+    await wrapper.vm.$nextTick();
+    expect(wrapper.vm.$el.value).toBe('11112011BC');
+  });
+
+  it('should conform to mask when mask changes from falsy value back to real mask', async () => {
+    const wrapper = mountWithMask({
+      data: () => ({ mask: false, value: undefined }),
+      template: '<input v-mask="mask" v-model="value"/>',
+    });
+    wrapper.vm.$el.value = '11112011BC';
+    wrapper.trigger('input');
+    await wrapper.vm.$nextTick();
+    expect(wrapper.vm.$el.value).toBe('11112011BC');
+    wrapper.setData({ mask: '##:##' });
+    wrapper.vm.$el.value = '11112011BC';
+    wrapper.trigger('input');
+    await wrapper.vm.$nextTick();
+    expect(wrapper.vm.$el.value).toBe('11:11');
+  });
+
+  it('should allow any value when mask changes from real mask to falsy value', async () => {
+    const wrapper = mountWithMask({
+      data: () => ({ mask: '##:##', value: undefined }),
+      template: '<input v-mask="mask" v-model="value"/>',
+    });
+    wrapper.vm.$el.value = '11112011BC';
+    wrapper.trigger('input');
+    await wrapper.vm.$nextTick();
+    expect(wrapper.vm.$el.value).toBe('11:11');
+    wrapper.setData({ mask: '' });
+    wrapper.vm.$el.value = '11112011BC';
+    wrapper.trigger('input');
+    await wrapper.vm.$nextTick();
+    expect(wrapper.vm.$el.value).toBe('11112011BC');
+  });
 });

@@ -90,3 +90,11 @@ test('Currency number input', async (t) => {
     .typeText(el, '1000')
     .expect(el.value).eql('$1,000');
 });
+
+test('Empty mask', async (t) => {
+  const el = Selector('input#empty-mask');
+
+  await t
+    .typeText(el, 'Anything can be entered here, $1,000!')
+    .expect(el.value).eql('Anything can be entered here, $1,000!');
+});
