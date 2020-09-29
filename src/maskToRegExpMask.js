@@ -1,5 +1,6 @@
 import { defaultMaskReplacers, NEXT_CHAR_OPTIONAL } from './constants';
 import { castToRegexp, makeRegexpOptional } from './utils/regexp';
+import { isFunction, isString } from './utils/index';
 
 function maskToRegExpMask(mask, maskReplacers = defaultMaskReplacers) {
   return mask
@@ -49,4 +50,26 @@ export function arrayMaskToRegExpMask(arrayMask, maskReplacers = defaultMaskRepl
     .reduce((mask, part) => mask.concat(part), []);
 
   return maskToRegExpMask(flattenedMask, maskReplacers);
+}
+/**
+ * Choose the correct format for `text-mask-core`
+ * @param {String|Function} inputMask
+ * @param {object<string, RegExp|NEXT_CHAR_OPTIONAL>} maskReplacers
+ * @returns {Function|RegExp[]}
+ */
+
+export function formatMask(inputMask, maskReplacers) {
+  let mask;
+
+  if (Array.isArray(inputMask)) {
+    mask = arrayMaskToRegExpMask(inputMask, maskReplacers);
+  } else if (isFunction(inputMask)) {
+    mask = inputMask;
+  } else if (isString(inputMask) && inputMask.length > 0) {
+    mask = stringMaskToRegExpMask(inputMask, maskReplacers);
+  } else {
+    mask = inputMask;
+  }
+
+  return mask
 }
