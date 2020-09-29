@@ -71,5 +71,5 @@ export function formatMask(inputMask, maskReplacers) {
     mask = inputMask;
   }
 
-  return mask
+  return mask;
 }
