@@ -139,10 +139,9 @@ export function createDirective(directiveOptions = {}) {
     componentUpdated(el, { value, oldValue }) {
       el = queryInputElementInside(el);
 
-      const isMaskChanged = isFunction(value)
-        || maskToString(oldValue) !== maskToString(value);
+      const isMaskChanged = maskToString(oldValue) !== maskToString(value);
 
-      if (isMaskChanged) {
+      if (isFunction(value) || isMaskChanged) {
         updateMask(el, value, instanceMaskReplacers);
       }
 
