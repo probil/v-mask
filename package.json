@@ -32,7 +32,7 @@
   "devDependencies": {
     "@babel/core": "7.12.10",
     "@babel/preset-env": "7.12.10",
-    "@vue/test-utils": "1.1.1",
+    "@vue/test-utils": "1.1.2",
     "babel-core": "7.0.0-bridge.0",
     "eslint": "7.15.0",
     "eslint-config-airbnb-base": "14.2.1",
