@@ -1,14 +1,14 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import conformToMask from 'text-mask-core/src/conformToMask';
-import { stringMaskToRegExpMask } from './maskToRegExpMask';
+import { formatMask } from './maskToRegExpMask';
 
 /**
  * Vue filter definition
  * @param {String} value
- * @param {String} stringMask
+ * @param {String} inputMask
  */
-export default (value, stringMask) => {
-  const mask = stringMaskToRegExpMask(stringMask);
+export default (value, inputMask) => {
+  const mask = formatMask(inputMask);
   const { conformedValue } = conformToMask(value, mask, { guide: false });
   return conformedValue;
 };

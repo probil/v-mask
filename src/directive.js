@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import conformToMask from 'text-mask-core/src/conformToMask';
-import { stringMaskToRegExpMask, arrayMaskToRegExpMask } from './maskToRegExpMask';
+import { formatMask } from './maskToRegExpMask';
 import {
   trigger, queryInputElementInside, isFunction, isString, isRegexp,
 } from './utils';
@@ -48,17 +48,7 @@ function updateValue(el, force = false) {
  * @param {String|Array.<String|RegExp>|Function|null} inputMask
  */
 function updateMask(el, inputMask, maskReplacers) {
-  let mask;
-
-  if (Array.isArray(inputMask)) {
-    mask = arrayMaskToRegExpMask(inputMask, maskReplacers);
-  } else if (isFunction(inputMask)) {
-    mask = inputMask;
-  } else if (isString(inputMask) && inputMask.length > 0) {
-    mask = stringMaskToRegExpMask(inputMask, maskReplacers);
-  } else {
-    mask = inputMask;
-  }
+  const mask = formatMask(inputMask, maskReplacers);
 
   options.partiallyUpdate(el, { mask });
 }
