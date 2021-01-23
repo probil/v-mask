@@ -1,6 +1,6 @@
 import { createLocalVue, mount } from '@vue/test-utils';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
-import VueMask, { VueMaskDirective, VueMaskPlugin } from '../index';
+import VueMask, { VueMaskDirective, VueMaskPlugin, VueMaskFilter } from '../index';
 import { timeRangeMask } from '../utils/timeRangeMask';
 
 describe('plugin/directive registration', () => {
@@ -18,8 +18,18 @@ describe('plugin/directive registration', () => {
     expect(VueMaskPlugin).toEqual(expect.any(Function));
   });
 
+  it('named export `VueMaskFilter` should be a function', () => {
+    expect(VueMaskFilter).toEqual(expect.any(Function));
+  });
+
   it('named export `VueMaskDirective` should be an object', () => {
     expect(VueMaskDirective).toEqual(expect.any(Object));
+  });
+
+  it('should register `VMask` filter', () => {
+    expect(Vue.options.filters.VMask).toBeUndefined();
+    Vue.use(VueMask);
+    expect(Vue.options.filters.VMask).toEqual(expect.any(Function));
   });
 
   it('should register `v-mask` directive', () => {
@@ -232,5 +242,45 @@ describe('directive usage', () => {
     wrapper.trigger('input');
     await wrapper.vm.$nextTick();
     expect(wrapper.vm.$el.value).toBe('19:32');
+  });
+});
+
+describe('filter usage', () => {
+  let mountWithMask;
+
+  beforeEach(() => {
+    const localVue = createLocalVue();
+    localVue.use(VueMask);
+    mountWithMask = (arg, options) => mount(arg, { ...options, localVue });
+  });
+
+  it('should mask static string', () => {
+    const wrapper = mountWithMask({
+      template: '<span>{{ "9999999999" | VMask("(###) ###-####") }}</span>',
+    });
+    expect(wrapper.text()).toBe('(999) 999-9999');
+  });
+
+  it('should mask static number', () => {
+    const wrapper = mountWithMask({
+      template: '<span>{{ 9999999999 | VMask("(###) ###-####") }}</span>',
+    });
+    expect(wrapper.text()).toBe('(999) 999-9999');
+  });
+
+  it('should mask dynamic value', () => {
+    const wrapper = mountWithMask({
+      data: () => ({ val: '8888888888' }),
+      template: '<span>{{ val | VMask("(###) ###-####") }}</span>',
+    });
+    expect(wrapper.text()).toBe('(888) 888-8888');
+  });
+
+  it.each([null, undefined])('should pass through %p without modification', (val) => {
+    const wrapper = mountWithMask({
+      data: () => ({ val }),
+      template: '<span>{{ val | VMask("(###) ###-####") }}</span>',
+    });
+    expect(wrapper.text()).toBe('');
   });
 });

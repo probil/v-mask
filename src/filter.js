@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import conformToMask from 'text-mask-core/src/conformToMask';
 import { stringMaskToRegExpMask } from './maskToRegExpMask';
+import { isString } from './utils';
 
 /**
  * Vue filter definition
@@ -9,6 +10,7 @@ import { stringMaskToRegExpMask } from './maskToRegExpMask';
  */
 export default (value, stringMask) => {
   const mask = stringMaskToRegExpMask(stringMask);
-  const { conformedValue } = conformToMask(value, mask, { guide: false });
+  if (!isString(value) && !Number.isFinite(value)) return value;
+  const { conformedValue } = conformToMask(`${value}`, mask, { guide: false });
   return conformedValue;
 };
