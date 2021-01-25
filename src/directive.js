@@ -20,6 +20,15 @@ function triggerInputUpdate(el) {
   trigger(el, 'input');
 }
 
+function updateElementWithMaskedValue(el, maskedValue) {
+  if (maskedValue === el.value) {
+    return;
+  }
+
+  el.value = maskedValue;
+  triggerInputUpdate(el);
+}
+
 /**
  * Event handler
  * @param {HTMLInputElement} el
@@ -35,8 +44,8 @@ function updateValue(el, force = false) {
 
   if ((force || isUpdateNeeded) && mask) {
     const { conformedValue } = conformToMask(value, mask, { guide: false });
-    el.value = conformedValue;
-    triggerInputUpdate(el);
+
+    updateElementWithMaskedValue(el, conformedValue);
   }
 
   options.partiallyUpdate(el, { previousValue: value });
@@ -96,6 +105,22 @@ function maskToString(mask) {
 }
 
 /**
+ * Check if previous mask has been different than current one
+ * @param {String|Array.<String|RegExp>} mask
+ */
+function hasMaskFromBindingChanged(el, oldValue, currentValue) {
+  const previousMask = isFunction(oldValue)
+    ? maskToString(oldValue(options.get(el).previousValue))
+    : maskToString(oldValue);
+
+  const currentMask = isFunction(currentValue)
+    ? maskToString(currentValue(el.value))
+    : maskToString(currentValue);
+
+  return previousMask !== currentMask;
+}
+
+/**
  * Create the Vue directive
  * @param {Object}                  directiveOptions
  * @param {Object.<string, RegExp>} directiveOptions.placeholders
@@ -139,8 +164,7 @@ export function createDirective(directiveOptions = {}) {
     componentUpdated(el, { value, oldValue }) {
       el = queryInputElementInside(el);
 
-      const isMaskChanged = isFunction(value)
-        || maskToString(oldValue) !== maskToString(value);
+      const isMaskChanged = hasMaskFromBindingChanged(el, oldValue, value);
 
       if (isMaskChanged) {
         updateMask(el, value, instanceMaskReplacers);
