@@ -30,7 +30,7 @@ function updateValue(el, force = false) {
   const { previousValue, mask } = options.get(el);
 
   const isValueChanged = value !== previousValue;
-  const isLengthIncreased = value.length > previousValue.length;
+  const isLengthIncreased = value && (value.length > previousValue.length);
   const isUpdateNeeded = value && isValueChanged && isLengthIncreased;
 
   if ((force || isUpdateNeeded) && mask) {
