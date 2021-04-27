@@ -96,58 +96,69 @@ function maskToString(mask) {
 }
 
 /**
+ * Create the hook functions for the directive
+ * @param {Object}                  directiveOptions
+ * @return {Object} The hook functions for the directive
+ */
+function hookFunctions(directiveOptions) {
+  const instanceMaskReplacers = extendMaskReplacers(
+    directiveOptions && directiveOptions.placeholders,
+  );
+
+  return {
+    /**
+     * Called only once, when the directive is first bound to the element.
+     * This is where you can do one-time setup work.
+     *
+     * @param {(HTMLInputElement|HTMLElement)} el
+     * @param {?String}                        value
+     */
+    bind(el, { value }) {
+      el = queryInputElementInside(el);
+
+      updateMask(el, value, instanceMaskReplacers);
+      updateValue(el);
+    },
+
+    /**
+     * Called after the containing component has updated,
+     * but possibly before its children have updated.
+     * The directive’s value may or may not have changed,
+     * but you can skip unnecessary updates by comparing the
+     * binding’s current and old values.
+     *
+     * @param {(HTMLInputElement|HTMLElement)} el
+     * @param {?String}                        value
+     * @param {?String}                        oldValue
+     */
+    componentUpdated(el, { value, oldValue }) {
+      el = queryInputElementInside(el);
+
+      const isMaskChanged = isFunction(value)
+        || maskToString(oldValue) !== maskToString(value);
+
+      if (isMaskChanged) {
+        updateMask(el, value, instanceMaskReplacers);
+      }
+
+      updateValue(el, isMaskChanged);
+    },
+
+    unbind(el) {
+      el = queryInputElementInside(el);
+      options.remove(el);
+    },
+  };
+}
+
+/**
  * Create the Vue directive
  * @param {Object}                  directiveOptions
  * @param {Object.<string, RegExp>} directiveOptions.placeholders
  * @return {Object} The Vue directive
  */
 export function createDirective(directiveOptions = {}) {
-  const instanceMaskReplacers = extendMaskReplacers(
-    directiveOptions && directiveOptions.placeholders,
-  );
-
-  /**
-   * Called only once, when the directive is first bound to the element.
-   * This is where you can do one-time setup work.
-   *
-   * @param {(HTMLInputElement|HTMLElement)} el
-   * @param {?String}                        value
-   */
-  const bind = (el, { value }) => {
-    el = queryInputElementInside(el);
-
-    updateMask(el, value, instanceMaskReplacers);
-    updateValue(el);
-  };
-
-  /**
-   * Called after the containing component has updated,
-   * but possibly before its children have updated.
-   * The directive’s value may or may not have changed,
-   * but you can skip unnecessary updates by comparing the
-   * binding’s current and old values.
-   *
-   * @param {(HTMLInputElement|HTMLElement)} el
-   * @param {?String}                        value
-   * @param {?String}                        oldValue
-   */
-  const componentUpdated = (el, { value, oldValue }) => {
-    el = queryInputElementInside(el);
-
-    const isMaskChanged = isFunction(value)
-      || maskToString(oldValue) !== maskToString(value);
-
-    if (isMaskChanged) {
-      updateMask(el, value, instanceMaskReplacers);
-    }
-
-    updateValue(el, isMaskChanged);
-  };
-
-  const unbind = (el) => {
-    el = queryInputElementInside(el);
-    options.remove(el);
-  };
+  const { bind, componentUpdated, unbind } = hookFunctions(directiveOptions);
 
   /**
    * Vue directive definition
