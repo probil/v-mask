@@ -157,18 +157,14 @@ export function createDirective(directiveOptions = {}) {
      * Vue 2
      */
     bind,
-
     componentUpdated,
-
     unbind,
 
     /**
      * Vue 3
      */
     beforeMount: bind,
-
     updated: componentUpdated,
-
     unmounted: unbind,
   };
 }
