@@ -107,52 +107,69 @@ export function createDirective(directiveOptions = {}) {
   );
 
   /**
+   * Called only once, when the directive is first bound to the element.
+   * This is where you can do one-time setup work.
+   *
+   * @param {(HTMLInputElement|HTMLElement)} el
+   * @param {?String}                        value
+   */
+  const bind = (el, { value }) => {
+    el = queryInputElementInside(el);
+
+    updateMask(el, value, instanceMaskReplacers);
+    updateValue(el);
+  };
+
+  /**
+   * Called after the containing component has updated,
+   * but possibly before its children have updated.
+   * The directive’s value may or may not have changed,
+   * but you can skip unnecessary updates by comparing the
+   * binding’s current and old values.
+   *
+   * @param {(HTMLInputElement|HTMLElement)} el
+   * @param {?String}                        value
+   * @param {?String}                        oldValue
+   */
+  const componentUpdated = (el, { value, oldValue }) => {
+    el = queryInputElementInside(el);
+
+    const isMaskChanged = isFunction(value)
+      || maskToString(oldValue) !== maskToString(value);
+
+    if (isMaskChanged) {
+      updateMask(el, value, instanceMaskReplacers);
+    }
+
+    updateValue(el, isMaskChanged);
+  };
+
+  const unbind = (el) => {
+    el = queryInputElementInside(el);
+    options.remove(el);
+  };
+
+  /**
    * Vue directive definition
    */
   return {
+    /**
+     * Vue 2
+     */
+    bind,
+
+    componentUpdated,
+
+    unbind,
 
     /**
-     * Called only once, when the directive is first bound to the element.
-     * This is where you can do one-time setup work.
-     *
-     * @param {(HTMLInputElement|HTMLElement)} el
-     * @param {?String}                        value
+     * Vue 3
      */
-    bind(el, { value }) {
-      el = queryInputElementInside(el);
+    beforeMount: bind,
 
-      updateMask(el, value, instanceMaskReplacers);
-      updateValue(el);
-    },
+    updated: componentUpdated,
 
-    /**
-     * Called after the containing component has updated,
-     * but possibly before its children have updated.
-     * The directive’s value may or may not have changed,
-     * but you can skip unnecessary updates by comparing the
-     * binding’s current and old values.
-     *
-     * @param {(HTMLInputElement|HTMLElement)} el
-     * @param {?String}                        value
-     * @param {?String}                        oldValue
-     */
-    componentUpdated(el, { value, oldValue }) {
-      el = queryInputElementInside(el);
-
-      const isMaskChanged = isFunction(value)
-        || maskToString(oldValue) !== maskToString(value);
-
-      if (isMaskChanged) {
-        updateMask(el, value, instanceMaskReplacers);
-      }
-
-      updateValue(el, isMaskChanged);
-    },
-
-    unbind(el) {
-      el = queryInputElementInside(el);
-      options.remove(el);
-    },
+    unmounted: unbind,
   };
 }
 
