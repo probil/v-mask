@@ -96,21 +96,16 @@ function maskToString(mask) {
 }
 
 /**
- * Create the Vue directive
+ * Create the hook functions for the directive
  * @param {Object}                  directiveOptions
- * @param {Object.<string, RegExp>} directiveOptions.placeholders
- * @return {Object} The Vue directive
+ * @return {Object} The hook functions for the directive
  */
-export function createDirective(directiveOptions = {}) {
+function hookFunctions(directiveOptions) {
   const instanceMaskReplacers = extendMaskReplacers(
     directiveOptions && directiveOptions.placeholders,
   );
 
-  /**
-   * Vue directive definition
-   */
   return {
-
     /**
      * Called only once, when the directive is first bound to the element.
      * This is where you can do one-time setup work.
@@ -153,6 +148,35 @@ export function createDirective(directiveOptions = {}) {
       el = queryInputElementInside(el);
       options.remove(el);
     },
+  };
+}
+
+/**
+ * Create the Vue directive
+ * @param {Object}                  directiveOptions
+ * @param {Object.<string, RegExp>} directiveOptions.placeholders
+ * @return {Object} The Vue directive
+ */
+export function createDirective(directiveOptions = {}) {
+  const { bind, componentUpdated, unbind } = hookFunctions(directiveOptions);
+
+  /**
+   * Vue directive definition
+   */
+  return {
+    /**
+     * Vue 2
+     */
+    bind,
+    componentUpdated,
+    unbind,
+
+    /**
+     * Vue 3
+     */
+    beforeMount: bind,
+    updated: componentUpdated,
+    unmounted: unbind,
   };
 }
 
