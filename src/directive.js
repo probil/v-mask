@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import conformToMask from 'text-mask-core/src/conformToMask';
-import { stringMaskToRegExpMask, arrayMaskToRegExpMask } from './utils/maskToRegExpMask';
+import parseMask from './utils/parseMask';
 import {
   trigger, queryInputElementInside, isFunction, isString, isRegexp,
 } from './utils';
@@ -9,6 +9,14 @@ import createOptions from './createOptions';
 import { defaultMaskReplacers } from './constants';
 
 const options = createOptions();
+
+/**
+ * @typedef {RegExp|NEXT_CHAR_OPTIONAL|null} MaskReplacerValue
+ */
+
+/**
+ * @typedef {Object<string,MaskReplacerValue>} MaskReplaces
+ */
 
 /**
  * Convenience wrapper for `trigger(el, 'input')`, which raises
@@ -45,30 +53,20 @@ function updateValue(el, force = false) {
 /**
  * Fires on handler update
  * @param {HTMLInputElement}                           el
- * @param {String|Array.<String|RegExp>|Function|null} inputMask
- * @param {Object<String,RegExp|NEXT_CHAR_OPTIONAL>} maskReplacers
+ * @param {string|Array.<string|RegExp>|Function|null} inputMask
+ * @param {MaskReplaces} maskReplacers
  */
 function updateMask(el, inputMask, maskReplacers) {
-  let mask;
-
-  if (Array.isArray(inputMask)) {
-    mask = arrayMaskToRegExpMask(inputMask, maskReplacers);
-  } else if (isFunction(inputMask)) {
-    mask = inputMask;
-  } else if (isString(inputMask) && inputMask.length > 0) {
-    mask = stringMaskToRegExpMask(inputMask, maskReplacers);
-  } else {
-    mask = inputMask;
-  }
+  const mask = parseMask(inputMask, maskReplacers);
 
   options.partiallyUpdate(el, { mask });
 }
 
 /**
  * Merge custom mask replacers with default mask replacers
- * @param {Object<string, RegExp>} maskReplacers
- * @param {Object<string, RegExp>} baseMaskReplacers
- * @return {Object} The extended mask replacers
+ * @param {MaskReplaces} maskReplacers
+ * @param {MaskReplaces} baseMaskReplacers
+ * @return {MaskReplaces} The extended mask replacers
  */
 function extendMaskReplacers(maskReplacers, baseMaskReplacers = defaultMaskReplacers) {
   if (maskReplacers === null || Array.isArray(maskReplacers) || typeof maskReplacers !== 'object') {
@@ -88,7 +86,7 @@ function extendMaskReplacers(maskReplacers, baseMaskReplacers = defaultMaskRepla
 
 /**
  * Convert a mask into a string for comparison
- * @param {String|Array.<String|RegExp>} mask
+ * @param {string|Array.<string|RegExp>} mask
  */
 function maskToString(mask) {
   const maskArray = Array.isArray(mask) ? mask : [mask];
@@ -98,8 +96,8 @@ function maskToString(mask) {
 
 /**
  * Create the Vue directive
- * @param {Object}                  directiveOptions
- * @param {Object.<string, RegExp>} directiveOptions.placeholders
+ * @param {Object}       directiveOptions
+ * @param {MaskReplaces} directiveOptions.placeholders
  * @return {Object} The Vue directive
  */
 export function createDirective(directiveOptions = {}) {
@@ -117,7 +115,7 @@ export function createDirective(directiveOptions = {}) {
      * This is where you can do one-time setup work.
      *
      * @param {(HTMLInputElement|HTMLElement)} el
-     * @param {?String}                        value
+     * @param {?string}                        value
      */
     bind(el, { value }) {
       el = queryInputElementInside(el);
@@ -134,8 +132,8 @@ export function createDirective(directiveOptions = {}) {
      * binding’s current and old values.
      *
      * @param {(HTMLInputElement|HTMLElement)} el
-     * @param {?String}                        value
-     * @param {?String}                        oldValue
+     * @param {?string}                        value
+     * @param {?string}                        oldValue
      */
     componentUpdated(el, { value, oldValue }) {
       el = queryInputElementInside(el);

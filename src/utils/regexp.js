@@ -1,7 +1,7 @@
 /**
  * @example
  * '/abc/g' -> /abc/g
- * @param {String} str - stringified regexp
+ * @param {string} str - stringified regexp
  * @return {RegExp} - real regexp
  */
 const stringToRegexp = (str) => {
@@ -30,8 +30,8 @@ export const makeRegexpOptional = (charRegexp) => (
 );
 
 /**
- * @param {String} char
- * @return {String}
+ * @param {string} char
+ * @return {string}
  */
 const escapeIfNeeded = (char) => (
   '[\\^$.|?*+()'.indexOf(char) > -1
@@ -41,20 +41,20 @@ const escapeIfNeeded = (char) => (
 
 /**
  * Wraps static character to RegExp
- * @param {String} char
+ * @param {string} char
  * @return {RegExp}
  */
 const charRegexp = (char) => new RegExp(`/[${escapeIfNeeded(char)}]/`);
 
 /**
  * Determines if value is regular expression
- * @param {String|RegExp} entity
+ * @param {string|RegExp} entity
  * @return {boolean}
  */
 const isRegexp = (entity) => entity instanceof RegExp;
 
 /**
- * @param {String|RegExp} char
+ * @param {string|RegExp} char
  * @return {RegExp}
  */
 export const castToRegexp = (char) => (isRegexp(char) ? char : charRegexp(char));

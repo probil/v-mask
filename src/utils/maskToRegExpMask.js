@@ -3,7 +3,7 @@ import { castToRegexp, makeRegexpOptional } from './regexp';
 
 /**
  * @param {string[]} mask
- * @param {Object<String,RegExp|NEXT_CHAR_OPTIONAL>} maskReplacers
+ * @param {MaskReplaces} maskReplacers
  * @returns {RegExp[]}
  */
 function maskToRegExpMask(mask, maskReplacers = defaultMaskReplacers) {
@@ -25,8 +25,8 @@ function maskToRegExpMask(mask, maskReplacers = defaultMaskReplacers) {
 
 /**
  * Converts mask from `v-mask` string format to `text-mask-core` format
- * @param {String} stringMask
- * @param {Object<string, RegExp|NEXT_CHAR_OPTIONAL>} maskReplacers
+ * @param {string} stringMask
+ * @param {MaskReplaces} maskReplacers
  * @return {RegExp[]}
  */
 export function stringMaskToRegExpMask(stringMask, maskReplacers = defaultMaskReplacers) {
@@ -35,8 +35,8 @@ export function stringMaskToRegExpMask(stringMask, maskReplacers = defaultMaskRe
 
 /**
  * Converts mask from `v-mask` array format to `text-mask-core` format
- * @param {Array.<String|RegExp>} arrayMask
- * @param {Object<string, RegExp|NEXT_CHAR_OPTIONAL>} maskReplacers
+ * @param {Array.<string|RegExp>} arrayMask
+ * @param {MaskReplaces} maskReplacers
  * @return {RegExp[]}
  */
 export function arrayMaskToRegExpMask(arrayMask, maskReplacers = defaultMaskReplacers) {

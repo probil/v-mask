@@ -5,8 +5,8 @@ import { isString } from './utils';
 
 /**
  * Vue filter definition
- * @param {String} value
- * @param {String} stringMask
+ * @param {string|number} value
+ * @param {string} stringMask
  */
 export default (value, stringMask) => {
   const mask = stringMaskToRegExpMask(stringMask);

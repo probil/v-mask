@@ -4,8 +4,8 @@ import filter from './filter';
 /**
  * Vue plugin definition
  * @param {Vue} Vue
- * @param {Object}                  options
- * @param {Object.<string, RegExp>} options.placeholders
+ * @param {Object}       options
+ * @param {MaskReplaces} options.placeholders
  */
 export default (Vue, options = {}) => {
   Vue.directive('mask', createDirective(options));
