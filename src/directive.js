@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import conformToMask from 'text-mask-core/src/conformToMask';
-import { stringMaskToRegExpMask, arrayMaskToRegExpMask } from './maskToRegExpMask';
+import { stringMaskToRegExpMask, arrayMaskToRegExpMask } from './utils/maskToRegExpMask';
 import {
   trigger, queryInputElementInside, isFunction, isString, isRegexp,
 } from './utils';
@@ -46,6 +46,7 @@ function updateValue(el, force = false) {
  * Fires on handler update
  * @param {HTMLInputElement}                           el
  * @param {String|Array.<String|RegExp>|Function|null} inputMask
+ * @param {Object<String,RegExp|NEXT_CHAR_OPTIONAL>} maskReplacers
  */
 function updateMask(el, inputMask, maskReplacers) {
   let mask;

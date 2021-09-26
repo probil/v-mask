@@ -1,6 +1,11 @@
-import { defaultMaskReplacers, NEXT_CHAR_OPTIONAL } from './constants';
-import { castToRegexp, makeRegexpOptional } from './utils/regexp';
+import { defaultMaskReplacers, NEXT_CHAR_OPTIONAL } from '../constants';
+import { castToRegexp, makeRegexpOptional } from './regexp';
 
+/**
+ * @param {string[]} mask
+ * @param {Object<String,RegExp|NEXT_CHAR_OPTIONAL>} maskReplacers
+ * @returns {RegExp[]}
+ */
 function maskToRegExpMask(mask, maskReplacers = defaultMaskReplacers) {
   return mask
     .map((char, index, array) => {
@@ -21,7 +26,7 @@ function maskToRegExpMask(mask, maskReplacers = defaultMaskReplacers) {
 /**
  * Converts mask from `v-mask` string format to `text-mask-core` format
  * @param {String} stringMask
- * @param {object<string, RegExp|NEXT_CHAR_OPTIONAL>} maskReplacers
+ * @param {Object<string, RegExp|NEXT_CHAR_OPTIONAL>} maskReplacers
  * @return {RegExp[]}
  */
 export function stringMaskToRegExpMask(stringMask, maskReplacers = defaultMaskReplacers) {
@@ -31,7 +36,7 @@ export function stringMaskToRegExpMask(stringMask, maskReplacers = defaultMaskRe
 /**
  * Converts mask from `v-mask` array format to `text-mask-core` format
  * @param {Array.<String|RegExp>} arrayMask
- * @param {object<string, RegExp|NEXT_CHAR_OPTIONAL>} maskReplacers
+ * @param {Object<string, RegExp|NEXT_CHAR_OPTIONAL>} maskReplacers
  * @return {RegExp[]}
  */
 export function arrayMaskToRegExpMask(arrayMask, maskReplacers = defaultMaskReplacers) {
