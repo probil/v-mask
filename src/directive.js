@@ -6,7 +6,7 @@ import {
   trigger, queryInputElementInside, isFunction, isString, isRegexp,
 } from './utils';
 import createOptions from './createOptions';
-import { defaultMaskReplacers } from './constants';
+import extendMaskReplacers from './utils/extendMaskReplacers';
 
 const options = createOptions();
 
@@ -60,28 +60,6 @@ function updateMask(el, inputMask, maskReplacers) {
   const mask = parseMask(inputMask, maskReplacers);
 
   options.partiallyUpdate(el, { mask });
-}
-
-/**
- * Merge custom mask replacers with default mask replacers
- * @param {MaskReplaces} maskReplacers
- * @param {MaskReplaces} baseMaskReplacers
- * @return {MaskReplaces} The extended mask replacers
- */
-function extendMaskReplacers(maskReplacers, baseMaskReplacers = defaultMaskReplacers) {
-  if (maskReplacers === null || Array.isArray(maskReplacers) || typeof maskReplacers !== 'object') {
-    return baseMaskReplacers;
-  }
-
-  return Object.keys(maskReplacers).reduce((extendedMaskReplacers, key) => {
-    const value = maskReplacers[key];
-
-    if (value !== null && !(value instanceof RegExp)) {
-      return extendedMaskReplacers;
-    }
-
-    return { ...extendedMaskReplacers, [key]: value };
-  }, baseMaskReplacers);
 }
 
 /**
