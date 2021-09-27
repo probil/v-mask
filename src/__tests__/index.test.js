@@ -283,4 +283,38 @@ describe('filter usage', () => {
     });
     expect(wrapper.text()).toBe('');
   });
+
+  it('should accept an array of regular expressions directly', async () => {
+    const wrapper = mountWithMask({
+      data: () => ({ mask: ['(', /\d/, /\d/, /\d/, ') ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/], value: '5555551234' }),
+      template: '<span>{{ value | VMask(mask) }}</span>',
+    });
+    expect(wrapper.text()).toBe('(555) 555-1234');
+  });
+
+  it('should be possible to create a mask for accepting a valid time range', async () => {
+    const wrapper = mountWithMask({
+      data: () => ({
+        mask: timeRangeMask,
+        value: '02532137',
+      }),
+      template: '<span>{{ value | VMask(mask) }}</span>',
+    });
+    expect(wrapper.text()).toBe('02:53-21:37');
+  });
+
+  it('should allow for add/removal of global mask placeholders', async () => {
+    const localVue = createLocalVue();
+    localVue.use(VueMask, {
+      placeholders: {
+        '#': null,
+        D: /\d/,
+      },
+    });
+    const wrapper = mount({
+      data: () => ({ mask: '###-DDD-###-DDD', value: '123456' }),
+      template: '<span>{{ value | VMask(mask) }}</span>',
+    }, { localVue });
+    expect(wrapper.text()).toBe('###-123-###-456');
+  });
 });
