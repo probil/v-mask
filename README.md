@@ -50,15 +50,15 @@ npm install v-mask
 ```javascript
 import Vue from 'vue'
 
-// As a plugin
+// Prefered: as a plugin (directive + filter) + custom placeholders support
 import VueMask from 'v-mask'
 Vue.use(VueMask);
 
-// Or as a directive
+// Or as a directive-only
 import { VueMaskDirective } from 'v-mask'
 Vue.directive('mask', VueMaskDirective);
 
-// Or only as a filter
+// Or only as a filter-only
 import { VueMaskFilter } from 'v-mask'
 Vue.filter('VMask', VueMaskFilter)
 ```
@@ -82,15 +82,20 @@ Vue.directive('mask', VueMask.VueMaskDirective);
 ```html
 <input type="text" v-mask="'####-##'" v-model="myInputModel">
 <!-- OR -->
-<input type="text" v-mask="nameOfVariableWithMask" v-model="myInputModel">
+<input type="text" v-mask="variableWithMask" v-model="myInputModel">
 ```
 **Notice:** `v-model` is required starting from `v1.1.0`, because [a lot](https://github.com/probil/v-mask/issues/16) [of](https://github.com/probil/v-mask/issues/30) [bugs](https://github.com/probil/v-mask/issues/29) with HTMLElement event listeners and sync with Vue internals.
 
 There is no reason to support using this lib for using without `v-model` but open the door for using on [custom inputs](http://vuejs.org/v2/guide/components.html#Form-Input-Components-using-Custom-Events).
 
 ### Filter usage
+
+The filter accepts a mask similarly to the directive, and might be useful when you need to render a raw value as masked without using an input (e.g. formatting currency).
+
 ```html
 <span>{{ '9999999999' | VMask('(###) ###-####') }}</span>
+<!-- or -->
+<span>{{ variableWithRawValue | VMask(variableWithMask) </span>
 ```
 
 ## :gear: Configuration
@@ -138,7 +143,7 @@ Here is a list placeholders you can utilize by default:
 
 
 ### Custom placeholders
-While default placeholders are easy to use and straightforward in reality we have to deal with more complex cases where validation can be a bit more complex and unpredictable. In such cases it makes sense to define custom placeholders specific to the project or the domain.
+While default placeholders are easy to use and straightforward, in reality we have to deal with more complex cases where validation can be tricky and unpredictable. In such cases it makes sense to define custom placeholders specific to the project or the domain.
 
 To define them you should pass them as an object while installing plugin. Where:
 * `key` is the character in a mask
@@ -153,7 +158,7 @@ Any valid string character can be used as a placeholder (e.g. Cyrillic or Arabic
 import Vue from 'vue'
 import VueMask from 'v-mask'
 
-Vue.use(VueMask, {
+Vue.use(VueMask, {   // (!) custom placeholders support requires registration as a plugin to
   placeholders: {
     '#': null,       // passing `null` removes default placeholder, so `#` is treated as character
     D: /\d/,         // define new placeholder
@@ -165,6 +170,8 @@ Vue.use(VueMask, {
 ```vue
 <template>
   <input type="text" v-mask="'###-DDD-###-DDD'" v-model="myInputModel">
+  <!-- or with filter -->
+  <span>{{ 123456 | VMask(mask) }}</span>
 </template>
 <script>
   export default {
@@ -179,7 +186,7 @@ Entering `123456` in that input field will produce value `###-123-###-456` in `m
 ### Array of RegExp
 In some cases you might not want to define global placeholders either because you are dealing with unique input or you are facing conflicts for placeholders in several places.
 
-In such cases you can supply array of per-char regular excursions or static characters to `v-mask`.
+In such cases you can supply array of per-char regular expressions or static characters to `v-mask`.
 
 `app.js`:
 ```js
@@ -192,6 +199,8 @@ Vue.use(VueMask)
 ```vue
 <template>
   <input type="text" v-mask="mask" v-model="myInputModel">
+  <!-- or with filter -->
+  <span>{{ 5555551234 | VMask(mask) }}</span>
 </template>
 <script>
   export default {
@@ -204,7 +213,7 @@ Vue.use(VueMask)
 ```
 In this example entering `5555551234` in the input field will produce value `(555) 555-1234` in `myInputModel` variable.
 
-**Notice**: Keep in mind that library always verifies _one_ character per regular expression. Trying verify multiple charters in the same RegExp won't work.
+**Notice**: Keep in mind that library always verifies _one_ character per regular expression. Trying to verify multiple charters in the same RegExp won't work.
 
 ### Function
 
@@ -225,7 +234,9 @@ Vue.use(VueMask)
 `<your_component>.vue`:
 ```vue
 <template>
-  <input type="text" v-mask="mask" v-model="myInputModel" placeholder="00:00-23:59">
+  <input type="text" v-mask="timeRangeMask" v-model="myInputModel" placeholder="00:00-23:59">
+  <!-- or with filter -->
+  <span>{{ '02532137' | VMask(timeRangeMask) }}</span>
 </template>
 <script>
   /**
@@ -257,7 +268,7 @@ Vue.use(VueMask)
 
   export default {
     data: () => ({
-      mask: timeRangeMask,
+      timeRangeMask,
       myInputModel: ''
     })
   }
@@ -269,7 +280,7 @@ In this example entering `02532137` in the input field will produce valid time r
 
 Library supports [Text Mask Addons](https://www.npmjs.com/package/text-mask-addons), they are basically pre-generated functions (describe above) for advanced functionality like currency masking.
 
-The usage is simple. Configure the addon as want and pass the result to the `v-mask` as you would to `text-mask-core`.
+The usage is simple. Configure the addon as you want and pass the result to the `v-mask` as you would to `text-mask-core`.
 
 `app.js`:
 ```js
@@ -281,7 +292,9 @@ Vue.use(VueMask)
 `<your_component>.vue`:
 ```vue
 <template>
-  <input type="text" v-mask="mask" v-model="myInputModel" placeholder="$100.00">
+  <input type="text" v-mask="currencyMask" v-model="myInputModel" placeholder="$100.00">
+  <!-- or with filter -->
+  <span>{{ '100' | VMask(currencyMask) }</span>
 </template>
 <script>
   import createNumberMask from 'text-mask-addons/dist/createNumberMask';
@@ -293,7 +306,7 @@ Vue.use(VueMask)
   });
   export default {
     data: () => ({
-      mask: currencyMask,
+      currencyMask,
       myInputModel: ''
     })
   }
@@ -335,7 +348,7 @@ We're using [GitHub Releases](https://github.com/probil/v-mask/releases).
 
 We're more than happy to see potential contributions, so don't hesitate. If you have any suggestions, ideas or problems feel free to add new [issue](https://github.com/probil/v-mask/issues), but first please make sure your question does not repeat previous ones.
 
-**Notice:** You should make your changes only in `src` folder, don't try to edit files from `dist` as it compiled from `src` by babel and shouldn't be changes manually.
+**Notice:** You should make your changes only in `src` folder, don't try to edit files from `dist` as it compiled from `src` by babel and shouldn't be changes manually. Moreover, adding a proper tests for your PR drastically improves chances of merging.
 
 ## :lock: License
 
