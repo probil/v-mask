@@ -9,7 +9,7 @@ export const NEXT_CHAR_OPTIONAL = {
 };
 
 /**
- * @type {Object<String,RegExp|NEXT_CHAR_OPTIONAL>}
+ * @type {MaskReplaces}
  */
 export const defaultMaskReplacers = {
   '#': /\d/,
