@@ -35,7 +35,7 @@
     "@vue/test-utils": "1.2.2",
     "babel-core": "7.0.0-bridge.0",
     "eslint": "8.1.0",
-    "eslint-config-airbnb-base": "14.2.1",
+    "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.25.2",
     "eslint-plugin-jest": "25.2.3",
     "eslint-plugin-testcafe": "0.2.1",
