@@ -39,7 +39,7 @@
     "eslint-plugin-import": "2.25.2",
     "eslint-plugin-jest": "25.2.3",
     "eslint-plugin-testcafe": "0.2.1",
-    "jest": "27.4.2",
+    "jest": "27.4.3",
     "rollup": "2.60.2",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-node-resolve": "5.2.0",
