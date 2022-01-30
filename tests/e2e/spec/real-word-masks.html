@@ -105,7 +105,7 @@
     v-model="models.emptyMask"
   />
 </div>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script src="https://unpkg.com/vue@next"></script>
 <script src="https://cdn.jsdelivr.net/npm/text-mask-addons@3.8.0/dist/textMaskAddons.min.js"></script>
 <script src="../../../dist/v-mask.min.js"></script>
 <script>
@@ -120,10 +120,7 @@
       : hours;
   }
 
-  Vue.use(VueMask.VueMaskPlugin);
-
-  new Vue({
-    el: '#app',
+  const App = {
     data: function () {
       return {
         models: {
@@ -152,7 +149,12 @@
       },
       currencyMask: textMaskAddons.createNumberMask()
     }
-  })
+  };
+
+  Vue
+    .createApp(App)
+    .use(VueMask.VueMaskPlugin)
+    .mount('#app')
 </script>
 </body>
 </html>

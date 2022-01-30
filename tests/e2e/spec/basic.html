@@ -17,13 +17,10 @@
     v-model="models.time"
   />
 </div>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script src="https://unpkg.com/vue@next"></script>
 <script src="../../../dist/v-mask.min.js"></script>
 <script>
-  Vue.use(VueMask.VueMaskPlugin);
-
-  new Vue({
-    el: '#app',
+  const App = {
     data: function () {
       return {
         models: {
@@ -31,7 +28,12 @@
         }
       }
     }
-  })
+  }
+
+  Vue
+    .createApp(App)
+    .use(VueMask.VueMaskPlugin)
+    .mount('#app')
 </script>
 </body>
 </html>
