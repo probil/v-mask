@@ -76,7 +76,7 @@ function maskToString(mask) {
  * Create the Vue directive
  * @param {Object}       directiveOptions
  * @param {MaskReplaces} directiveOptions.placeholders
- * @return {Object} The Vue directive
+ * @return {import('vue').ObjectDirective<HTMLInputElement|HTMLElement>} The Vue directive
  */
 export function createDirective(directiveOptions = {}) {
   const instanceMaskReplacers = extendMaskReplacers(
@@ -95,7 +95,7 @@ export function createDirective(directiveOptions = {}) {
      * @param {(HTMLInputElement|HTMLElement)} el
      * @param {?string}                        value
      */
-    bind(el, { value }) {
+    beforeMount(el, { value }) {
       el = queryInputElementInside(el);
 
       updateMask(el, value, instanceMaskReplacers);
@@ -113,7 +113,7 @@ export function createDirective(directiveOptions = {}) {
      * @param {?string}                        value
      * @param {?string}                        oldValue
      */
-    componentUpdated(el, { value, oldValue }) {
+    updated(el, { value, oldValue }) {
       el = queryInputElementInside(el);
 
       const isMaskChanged = isFunction(value)
@@ -126,7 +126,7 @@ export function createDirective(directiveOptions = {}) {
       updateValue(el, isMaskChanged);
     },
 
-    unbind(el) {
+    unmounted(el) {
       el = queryInputElementInside(el);
       options.remove(el);
     },
