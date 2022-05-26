@@ -44,7 +44,7 @@
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-terser": "7.0.2",
-    "testcafe": "1.18.6",
+    "testcafe": "1.19.0",
     "text-mask-addons": "3.8.0",
     "text-mask-core": "5.1.2",
     "vue": "2.6.14",
