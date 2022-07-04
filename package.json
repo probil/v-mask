@@ -47,8 +47,8 @@
     "testcafe": "1.19.0",
     "text-mask-addons": "3.8.0",
     "text-mask-core": "5.1.2",
-    "vue": "2.7.0",
-    "vue-server-renderer": "2.7.0",
-    "vue-template-compiler": "2.7.0"
+    "vue": "2.7.1",
+    "vue-server-renderer": "2.7.1",
+    "vue-template-compiler": "2.7.1"
   }
 }
