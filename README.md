@@ -294,7 +294,7 @@ Vue.use(VueMask)
 <template>
   <input type="text" v-mask="currencyMask" v-model="myInputModel" placeholder="$100.00">
   <!-- or with filter -->
-  <span>{{ '100' | VMask(currencyMask) }</span>
+  <span>{{ '100' | VMask(currencyMask) }}</span>
 </template>
 <script>
   import createNumberMask from 'text-mask-addons/dist/createNumberMask';
