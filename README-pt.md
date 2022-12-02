@@ -35,7 +35,7 @@
 Suportamos apenas navegadores com estatísticas de uso global superiores a 1%, última versão 2 de cada navegador, mas não navegadores inativos. A biblioteca pode funcionar em navegadores antigos, mas não garantimos isso. Você pode precisar de polyfills adicionais para fazê-lo funcionar.
 
 
-## :cd: Intalação
+## :cd: Instalação
 
 Esta versão requer o Vue 2.X. Se você está utilizando o Vue 1.X [clique aqui](https://github.com/probil/v-mask/tree/vue-1.x).
 
