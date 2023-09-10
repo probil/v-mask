@@ -1,19 +1,18 @@
-version: 2
+version: 2.1
+orbs:
+  node: circleci/node@5.1.0
+  browser-tools: circleci/browser-tools@1.4.5
 jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:latest-browsers
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
+      - image: cimg/node:lts-browsers
 
     working_directory: ~/repo
 
     steps:
       - checkout
+      - browser-tools/install-browser-tools
 
       # Download and cache dependencies
       - restore_cache:
