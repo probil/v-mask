@@ -1,3 +1,7 @@
+[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner-direct-single.svg)](https://stand-with-ukraine.pp.ua)
+
+---
+
 # :abcd: Vue input mask
 [![npm](https://img.shields.io/npm/v/v-mask.svg)](https://www.npmjs.com/package/v-mask)
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/v-mask)
