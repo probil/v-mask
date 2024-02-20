@@ -23,8 +23,8 @@ export const makeRegexpOptional = (charRegexp) => (
   stringToRegexp(
     charRegexp.toString()
       .replace(
-        /.(\/)[gmiyus]{0,6}$/,
-        (match) => match.replace('/', '?/'),
+        /[^\/].*(\/)[gmiyus]{0,6}$/,
+        (match) => match.replace(/^([^\^])/, '^$1').replace(/[^\$]$/, '$/').replace('\$/', '?$/'),
       ),
   )
 );
