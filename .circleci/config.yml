@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  node: circleci/node@5.2.0
+  node: circleci/node@5.3.0
   browser-tools: circleci/browser-tools@1.4.8
 jobs:
   build:
