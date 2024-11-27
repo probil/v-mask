@@ -243,6 +243,17 @@ describe('directive usage', () => {
     await wrapper.vm.$nextTick();
     expect(wrapper.vm.$el.value).toBe('19:32');
   });
+
+  it('should not trigger input events if resolved mask is the same as previous one', async () => {
+    const wrapper = mountWithMask({
+      props: { triggerUpdate: { required: false } },
+      data: () => ({ mask: () => [/\d/, /\d/], value: null }),
+      template: '<input v-mask="mask" v-model="value" v-on:input="$emit(\'input\', $event)" />',
+    });
+
+    await wrapper.setProps({ triggerUpdate: true });
+    expect(wrapper.emitted().input).toBeFalsy();
+  });
 });
 
 describe('filter usage', () => {
